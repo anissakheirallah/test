@@ -236,6 +236,24 @@ export class SkillsComponent implements OnInit {
     this.skillService.getSkill(id).subscribe({
       next: (data) => {
         this.skill = data;
+        this.skillForm = this.formBuilder.group({
+          name: [
+            this.skill.name,
+            [
+              Validators.required,
+              Validators.minLength(3),
+              Validators.pattern("[a-zA-Z ]*"),
+            ],
+          ],
+          description: [
+            this.skill.description,
+            [
+              Validators.required,
+              Validators.minLength(3),
+              Validators.maxLength(45),
+            ],
+          ],
+        });
       },
       error: (err) => {
         console.error(err);
@@ -247,15 +265,22 @@ export class SkillsComponent implements OnInit {
     });
   }
 
-  updateSkill(): void {
-    const updateS = {
-      id: this.skill.id,
-      name: this.skill.name,
-      description: this.skill.description,
-    };
-    this.skillService.updateSkill(updateS.id, updateS).subscribe({
+  edit(): void {
+    if (this.skillForm.invalid) {
+      return;
+    }
+    this.skill.name = this.skillForm.value.name;
+    this.skill.description = this.skillForm.value.description;
+
+    this.updateSkill(this.skill);
+  }
+
+  updateSkill(skill: Skill): void {
+    this.skillService.updateSkill(skill.id, skill).subscribe({
       next: (data) => {
-        this.ngOnInit();
+        console.log(data);
+        this.getData();
+        this.modalService.dismissAll();
       },
       error: (err) => {
         console.error(err);

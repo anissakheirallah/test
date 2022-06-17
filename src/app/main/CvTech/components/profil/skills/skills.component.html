@@ -230,53 +230,81 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body" tabindex="0" ngbAutofocus>
-    <div class="col-12">
-      <div class="form-group row">
-        <div class="col-sm-3 col-form-label">
-          <label for="name">Name</label>
+  <form
+    class="form form-horizontal"
+    [formGroup]="skillForm"
+    (ngSubmit)="edit()"
+  >
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+      <div class="col-12">
+        <div class="form-group row">
+          <div class="col-sm-3 col-form-label">
+            <label for="Skill-name">Name</label>
+          </div>
+          <div class="col-sm-9">
+            <input
+              type="text"
+              formControlName="name"
+              id="skill-name"
+              class="form-control"
+              name="skill-name"
+              [ngClass]="{
+                'is-invalid': f['name'].errors
+              }"
+              placeholder="Enter the skill's name"
+            />
+            <div *ngIf="f['name'].errors" class="invalid-feedback">
+              <div *ngIf="f['name'].errors['required']">
+                The skill's name is required
+              </div>
+              <div *ngIf="f['name'].errors['pattern']">
+                The skill's name must have characters only
+              </div>
+              <div *ngIf="f['name'].errors['minlength']">
+                Add more characters
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-sm-9">
-          <input
-            type="text"
-            id="name"
-            class="form-control"
-            name="name"
-            [(ngModel)]="skill.name"
-          />
+      </div>
+      <div class="col-12">
+        <div class="form-group row">
+          <div class="col-sm-3 col-form-label">
+            <label for="skill-desc">Description</label>
+          </div>
+          <div class="col-sm-9">
+            <textarea
+              id="skill-desc"
+              formControlName="description"
+              placeholder="Description"
+              name="skill-desc"
+              rows="2"
+              wrap="soft"
+              [ngClass]="{
+                'is-invalid': f['description'].errors
+              }"
+              class="form-control"
+              data-v-aa799a9e=""
+            ></textarea>
+            <div *ngIf="f['description'].errors" class="invalid-feedback">
+              <div *ngIf="f['description'].errors['required']">
+                description is required
+              </div>
+              <div *ngIf="f['description'].errors['minlength']">
+                description should have more than 3 characters
+              </div>
+              <div *ngIf="f['description'].errors['maxlength']">
+                description shouldn't have more than 45 characters
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="col-12">
-      <div class="form-group row">
-        <div class="col-sm-3 col-form-label">
-          <label for="name">Name</label>
-        </div>
-        <div class="col-sm-9">
-          <textarea
-            type="text"
-            id="name"
-            class="form-control"
-            name="name"
-            [(ngModel)]="skill.description"
-          >
-          </textarea>
-        </div>
-      </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" rippleEffect>Accept</button>
     </div>
-  </div>
-
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-primary"
-      (click)="updateSkill(); modal.close('Accept click')"
-      rippleEffect
-    >
-      Accept
-    </button>
-  </div>
+  </form>
 </ng-template>
 
 <div class="modal-danger d-inline-block">
