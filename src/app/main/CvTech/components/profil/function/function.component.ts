@@ -235,6 +235,24 @@ export class FunctionComponent implements OnInit {
     this.functionService.getFunction(id).subscribe({
       next: (data) => {
         this.func = data;
+        this.funcForm = this.formBuilder.group({
+          name: [
+            this.func.name,
+            [
+              Validators.required,
+              Validators.minLength(3),
+              Validators.pattern("[a-zA-Z ]*"),
+            ],
+          ],
+          description: [
+            this.func.name,
+            [
+              Validators.required,
+              Validators.minLength(3),
+              Validators.maxLength(45),
+            ],
+          ],
+        });
       },
       error: (err) => {
         console.error(err);
@@ -246,15 +264,22 @@ export class FunctionComponent implements OnInit {
     });
   }
 
-  updateSkill(): void {
-    const updateF = {
-      id: this.func.id,
-      name: this.func.name,
-      description: this.func.description,
-    };
-    this.functionService.updateFunction(updateF.id, updateF).subscribe({
+  edit(): void {
+    if (this.funcForm.invalid) {
+      return;
+    }
+    this.func.name = this.funcForm.value.name;
+    this.func.description = this.funcForm.value.description;
+
+    this.updateFunction(this.func);
+  }
+
+  updateFunction(funct: Function): void {
+    this.functionService.updateFunction(funct.id, funct).subscribe({
       next: (data) => {
-        this.ngOnInit();
+        console.log(data);
+        this.getData();
+        this.modalService.dismissAll();
       },
       error: (err) => {
         console.error(err);
