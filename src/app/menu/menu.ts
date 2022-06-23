@@ -15,20 +15,20 @@ export const menu: CoreMenu[] = [
     icon: 'menu',
 
     children: [
-      {
-        id: 'dashboard',
-        title: 'MENU.Dashboard',
-        type: 'item',
-        icon: 'monitor',
-        url: 'cvtech/dashboard',
-      },
-      {
-        id: 'cvs',
-        title: 'MENU.CVs',
-        type: 'item',
-        icon: 'file',
-        url: 'cvtech/cvs'
-      },
+      // {
+      //   id: 'dashboard',
+      //   title: 'MENU.Dashboard',
+      //   type: 'item',
+      //   icon: 'monitor',
+      //   url: 'cvtech/dashboard',
+      // },
+      // {
+      //   id: 'cvs',
+      //   title: 'MENU.CVs',
+      //   type: 'item',
+      //   icon: 'file',
+      //   url: 'cvtech/cvs'
+      // },
       {
         id: 'campaign',
         title: 'MENU.CVTECH.APP',

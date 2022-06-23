@@ -100,11 +100,40 @@
           </ngx-datatable>
           <div class=" col-lg-12">
             <h5 class="text-right mb-1"></h5>
-            <ngb-pagination class="d-flex justify-content-end" [directionLinks]="false" [collectionSize]="totalPages"
+            <!-- <ngb-pagination class="d-flex justify-content-end" [directionLinks]="false" [collectionSize]="totalPages"
               [(page)]="pagePosition" (pageChange)="pageChanged($event)">
-            </ngb-pagination>
+            </ngb-pagination> -->
           </div>
         </div>
       </div>
     </div>
   </div>
+  
+<!-- --------- Delete --------- -->
+<div class="modal-danger d-inline-block">
+  <!-- Modal -->
+  <ng-template #modalDanger let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">Confirm</h5>
+
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+      Are you sure you want to delete the education ?
+    </div>
+    <div class="modal-footer">
+
+      <button type="button" class="btn btn-danger" (click)="modal.close('Accept click')" rippleEffect>
+        Cancel
+      </button>
+
+      <button type="button" class="btn btn-danger" (click)="deleteData()" routerLink="/reload" rippleEffect>
+        Delete
+      </button>
+
+    </div>
+  </ng-template>
+  <!-- / Modal -->
+</div>

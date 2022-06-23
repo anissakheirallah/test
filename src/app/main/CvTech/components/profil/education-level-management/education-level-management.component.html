@@ -104,7 +104,7 @@
 
                 <div class="d-flex align-items-center">
                   <div container="body">
-                    <button (click)="modalOpenSM(modalSM, row?.id)" type="button" class="btn btn-flat-primary btn-sm"
+                    <button (click)="modalOpenSM(modalSM, row)" type="button" class="btn btn-flat-primary btn-sm"
                       rippleEffect>
                       <i data-feather="edit" class="mr-50"></i> Update
                     </button>
@@ -199,7 +199,7 @@
             </div>
             <div class="col-sm-9">
               <input type="text" id="skill-name" class="form-control" formControlName="name" name="avail-name"
-                placeholder="Name" [ngClass]="{ 'is-invalid': submitted && fU['name'].errors }" />
+                placeholder="Name" [ngClass]="{ 'is-invalid': fU['name'].errors }" />
               <div *ngIf="fU['name'].errors" class="invalid-feedback">
                 <div *ngIf="fU['name'].errors['required']">Name is required</div>
                 <div *ngIf="fU['name'].errors['pattern']">Name must have characters only </div>
@@ -214,10 +214,10 @@
             </div>
             <div class="col-sm-9">
               <textarea id="skill-desc" placeholder="Description" formControlName="description" name="avail-desc"
-                rows="2" wrap="soft" class="form-control" [ngClass]="{ 'is-invalid': fU['name'].errors }"></textarea>
+                rows="2" wrap="soft" class="form-control" [ngClass]="{ 'is-invalid': fU['description'].errors }"></textarea>
               <div *ngIf="fU['description'].errors" class="invalid-feedback">
-                <div *ngIf="fU['description'].errors['required']">Name is required</div>
-                <div *ngIf="fU['description'].errors['pattern']">Name must have characters only </div>
+                <div *ngIf="fU['description'].errors['required']">Description is required</div>
+                <div *ngIf="fU['description'].errors['minLength']">description should be between 10 to 255 characters</div>
               </div>
             </div>
           </div>
@@ -229,7 +229,7 @@
 
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-primary" (click)="onUpdate()">Accept</button>
+      <button type="submit" class="btn btn-primary" (click)="onUpdate();modal.close('Accept click')">Accept</button>
       <button type="reset" rippleEffect class="btn btn-outline-secondary">Reset</button>
     </div>
   </ng-template>

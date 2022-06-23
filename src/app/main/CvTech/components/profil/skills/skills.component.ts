@@ -1,6 +1,7 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, NgModule, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Skill } from '../../../models/skill';
 import { SkillService } from '../../../services/skill.service';
 
@@ -19,7 +20,7 @@ export class SkillsComponent implements OnInit
   public contentHeader: object;
   public data?: Skill[];
 
-  constructor(private skillService : SkillService) { }
+  constructor(private modalService: NgbModal, private skillService : SkillService) { }
 
   skillForm = new FormGroup({
     name: new FormControl(''),
@@ -84,15 +85,30 @@ export class SkillsComponent implements OnInit
       description : this.skill.description
     }
     this.skillService.addSkill(skillData).subscribe(
-      (response : Skill) => { console.log(response), window.location.reload() },
+      (response : Skill) => { console.log(response), this.ngOnInit() },
       (error : HttpErrorResponse) => { alert(error.message) }
       )
     
   }
 
-  public deleteData(id : number) : void 
+  // ----------------------------------
+
+  private modal = null;
+  private id = 0;
+
+  modalOpenDanger(modalDanger, id: any) {
+    this.id = id;
+    console.log(id);
+    
+    this.modal = this.modalService.open(modalDanger, {
+      centered: true,
+      windowClass: "modal modal-danger",
+    });
+  }
+
+  public deleteData() : void 
   {
-    this.skillService.deleteSkill(id).subscribe(
+    this.skillService.deleteSkill(this.id).subscribe(
       () => { window.location.reload() },
       (error : HttpErrorResponse) => {  alert(error.message)}
       )

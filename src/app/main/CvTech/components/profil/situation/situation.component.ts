@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { analyzeFileForInjectables } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CurrentSituation } from 'app/main/CvTech/models/current-situation';
 import { CurrentSituationService } from 'app/main/CvTech/services/current-situation.service';
 
@@ -24,7 +25,7 @@ export class SituationComponent implements OnInit {
   })
 
 
-  constructor(private situationService: CurrentSituationService) { }
+  constructor(private modalService: NgbModal, private situationService: CurrentSituationService) { }
 
   ngOnInit(): void {
     this.getData()
@@ -68,7 +69,6 @@ export class SituationComponent implements OnInit {
   public pageChanged(event: any): void {
     this.page = event;
     console.log(event);
-    this.getData();
   }
 
 
@@ -102,7 +102,7 @@ export class SituationComponent implements OnInit {
           const { content, totalElements, totalPages } = response;
           this.count = totalElements;
           this.totalPages = totalPages * 10
-          this.data = response.content
+          this.data = content
           console.log(this.data);
 
         }, error: (err) => {
@@ -125,9 +125,25 @@ export class SituationComponent implements OnInit {
 
   }
 
-  deleteData(id: number) {
-    this.situationService.deleteSituation(id).subscribe(
-      () => { window.location.reload() },
+  
+  // ----------------------------------
+
+  private modal = null;
+  private id = 0;
+
+  modalOpenDanger(modalDanger, id: any) {
+    this.id = id;
+    console.log(id);
+    
+    this.modal = this.modalService.open(modalDanger, {
+      centered: true,
+      windowClass: "modal modal-danger",
+    });
+  }
+
+  deleteData() {
+    this.situationService.deleteSituation(this.id).subscribe(
+      () => { this.modal.close("Accept click");this.ngOnInit() },
       (error: HttpErrorResponse) => { alert(error.message) }
     )
   }

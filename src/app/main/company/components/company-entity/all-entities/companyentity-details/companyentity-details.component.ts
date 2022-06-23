@@ -78,9 +78,11 @@ export class CompanyentityDetailsComponent implements OnInit {
 
   getCompanyEntity(id:any):any{
     this.companyEntityService.getCompanyEntity(id).subscribe({
-      next:(data)=>{
+      next:(data:any)=>{
+        console.log(data);
+        
         this.entity=data;
-        this.departments=data.departements;
+        this.departments=data.departmentResponses;
     },
       error:(err) =>{
         console.error(err);

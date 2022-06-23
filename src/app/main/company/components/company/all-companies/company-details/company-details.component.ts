@@ -67,9 +67,11 @@ export class CompanyDetailsComponent implements OnInit {
 
   getCompany(id:any):Company{
     this.companyservice.getCompany(id).subscribe({
-      next:(data)=>{
+      next:(data:any)=>{
+        console.log(data);
+        
         this.company=data;
-        this.entities=data.entities;
+        this.entities=data.companyEntityResponses;
     },
       error:(err) =>{
         console.error(err);
@@ -127,7 +129,9 @@ export class CompanyDetailsComponent implements OnInit {
       this.companyservice.getCompanies(params).subscribe(
         {
           next: (data) => {
+            
             const { content, totalElements } = data;
+            console.log(content);
             this.companies = content;
             this.count = totalElements;
           }, error: (err) => {

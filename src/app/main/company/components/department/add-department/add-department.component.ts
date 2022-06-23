@@ -75,6 +75,7 @@ export class AddDepartmentComponent implements OnInit {
       {
         next: (data) => {
           console.log(data);
+          this.ngOnInit()
         }, error: (err) => {
           console.error(err);
         }

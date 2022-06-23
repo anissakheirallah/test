@@ -152,6 +152,7 @@ export class AvailabiltyComponent implements OnInit {
       {
         next: (response: any) => {
           console.log(response);
+          this.submitted=false
           Swal.fire({
             icon: 'success',
             title: 'Your work has been saved',
@@ -183,11 +184,9 @@ export class AvailabiltyComponent implements OnInit {
   // ----------------- Delete availability
   public deleteData(): void {
 
-    this.modalDanger.close('Accept click')
-    this.ngOnInit()
     console.log(this.id)
     this.availabilityService.deleteAvailability(this.id).subscribe(
-      () => { this.ngOnInit() },
+      () => { this.modalDanger.close('Accept click');this.ngOnInit() },
       (error: HttpErrorResponse) => { alert(error.message) }
 
     )
@@ -215,21 +214,6 @@ export class AvailabiltyComponent implements OnInit {
   public pageChanged(event: any): void {
     this.page = event;
     this.getAllavailabilities();
-  }
-
-  getParams(page: number, pageSize: number, name: string) {
-    let params: any = {};
-    if (page) {
-      params['page'] = page - 1;
-    }
-    if (pageSize) {
-      params['size'] = pageSize;
-    }
-    if (name) {
-      params['name'] = name;
-    }
-
-    return params;
   }
 
   // ----------------- Get availability

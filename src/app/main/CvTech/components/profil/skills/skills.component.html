@@ -73,21 +73,6 @@
                               </td>
                               <td>{{obj.description}}</td>
                               <td class="overflow-hidden">
-                                <!-- <div ngbDropdown container="body">
-                                  <button type="button" class="btn btn-sm hide-arrow" ngbDropdownToggle data-toggle="dropdown">
-                                    <i data-feather="more-horizontal"></i>
-                                  </button>
-                                  <div ngbDropdownMenu>
-                                    <a ngbDropdownItem href="javascript:void(0);">
-                                      <i data-feather="edit-2" class="mr-50"></i><span>Edit</span>
-                                    </a
-                                    >
-                                    <a ngbDropdownItem  (click)="deleteData(obj.id)">
-                                        <i data-feather="trash" class="mr-50"></i>
-                                        <span>Delete</span>
-                                    </a>
-                                  </div>
-                                </div> -->
                                 <div container="body">
                                     <button href="javascript:void(0);" type="button"
                                         class="btn btn-flat-primary btn-sm" rippleEffect>
@@ -108,3 +93,31 @@
         </div>
     </div>
 </div>
+<!-- --------- Delete --------- -->
+<div class="modal-danger d-inline-block">
+    <!-- Modal -->
+    <ng-template #modalDanger let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">Confirm</h5>
+  
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+        Are you sure you want to delete the education ?
+      </div>
+      <div class="modal-footer">
+  
+        <button type="button" class="btn btn-danger" (click)="modal.close('Accept click')" rippleEffect>
+          Cancel
+        </button>
+  
+        <button type="button" class="btn btn-danger" (click)="deleteData()" routerLink="/reload" rippleEffect>
+          Delete
+        </button>
+  
+      </div>
+    </ng-template>
+    <!-- / Modal -->
+  </div>

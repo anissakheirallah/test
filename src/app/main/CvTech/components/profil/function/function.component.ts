@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Function } from 'app/main/CvTech/models/function';
 import { FunctionService } from 'app/main/CvTech/services/function.service';
 
@@ -13,7 +14,7 @@ export class FunctionComponent implements OnInit {
   data?: Function[]
   public func : Function = {name: '', description :''}
   contentHeader: { headerTitle: string; actionButton: boolean; breadcrumb: { type: string; links: ({ name: string; isLink: boolean; link: string; } | { name: string; isLink: boolean; link?: undefined; })[]; }; };
-  constructor(private functionService : FunctionService) { }
+  constructor(private modalService: NgbModal, private functionService : FunctionService) { }
 
   funcForm = new FormGroup({
     name : new FormControl(''),
@@ -72,11 +73,26 @@ export class FunctionComponent implements OnInit {
       (error : HttpErrorResponse) =>  { alert(error.message)}
     )
   }
+  
+  // ----------------------------------
 
-  deleteData(id : number)
+  private modal = null;
+  private id = 0;
+
+  modalOpenDanger(modalDanger, id: any) {
+    this.id = id;
+    console.log(id);
+    
+    this.modal = this.modalService.open(modalDanger, {
+      centered: true,
+      windowClass: "modal modal-danger",
+    });
+  }
+
+  deleteData()
   {
-    this.functionService.deleteFunction(id).subscribe(
-      () => { window.location.reload() },
+    this.functionService.deleteFunction(this.id).subscribe(
+      () => { this.modal.close("Accept click");this.ngOnInit() },
       (error : HttpErrorResponse) => {  alert(error.message)}
     )
     

@@ -124,6 +124,8 @@ export class AllEntitiesComponent implements OnInit {
       {
         next: (response: any) => {
           const { content, totalElements, totalPages } = response;
+          console.log(content);
+          
           this.count = totalElements;
           this.totalPages = totalPages*10
           this.entities = content
