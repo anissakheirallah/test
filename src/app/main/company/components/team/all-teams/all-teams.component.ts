@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { EntityDepartmentService } from 'app/main/company/services/entity-department.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TeamService } from 'app/main/company/services/team.service';
@@ -6,27 +6,15 @@ import { Team } from 'app/main/company/models/team.model';
 import { EntityDepartment } from 'app/main/company/models/entity-department.model';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-all-teams',
   templateUrl: './all-teams.component.html',
-  styleUrls: ['./all-teams.component.scss']
+  styleUrls: ['./all-teams.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AllTeamsComponent implements OnInit {
-  contentHeader: {
-      headerTitle: string; actionButton: boolean; breadcrumb:
-      {
-        type: string; links: ({ name: string; isLink: boolean; link: string; } |
-        { name: string; isLink: boolean; link?: undefined; })[];
-      };
-  };
-
-  constructor(private modalService: NgbModal,
-      private departmentservice: EntityDepartmentService,
-      private teamService: TeamService,
-      private formBuilder: FormBuilder) { }
-
-  teams?: Team[];
   team: Team = {
     id: null,
     teamName: '',
@@ -35,68 +23,74 @@ export class AllTeamsComponent implements OnInit {
     employees: null
   }
 
- // ------------ Validation ------------
+  idDepartment: any;
+  departments?: EntityDepartment[];
+  teams: any;
+  submitted = false;
+  
+  isSelected: boolean = false;
+  isDisabled: any;
+  ids = [];
+  public basicSelectedOption: number = 5;
+  selectedList?= [];
+  selectedListtest?= [];
+
+  public contentHeader: object;
+  private tempData = [];
+  // public rows: any;
+  
+  public ColumnMode = ColumnMode;
+  public SelectionType = SelectionType;
+
+
+  constructor(private modalService: NgbModal,
+    private departmentservice: EntityDepartmentService,
+    private formBuilder: FormBuilder,
+    private teamService: TeamService) {
+  }
+
+  @ViewChild(DatatableComponent) table: DatatableComponent;
+
+  // ------------ Search ------------
+
+  filterUpdate(event) {
+    const val = event.target.value.toLowerCase();
+    // filter our data
+    const temp = this.tempData.filter(function (d) {
+      return d.teamName.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    // update the rows
+    this.teams = temp;
+    // Whenever the filter changes, always go back to the first page
+    this.table.offset = 0;
+  }
+
+  // ------------ Get data ------------
+  page = 1;
+  count = 0;
+  name = '';
+
+  getAllteams() {
+    const params = { page: this.page - 1, size: 5000, name: this.name };
+    this.teamService.getTeams(params).subscribe(response => {
+      const { content, totalElements } = response;
+      // this.rows = content;
+      this.count = totalElements;
+      this.tempData = content;
+      this.teams = content;
+    }
+    );
+  }
+
+  // ------------ Validation ------------
 
   public form: FormGroup = new FormGroup({
     teamName: new FormControl(''),
     teamDesc: new FormControl('')
   });
-  submitted = false;
 
   get formControl(): { [key: string]: AbstractControl } {
     return this.form.controls;
-  }
-
-  ngOnInit(): void {
-    this.getAllteams()
-    this.getDepartments();
-
-    this.contentHeader = {
-      headerTitle: 'Company',
-      actionButton: true,
-      breadcrumb: {
-        type: '',
-        links: [
-          {
-            name: 'Home',
-            isLink: true,
-            link: '/'
-          },
-          {
-            name: 'Companies',
-            isLink: true,
-            link: '/'
-          },
-          {
-            name: 'Team',
-            isLink: true,
-            link: '/'
-          },
-          {
-            name: 'All teams',
-            isLink: false
-          }
-        ]
-      }
-    };
-    this.form = this.formBuilder.group(
-      {
-        teamName: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(3)
-          ]
-        ],
-        teamDesc: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(3),
-          ]
-        ]
-      }
-    );
   }
 
   // ------------ Add Team ------------
@@ -122,7 +116,7 @@ export class AllTeamsComponent implements OnInit {
             timer: 1500
           });
           this.modalService.dismissAll("Cross click");
-          this.ngOnInit()
+          this.ngOnInit();
           this.submitted = false;
         }, error: (err) => {
           console.error(err);
@@ -131,6 +125,7 @@ export class AllTeamsComponent implements OnInit {
   }
 
   modalAdd(modalPrimaryAdd) {
+    this.form.reset();
     this.modalService.open(modalPrimaryAdd, {
       centered: true,
       windowClass: 'modal modal-primary'
@@ -139,13 +134,9 @@ export class AllTeamsComponent implements OnInit {
 
   onChange(e: any) {
     this.idDepartment = e.target.value;
-    console.log("id", this.idDepartment);
   }
 
   // ------------ Edit Team ------------
-
-  departments?: EntityDepartment[];
-  idDepartment: any;
 
   modalEdit(modalPrimaryedit, id) {
     this.teamService.getTeam(id).subscribe({
@@ -187,7 +178,7 @@ export class AllTeamsComponent implements OnInit {
     }
     this.team.teamName = this.form.value.teamName;
     this.team.teamDesc = this.form.value.teamDesc;
-    this.team.departement_id=this.idDepartment;
+    this.team.departement_id = this.idDepartment;
     this.editTeam(this.team);
   }
 
@@ -247,55 +238,118 @@ export class AllTeamsComponent implements OnInit {
     );
   }
 
-  // ------------ pagination & search ------------
+  // ------------ Check multiple deletion ------------
 
-  page = 1;
-  count = 0;
-  name = ''
-  public pagePosition = 1;
-  public totalPages = 0;
-  public chkBoxSelected = [];
-
-  pageSize = 5;
-
-  public pageChanged(event: any): void {
-    this.page = event;
-    this.getAllteams();
+  onSelect({ selected }) {
+    console.log("sel1",selected);
+    //this.selectedList.splice(0,this.selectedList.length);
+    while(this.selectedList.length > 0) {
+      this.selectedList.pop();
+  }
+  console.log("sel2",selected);
+    this.selectedList.push(...selected);
+    console.log("sel3",selected);
+    console.log("list",this.selectedList);
+    // console.log("selected.length",selected.length);
+    // selected.length=0;
+    // console.log("selected.length",selected.length);
+      if (this.selectedList.length != 0) {
+        this.isDisabled = false;
+      } else {
+        this.isDisabled = true;
+      }
   }
 
-  getParams(page: number, pageSize: number, name: string) {
-    let params: any = {};
-    if (page) {
-      params['page'] = page - 1;
+  /*onCheckedAll(allRowsSelected: any) {
+    if (allRowsSelected) {
+      this.selectedList.splice(0, this.selectedList.length);
+      this.isDisabled = false;
+      this.teams.forEach((team) => {
+        this.selectedList.push(team.id);
+      })
+    } else {
+      this.isDisabled = true;
     }
-    if (pageSize) {
-      params['size'] = pageSize;
-    }
-    if (name) {
-      params['name'] = name;
-    }
-    return params;
+    console.log("total elements checked", this.selectedList)
+  }*/
+
+  deletemultiple() {
+    this.ids.splice(0, this.ids.length);
+    this.selectedList.forEach((item) => {
+      this.ids.push(item.id)
+    });
+    this.teamService.deleteMultipleTeam(this.ids).subscribe({
+      next: () => {
+       // location.reload();
+        //this.modalService.dismissAll("Cross click");
+        this.ngOnInit();
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });  
   }
 
-  public getAllteams(): void {
-    const params = {
-      page: this.page - 1,
-      size: this.pageSize,
-      name: this.name
+  modalmultipledelete(modalDanger) {
+    this.modal = this.modalService.open(modalDanger, {
+      centered: true,
+      windowClass: 'modal modal-danger'
+    });
+  }
+
+  ngOnInit() {
+    //this.isSelected = true;
+    this.getAllteams()
+    this.getDepartments();
+    this.isDisabled = true;
+
+    this.contentHeader = {
+      headerTitle: 'Company',
+      actionButton: true,
+      breadcrumb: {
+        type: '',
+        links: [
+          {
+            name: 'Home',
+            isLink: true,
+            link: '/'
+          },
+          {
+            name: 'Companies',
+            isLink: true,
+            link: '/'
+          },
+          {
+            name: 'Team',
+            isLink: true,
+            link: '/'
+          },
+          {
+            name: 'All teams',
+            isLink: false
+          }
+        ]
+      }
     }
-    this.teamService.getTeams(params).subscribe(
+
+    this.form = this.formBuilder.group(
       {
-        next: (response: any) => {
-          const { content, totalElements, totalPages } = response;
-          this.count = totalElements;
-          this.totalPages = totalPages * 10
-          this.teams = content
-        }, error: (err) => {
-          console.error(err);
-        }
+        teamName: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(3)
+          ]
+        ],
+        teamDesc: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(3),
+          ]
+        ]
       }
     );
   }
-
 
 }

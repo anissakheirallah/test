@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
@@ -32,4 +32,14 @@ export class TeamService {
   getTeams(params: any): Observable<any> {
     return this.httpClient.get<Team[]>(`${baseUrl}/team`, { params });
   }
+
+  deleteMultipleTeam(ids:any[]): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('ids', ids.join(', '));
+    const req = new HttpRequest('DELETE', `${baseUrl}/team`, formData, {
+      responseType: 'text'
+    });
+    return this.httpClient.request(req);
+  }
+  
 }
