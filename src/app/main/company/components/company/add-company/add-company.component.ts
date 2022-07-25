@@ -21,7 +21,8 @@ export class AddCompanyComponent implements OnInit {
     phoneNumber: '',
     webSite: '',
     image: '',
-    entities: []
+    entities: [],
+    timestamp:''
   }
 
   public form: FormGroup = new FormGroup({
@@ -74,42 +75,23 @@ export class AddCompanyComponent implements OnInit {
           [
             Validators.required,
             Validators.minLength(3),
-            Validators.pattern("[a-zA-Z ]*")
+            Validators.pattern("[a-zA-Z]*")
           ]
         ],
-        message: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(10),
-            Validators.maxLength(255)
-          ]
-        ],
-        birthDate: ['', Validators.required],
-        civility: ['', Validators.required],
-        country: ['', Validators.required],
+        webSite: ['',Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        phone: [
+        phoneNumber: [
           '',
           [
             Validators.required,
-            Validators.pattern(/(\+212|0)([ \-_/]*)(\d[ \-_/]*){9}/g),
+            Validators.pattern(/^[\+|0{1,2}]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/),
 
           ]
         ],
-        city: ['',
-          [
-            Validators.required,
-            Validators.pattern("[a-zA-Z ]*")
-          ]
-        ],
-        adress: ['', Validators.required]
+        address: ['', Validators.required]
       }
     );
   }
-
-
-
 
   get formControl(): { [key: string]: AbstractControl } {
     return this.form.controls;
@@ -117,6 +99,8 @@ export class AddCompanyComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
     if (this.form.invalid) {
+      console.log(this.form.value);
+      
       return;
     }
     this.company = this.form.value;
@@ -137,6 +121,7 @@ export class AddCompanyComponent implements OnInit {
             timer: 1500
           });
           this.ngOnInit()
+          this.submitted = false;
         }, error: (err) => {
           console.error(err);
         }

@@ -134,6 +134,8 @@ export class FunctionComponent implements OnInit {
     return params;
   }
 
+  // ----------------------------------
+
   // getData(): void {
   //   this.functionService.getFunctions().subscribe((response: any) => {
   //     (this.data = response.content), console.log(response);

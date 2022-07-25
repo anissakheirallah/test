@@ -55,7 +55,8 @@ const routes: Routes =
     FormsModule,
     NgxDatatableModule,
     CampaignModule,
-    CandidatsModule
+    CandidatsModule,
+    NgbModule
   ],
 
   providers: []

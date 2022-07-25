@@ -15,36 +15,36 @@ export const menu: CoreMenu[] = [
     icon: 'menu',
 
     children: [
-      {
-        id: 'dashboard',
-        title: 'MENU.Dashboard',
-        type: 'item',
-        icon: 'monitor',
-        url: 'cvtech/dashboard',
-      },
-      {
-        id: 'cvs',
-        title: 'MENU.CVs',
-        type: 'item',
-        icon: 'file',
-        url: 'cvtech/cvs'
-      },
+      // {
+      //   id: 'dashboard',
+      //   title: 'MENU.Dashboard',
+      //   type: 'item',
+      //   icon: 'monitor',
+      //   url: 'cvtech/dashboard',
+      // },
+      // {
+      //   id: 'cvs',
+      //   title: 'MENU.CVs',
+      //   type: 'item',
+      //   icon: 'file',
+      //   url: 'cvtech/cvs'
+      // },
       {
         id: 'campaign',
-        title: 'MENU.Campaign',
+        title: 'MENU.CVTECH.APP',
         type: 'collapsible',
         icon: 'folder-plus',
         children:[
           {
             id: 'allcampaigns',
-            title: 'All campaigns',
+            title: 'MENU.CVTECH.ALLCAMPAIGNS',
             type: 'item',
             icon: 'list',
             url: 'cvtech/campaign/allcampaigns'
           },
           {
             id: 'addcampaign',
-            title: 'Add campaign',
+            title: 'MENU.CVTECH.ADDCAMPAIGN',
             type: 'item',
             icon: 'plus-square',
             url: 'cvtech/campaign/addcampaign'
@@ -53,20 +53,20 @@ export const menu: CoreMenu[] = [
       },
       {
         id: 'candidats',
-        title: 'Candidats',
+        title: 'MENU.CVTECH.CANDIDAT',
         type: 'collapsible',
         icon: 'users',
         children:[
           {
             id: 'allcandidats',
-            title: 'All candidats',
+            title: 'MENU.CVTECH.ALLCANDIDATS',
             type: 'item',
             icon: 'list',
             url: 'cvtech/candidats/allcandidats'
           },
           {
             id: 'addcandidat',
-            title: 'Add Candidat',
+            title: 'MENU.CVTECH.ADDCANDIDAT',
             type: 'item',
             icon: 'plus-square',
             url: 'cvtech/candidats/addcandidat'
@@ -76,10 +76,9 @@ export const menu: CoreMenu[] = [
       {
         id: 'profil',
         title: 'Profil',
-        //translate: 'MENU.cvtech',
         type: 'collapsible',
         icon: 'book',
-        children: [
+        children:[
           {
             id: 'edu',
             title: 'Education',
@@ -90,7 +89,7 @@ export const menu: CoreMenu[] = [
           {
             id: 'ge',
             title: 'Global Exprience',
-            type: 'item',
+            type:'item',
             icon: 'file',
             url: 'cvtech/profile/experience'
           },
@@ -131,7 +130,7 @@ export const menu: CoreMenu[] = [
     id: 'companies',
     type: 'collapsible',
     title: 'MENU.COMPANY.APP',
-    icon: 'list',
+    icon: 'menu',
 
     children: [
       {
@@ -182,15 +181,52 @@ export const menu: CoreMenu[] = [
       {
         id: 'Department',
         title: 'MENU.COMPANY.DEPARTMENT',
+        type: 'item',
+        icon: 'grid',
+        url: 'companies/department/department'
+      },
+      {
+        id: 'Team',
+        title: 'MENU.COMPANY.TEAM',
         type: 'collapsible',
         icon: 'grid',
         children: [
           {
-            id: 'adddepartment',
-            title: 'MENU.COMPANY.ADDDEPARTMENT',
+            id: 'allteams',
+            title: 'MENU.COMPANY.ALLTEAMS',
             type: 'item',
             icon: 'plus-square',
-            url: 'companies/department/addDepartment'
+            url: 'companies/team/allteams'
+          }
+        ]
+      },
+      {
+        id: 'Project',
+        title: 'MENU.COMPANY.PROJECT',
+        type: 'collapsible',
+        icon: 'grid',
+        children: [
+          {
+            id: 'allprojects',
+            title: 'MENU.COMPANY.ALLPROJECTS',
+            type: 'item',
+            icon: 'plus-square',
+            url: 'companies/project/allprojects'
+          }
+        ]
+      },
+      {
+        id: 'Employee',
+        title: 'MENU.COMPANY.EMPLOYEE',
+        type: 'collapsible',
+        icon: 'grid',
+        children: [
+          {
+            id: 'addemployee',
+            title: 'MENU.COMPANY.ADDEMPLOYEE',
+            type: 'item',
+            icon: 'plus-square',
+            url: 'companies/employee/addemployee'
           }
         ]
       }

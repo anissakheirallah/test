@@ -1,102 +1,242 @@
 <div class="content-wrapper container-xxl p-0">
-    <div class="content-body">
+  <div class="content-body">
 
-        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
 
-        <section id="basic-carousel">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title text-primary">Add Availibilty</h4>
-                        </div>
-                        <div class="card-body">
-                            <form class="form form-horizontal" [formGroup]="availabilityForm" (ngSubmit)="addData()">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group row">
-                                            <div class="col-sm-3 col-form-label">
-                                                <label for="first-name">Name</label>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <input type="text" formControlName="name" id="skill-name" class="form-control" name="avail-name"
-                                                    placeholder="Name" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group row">
-                                            <div class="col-sm-3 col-form-label">
-                                                <label for="email-id">Description</label>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <textarea id="skill-desc" formControlName="description" placeholder="Description" name="avail-desc"  rows="2" wrap="soft" class="form-control" data-v-aa799a9e=""></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-9 offset-sm-3">
-                                        <button type="submit" rippleEffect class="btn btn-primary mr-1">Add</button>
-                                        <button type="reset" rippleEffect class="btn btn-outline-secondary">Reset</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-               
+    <section id="basic-carousel">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
 
+            <div class="card-header">
+              <h4 class="card-title text-primary">Add Availibilty</h4>
             </div>
-        </section>
-        <div class="row" id="table-hover-animation">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title text-primary">All Avalibilties</h4>
-                        <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
-                            <input type="search" placeholder="Search" class="form-control ml-25" />
-                        </div>
-                    </div>
 
-                    <div class="table-responsive">
-                        <table class="table" style="text-align: center;">
-                          <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Name</th>
-                              <th>Description</th>
-                              <th>Actions</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let obj of data, let i = index">
-                              <td>{{i + 1}}</td>
-                              <td>
-                               <span class="font-weight-bold">{{obj.name}}</span>
-                              </td>
-                              <td>{{obj.description}}</td>
-                              <td class="overflow-hidden">
-                                <div ngbDropdown container="body">
-                                  <button type="button" class="btn btn-sm hide-arrow" ngbDropdownToggle data-toggle="dropdown">
-                                    <i data-feather="more-horizontal"></i>
-                                  </button>
-                                  <div ngbDropdownMenu>
-                                    <a ngbDropdownItem href="javascript:void(0);">
-                                      <i data-feather="edit-2" class="mr-50"></i><span>Edit</span>
-                                    </a
-                                    >
-                                    <a ngbDropdownItem  (click)="deleteData(obj.id)">
-                                        <i data-feather="trash" class="mr-50"></i>
-                                        <span>Delete</span>
-                                    </a>
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+            <div class="card-body">
+
+
+              <form class="form form-horizontal" [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group row">
+                      <div class="col-sm-3 col-form-label">
+                        <label for="email-id">Name</label>
                       </div>
+                      <div class="col-sm-9">
+                        <input type="text" formControlName="name" class="form-control" placeholder="Name"
+                          [ngClass]="{ 'is-invalid': submitted && f['name'].errors }" />
+                        <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                          <div *ngIf="f['name'].errors['required']">Name is required</div>
+                          <div *ngIf="f['name'].errors['pattern']">Name must have characters only </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group row">
+                      <div class="col-sm-3 col-form-label">
+                        <label for="email-id">Description</label>
+                      </div>
+                      <div class="col-sm-9">
+                        <textarea id="description-rp-cs" placeholder="Description" name="description" rows="2"
+                          wrap="soft" formControlName="description"
+                          [ngClass]="{ 'is-invalid': submitted && f['description'].errors }" class="form-control "
+                          data-v-aa799a9e=""></textarea>
+                        <div *ngIf="submitted && f['description'].errors" class="invalid-feedback">
+                          <div *ngIf="f['description'].errors['required']">description is required</div>
+                          <div *ngIf="f['description'].errors['minlength']">
+                            description should be between 10 to 255 characters
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-9 offset-sm-3">
+                    <button type="submit" class="btn btn-primary mr-1">Add</button>
+                    <button type="button" (click)="onReset()" class="btn btn-outline-secondary">Reset</button>
+                    <swal></swal>
+                  </div>
                 </div>
+              </form>
+
             </div>
+          </div>
         </div>
+
+
+      </div>
+    </section>
+    <div class="row" id="table-hover-animation">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title text-primary">All Availibilties</h4>
+          </div>
+
+          <div class="row">
+            <div class="col-12  mb-2">
+              <button class="btn btn-primary ml-1" routerLink="" rippleEffect>
+                <i data-feather="plus" class="mr-0 mr-sm-1"></i>
+                <span class="d-none d-sm-inline-block">Add New Availibilty</span>
+              </button>
+              <label class="d-flex align-items-center float-right mr-1">
+                Search
+                <input type="search" [(ngModel)]="name" name="name" id="name" placeholder="Search by Name"
+                  class="form-control ml-25" (change)="getAllavailabilities()" />
+              </label>
+            </div>
+          </div>
+
+          <ngx-datatable class="bootstrap core-bootstrap ml-1" [columnMode]="'flex'" [headerHeight]="40"
+            [footerHeight]="50" [rowHeight]="58" rowHeight="auto" [rows]="availabilities">
+
+            <ngx-datatable-column name="Name" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row?.name}}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Description" [flexGrow]="2.5">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row?.description}}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Actions" [flexGrow]="1.5">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+
+                <div class="d-flex align-items-center">
+                  <div container="body">
+                    <button type="button" class="btn btn-flat-primary btn-sm" (click)="modalOpenSM(modalSM, row?.id)"
+                      rippleEffect>
+                      <i data-feather="edit" class="mr-50"></i> Update
+                    </button>
+                    <button (click)="modalOpenDanger(modalDanger, row?.id)" type="button"
+                      class="btn btn-flat-danger btn-sm" rippleEffect>
+                      <i data-feather="trash-2" class="mr-50"></i> Delete
+                    </button>
+                  </div>
+                </div>
+
+              </ng-template>
+            </ngx-datatable-column>
+
+
+          </ngx-datatable>
+
+          <ngx-datatable-footer>
+            <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize"
+              let-selectedCount="selectedCount" let-curPage="curPage" let-offset="offset" let-isVisible="isVisible">
+              <div class="page-count">
+                <span *ngIf="selectedMessage">
+                  {{selectedCount.toLocaleString()}} {{selectedMessage}} /
+                </span>
+                {{rowCount.toLocaleString()}} {{totalMessage}}
+              </div>
+            </ng-template>
+          </ngx-datatable-footer>
+
+          <div class="col-lg-12">
+            <ngb-pagination class="d-flex justify-content-end" [directionLinks]="false" [collectionSize]="totalPages"
+              [(page)]="pagePosition" (pageChange)="pageChanged($event)">
+              <ng-template ngbPaginationPrevious><span [data-feather]="'chevron-left'"
+                  [class]="'font-weight-bolder'"></span>Prev
+              </ng-template>
+              <ng-template ngbPaginationNext>Next<span [data-feather]="'chevron-right'"
+                  [class]="'font-weight-bolder'"></span>
+              </ng-template>
+            </ngb-pagination>
+          </div>
+
+
+        </div>
+      </div>
     </div>
+  </div>
 </div>
+<div class="modal-danger d-inline-block">
+  <!-- Modal Delete -->
+  <ng-template #modalDanger let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">Confirm</h5>
+
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+      Are you sure you want to delete the Availibilty ?
+    </div>
+    <div class="modal-footer">
+
+      <button type="button" class="btn btn-danger" (click)="modal.close('Accept click')" rippleEffect>
+        Cancel
+      </button>
+
+      <button type="button" class="btn btn-danger" (click)="deleteData()" routerLink="/reload" rippleEffect>
+        Delete
+      </button>
+
+    </div>
+  </ng-template>
+  <!-- / Modal -->
+</div>
+
+<div [formGroup]="formUpdate">
+  <!-- -----update ----- -->
+  <ng-template #modalSM let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">Update Availability</h5>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+
+      <!--  -->
+
+      <div class="row">
+
+        <div class="col-12">
+          <div class="form-group row">
+            <div class="col-sm-3 col-form-label">
+              <label for="first-name">Name</label>
+            </div>
+            <div class="col-sm-9">
+              <input type="text" id="skill-name" class="form-control" formControlName="name" name="avail-name"
+                placeholder="Name" [ngClass]="{ 'is-invalid': submitted && fU['name'].errors }" />
+              <div *ngIf="fU['name'].errors" class="invalid-feedback">
+                <div *ngIf="fU['name'].errors['required']">Name is required</div>
+                <div *ngIf="fU['name'].errors['pattern']">Name must have characters only </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group row">
+            <div class="col-sm-3 col-form-label">
+              <label for="email-id">Description</label>
+            </div> 
+            <div class="col-sm-9">
+              <textarea id="skill-desc" placeholder="Description" formControlName="description" name="avail-desc"
+                rows="2" wrap="soft" class="form-control" [ngClass]="{ 'is-invalid': fU['name'].errors }"></textarea>
+              <div *ngIf="fU['description'].errors" class="invalid-feedback">
+                <div *ngIf="fU['description'].errors['required']">Name is required</div>
+                <div *ngIf="fU['description'].errors['pattern']">Name must have characters only </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!--  -->
+
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" (click)="onUpdate()">Accept</button>
+      <button type="reset" rippleEffect class="btn btn-outline-secondary">Reset</button>
+    </div>
+  </ng-template>
+</div>
+<!-- / Modal -->

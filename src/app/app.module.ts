@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-
-import 'hammerjs';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { ToastrModule } from 'ngx-toastr'; // For auth after login toast
@@ -21,6 +19,8 @@ import { SampleModule } from 'app/main/sample/sample.module';
 import { CvtechModule } from './main/CvTech/cvtech.module';
 import { CompanyModule } from './main/company/company.module';
 import { GrhModule } from './main/grh/grh.module';
+
+import { ReactiveFormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
   {
@@ -75,7 +75,9 @@ const appRoutes: Routes = [
     SampleModule,
     CvtechModule,
     CompanyModule,
-    GrhModule
+    GrhModule,
+
+    ReactiveFormsModule
   ],
 
   bootstrap: [AppComponent]

@@ -16,54 +16,15 @@ import { AllEntitiesComponent } from './components/company-entity/all-entities/a
 import { AddCompanyentityComponent } from './components/company-entity/add-companyentity/add-companyentity.component';
 const routes: Routes = [
   
-  // {
-  //   path: 'company',
-  //   loadChildren: () => import('./components/components.module').then(m => m.ComponentsModule)
-  // },
   {
     path: '',
     loadChildren: () => import('./components/components.module').then(m => m.ComponentsModule)
   },
-  // {
-  //   path: 'addcompany',
-  //   component:AddCompanyComponent ,
-  // },
-  // {
-  //   path: 'addcompanyentity',
-  //   component:AddCompanyentityComponent ,
-  // },
-  // {
-  //   path: 'adddepartment',
-  //   component:AddDepartmentComponent ,
-  // },
-  // {
-  //   path: 'allcompanies',
-  //   component:AllCompaniesComponent ,
-  // },
-  // {
-  //   path: 'company-details/:company_id',
-  //   component:CompanyDetailsComponent ,
-  // },
-  // {
-  //   path: 'companyentity-details/:entity_id',
-  //   component:CompanyentityDetailsComponent ,
-  // },
-  // {
-  //   path: 'allentities',
-  //   component:AllEntitiesComponent ,
-  // }
   
 ];
 
 @NgModule({
   declarations: [
-    // AddCompanyComponent,
-    // AddCompanyentityComponent,
-    // AddDepartmentComponent,
-    // AllCompaniesComponent,
-    // AllEntitiesComponent,
-    // CompanyDetailsComponent,
-    // CompanyentityDetailsComponent
   ],
   imports: [
     CommonModule,
