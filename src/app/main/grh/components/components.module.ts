@@ -1,28 +1,35 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { CoreCommonModule } from '@core/common.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
+import { AddEmployeeVacationComponent } from './employee-vacation/add-employee-vacation/add-employee-vacation.component';
+import { AllVacationComponent } from './employee-vacation/all-vacation/all-vacation.component';
 
-
-const routes: Routes = 
-[
+const routes: Routes =
+  [
     {
-      path: '',
-    //   loadChildren: () => import('./').then(m => m.)
+      //path: 'vacation',
+      //loadChildren: () => import('./employee-vacation/employee-vacation.component').then(m => m.EmployeeVacationComponent)
     },
     {
-    path: '',
-    // component: ,
+      path: 'add-vacation',
+      component: AddEmployeeVacationComponent,
+    },
+    {
+      path: 'all-vacation',
+      component: AllVacationComponent,
     }
-];
+  ];
 
 @NgModule({
   declarations: [
+    AddEmployeeVacationComponent,
+    AllVacationComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +39,7 @@ const routes: Routes =
     NgbModule,
     NgSelectModule,
     FormsModule,
-    NgxDatatableModule
+    NgxDatatableModule,
   ],
 
   providers: []
