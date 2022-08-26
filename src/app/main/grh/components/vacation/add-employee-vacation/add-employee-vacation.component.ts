@@ -69,7 +69,7 @@ export class AddEmployeeVacationComponent implements OnInit {
     }
   */
 
-  constructor(private router: Router,private calendar: NgbCalendar, public formatter: NgbDateParserFormatter, private employeeService: EmployeeService, private rhService: RequestServiceService,
+  constructor(private router: Router, private calendar: NgbCalendar, public formatter: NgbDateParserFormatter, private employeeService: EmployeeService, private rhService: RequestServiceService,
     private holidayService: HolidayService, private holidaybalanceService: HolidayBalanceService) { }
 
   ngOnInit(): void {

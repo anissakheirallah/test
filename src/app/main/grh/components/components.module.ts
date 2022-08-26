@@ -7,23 +7,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
-import { AddEmployeeVacationComponent } from './employee-vacation/add-employee-vacation/add-employee-vacation.component';
-import { AllVacationComponent } from './employee-vacation/all-vacation/all-vacation.component';
+import { AddEmployeeVacationComponent } from './vacation/add-employee-vacation/add-employee-vacation.component';
+import { AllVacationComponent } from './vacation/all-vacation/all-vacation.component';
 
 const routes: Routes =
   [
     {
-      //path: 'vacation',
-      //loadChildren: () => import('./employee-vacation/employee-vacation.component').then(m => m.EmployeeVacationComponent)
+      path: 'vacation',
+      loadChildren: () => import('./vacation/vacation.module').then(m => m.VacationModule)
     },
-    {
-      path: 'add-vacation',
-      component: AddEmployeeVacationComponent,
-    },
-    {
-      path: 'all-vacation',
-      component: AllVacationComponent,
-    }
   ];
 
 @NgModule({
