@@ -195,6 +195,12 @@ export const menu: CoreMenu[] = [
         ]
       }
     ]
+  },
+  {
+    id: 'leads',
+    type: 'collapsible',
+    title: 'MENU.LEAD.APP',
+    icon: 'menu',
   }
 
 
