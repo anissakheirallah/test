@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CompanyService } from 'app/main/company/services/company.service';
-import { Commercial } from 'app/main/vente/models/commercial.model';
-import { CommercialService } from 'app/main/vente/services/commercial.service';
+import { Commercial } from 'app/main/crm/models/commercial.model';
+import { CommercialService } from 'app/main/crm/services/commercial.service';
 import Swal from 'sweetalert2';
 
 @Component({

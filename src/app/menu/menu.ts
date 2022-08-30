@@ -34,7 +34,7 @@ export const menu: CoreMenu[] = [
         title: 'MENU.Campaign',
         type: 'collapsible',
         icon: 'folder-plus',
-        children:[
+        children: [
           {
             id: 'allcampaigns',
             title: 'All campaigns',
@@ -56,7 +56,7 @@ export const menu: CoreMenu[] = [
         title: 'Candidats',
         type: 'collapsible',
         icon: 'users',
-        children:[
+        children: [
           {
             id: 'allcandidats',
             title: 'All candidats',
@@ -140,7 +140,7 @@ export const menu: CoreMenu[] = [
         type: 'collapsible',
         icon: 'grid',
 
-        children:[
+        children: [
           {
             id: 'allcompanies',
             title: 'MENU.COMPANY.ALLCOMPANIES',
@@ -202,29 +202,29 @@ export const menu: CoreMenu[] = [
     title: 'MENU.LEAD.APP',
     icon: 'menu',
     children: [
-    {
-      id: 'commercial',
-      title: 'MENU.LEAD.COMMERCIAL',
-      type: 'collapsible',
-      icon: 'grid',
+      {
+        id: 'commercial',
+        title: 'MENU.LEAD.COMMERCIAL',
+        type: 'collapsible',
+        icon: 'grid',
 
-      children:[
-        {
-          id: 'allcommercials',
-          title: 'MENU.LEAD.ALLCOMMERCIAL',
-          type: 'item',
-          icon: 'list',
-          url: 'vente/commercial/allcommercials'
-        },
-        {
-          id: 'addcommercial',
-          title: 'MENU.LEAD.ADDCOMMERCIAL',
-          type: 'item',
-          icon: 'plus-square',
-          url: 'vente/commercial/addcommercial'
-        },
-      ]
-    }
+        children: [
+          {
+            id: 'allcommercials',
+            title: 'MENU.LEAD.ALLCOMMERCIAL',
+            type: 'item',
+            icon: 'list',
+            url: 'crm/commercial/allcommercials'
+          },
+          {
+            id: 'addcommercial',
+            title: 'MENU.LEAD.ADDCOMMERCIAL',
+            type: 'item',
+            icon: 'plus-square',
+            url: 'crm/commercial/addcommercial'
+          },
+        ]
+      }
     ]
   }
 

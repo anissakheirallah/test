@@ -40,6 +40,10 @@ const appRoutes: Routes = [
     loadChildren: () => import('./main/grh/grh.module').then(m => m.GrhModule)
   },
   {
+    path: 'crm',
+    loadChildren: () => import('./main/crm/crm.module').then(m => m.CrmModule)
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
