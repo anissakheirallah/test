@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: "project",
     component: ProjectsComponent
+  },
+  {
+    path: 'commercial',
+    loadChildren: () => import('./commercial/commercial.module').then(m => m.CommercialModule)
   }
 ]
 
@@ -23,12 +27,13 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    ContentHeaderModule,
     CoreCommonModule,
+    ContentHeaderModule,
     NgbModule,
     NgSelectModule,
     FormsModule,
     NgxDatatableModule
   ]
 })
+
 export class ComponentsModule { }

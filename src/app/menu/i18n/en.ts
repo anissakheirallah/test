@@ -25,6 +25,12 @@ export const locale = {
         ALLENTITIES:"All entities",
         ADDCOMPANYENTITY:"Add entity",
         ADDDEPARTMENT:"Add department"
+      },
+       LEAD:{
+        APP: "Leads",
+        COMMERCIAL:"Commercial",
+        ALLCOMMERCIAL:"All Commercials",
+        ADDCOMMERCIAL:"Add Commercial"
       }
     }
   }

@@ -25,7 +25,14 @@ export const locale = {
         ADDCOMPANYENTITY:"Ajouter une entité de compagnie",
         ADDDEPARTMENT:"Ajouter un département",
         ALLENTITIES:"Toutes les entitées"
+      },
+      LEAD:{
+        APP: "Ventes",
+        COMMERCIAL:"Commercial",
+        ALLCOMMERCIAL:"Tous les Commercials",
+        ADDCOMMERCIAL:"Ajouter un Commercial"
       }
+
     }
   }
 }

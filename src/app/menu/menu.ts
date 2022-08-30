@@ -195,7 +195,39 @@ export const menu: CoreMenu[] = [
         ]
       }
     ]
+  },
+  {
+    id: 'leads',
+    type: 'collapsible',
+    title: 'MENU.LEAD.APP',
+    icon: 'menu',
+    children: [
+    {
+      id: 'commercial',
+      title: 'MENU.LEAD.COMMERCIAL',
+      type: 'collapsible',
+      icon: 'grid',
+
+      children:[
+        {
+          id: 'allcommercials',
+          title: 'MENU.LEAD.ALLCOMMERCIAL',
+          type: 'item',
+          icon: 'list',
+          url: 'vente/commercial/allcommercials'
+        },
+        {
+          id: 'addcommercial',
+          title: 'MENU.LEAD.ADDCOMMERCIAL',
+          type: 'item',
+          icon: 'plus-square',
+          url: 'vente/commercial/addcommercial'
+        },
+      ]
+    }
+    ]
   }
+
 
 
 

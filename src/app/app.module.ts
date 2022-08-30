@@ -20,8 +20,10 @@ import { CompanyModule } from './main/company/company.module';
 import { CvtechModule } from './main/CvTech/cvtech.module';
 import { VacationModule } from './main/grh/components/vacation/vacation.module';
 import { GrhModule } from './main/grh/grh.module';
+import { CommercialModule } from './main/vente/components/commercial/commercial.module';
 import { ComponentsModule } from './main/vente/components/components.module';
 import { VenteModule } from './main/vente/vente.module';
+import { CrmModule } from './main/crm/crm.module';
 
 const appRoutes: Routes = [
   {
@@ -41,14 +43,15 @@ const appRoutes: Routes = [
     loadChildren: () => import('./main/grh/grh.module').then(m => m.GrhModule)
   },
   {
-    path: '',
+    path: 'vente',
     loadChildren: () => import('./main/vente/vente.module').then(m => m.VenteModule)
   },
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  }
+  },
+ 
 ];
 
 @NgModule({
@@ -84,6 +87,7 @@ const appRoutes: Routes = [
     VacationModule,
     VenteModule,
     ComponentsModule,
+    CrmModule,
   ],
 
   bootstrap: [AppComponent]
