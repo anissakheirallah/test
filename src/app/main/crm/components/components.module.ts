@@ -7,18 +7,22 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
-import { AddProjectComponent } from './add-project/add-project.component';
+import { ProjectsComponent } from './projects/projects.component';
 
 const routes: Routes = [
   {
-    path: "add-project",
-    component: AddProjectComponent
+    path: "project",
+    component: ProjectsComponent
+  },
+  {
+    path: 'commercial',
+    loadChildren: () => import('./commercial/commercial.module').then(m => m.CommercialModule)
   }
 ]
 
 @NgModule({
   declarations: [
-    AddProjectComponent
+    ProjectsComponent
   ],
   imports: [
     CommonModule,
@@ -31,4 +35,5 @@ const routes: Routes = [
     NgxDatatableModule
   ]
 })
-export class ProjectsModule { }
+
+export class ComponentsModule { }

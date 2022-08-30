@@ -2,13 +2,13 @@ import { Team } from "./team.model";
 
 export class Project {
     id: number;
-    projectName: String;
-    projectType: String;
+    projectName: string;
+    projectType: string;
     startDate: Date;
     finishDate: Date;
     teams: Team[];
 
-    constructor(id: number, projectName: String, projectType: String, startDate: Date, finishDate: Date, teams: Team[]) {
+    constructor(id: number, projectName: string, projectType: string, startDate: Date, finishDate: Date, teams: Team[]) {
         this.id = id;
         this.projectName = projectName;
         this.projectType = projectType;

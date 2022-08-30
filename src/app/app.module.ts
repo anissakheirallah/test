@@ -17,13 +17,10 @@ import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
 import { CompanyModule } from './main/company/company.module';
+import { CrmModule } from './main/crm/crm.module';
 import { CvtechModule } from './main/CvTech/cvtech.module';
 import { VacationModule } from './main/grh/components/vacation/vacation.module';
 import { GrhModule } from './main/grh/grh.module';
-import { CommercialModule } from './main/vente/components/commercial/commercial.module';
-import { ComponentsModule } from './main/vente/components/components.module';
-import { ProjectsModule } from './main/vente/components/projects/projects.module';
-import { VenteModule } from './main/vente/vente.module';
 
 const appRoutes: Routes = [
   {
@@ -43,15 +40,11 @@ const appRoutes: Routes = [
     loadChildren: () => import('./main/grh/grh.module').then(m => m.GrhModule)
   },
   {
-    path: 'vente',
-    loadChildren: () => import('./main/vente/vente.module').then(m => m.VenteModule)
-  },
-  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
   },
- 
+
 ];
 
 @NgModule({
@@ -85,10 +78,7 @@ const appRoutes: Routes = [
     CompanyModule,
     GrhModule,
     VacationModule,
-    VenteModule,
-    ComponentsModule,
-    ProjectsModule,
-    CommercialModule
+    CrmModule,
   ],
 
   bootstrap: [AppComponent]

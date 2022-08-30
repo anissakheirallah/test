@@ -2,16 +2,16 @@ import { Team } from "./team.model";
 
 export class User {
 
-    id: Number;
-    firstName: String;
-    lastName: String;
-    userName: String;
-    password: String;
-    language: String;
-    role: String;
+    id: number;
+    firstName: string;
+    lastName: string;
+    userName: string;
+    password: string;
+    language: string;
+    role: string;
     teams: Team[];
 
-    constructor(id: Number, firstName: String, lastName: String, userName: String, password: String, language: String, role: String, teams: Team[]) {
+    constructor(id: number, firstName: string, lastName: string, userName: string, password: string, language: string, role: string, teams: Team[]) {
         this.id = id;
         this.firstName = firstName
         this.lastName = lastName;
