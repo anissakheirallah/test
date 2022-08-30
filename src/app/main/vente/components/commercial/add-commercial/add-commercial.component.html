@@ -1,1 +1,126 @@
-<p>add-commercial works!</p>
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title text-primary">Add Commercial</h4>
+          </div>
+          <div class="card-body">
+            <form
+              [formGroup]="form"
+              (ngSubmit)="onSubmit()"
+              class="form form-horizontal"
+            >
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label">
+                      <label for="first-name">Commercial Name</label>
+                    </div>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <input
+                          type="name"
+                          id="commercialName"
+                          class="form-control"
+                          name="commercialName"
+                          formControlName="commercialName"
+                          placeholder="Statut"
+                          [ngClass]="{
+                            'is-invalid':
+                              submitted && formControl['name'].errors
+                          }"
+                        />
+                        <div
+                          *ngIf="formControl['commercialName'].errors"
+                          class="required-feedback"
+                        >
+                          <div
+                            *ngIf="
+                              formControl['commercialName'].errors['required']
+                            "
+                            class="required-feedback"
+                          >
+                            Commercial Name is required
+                          </div>
+                          <div
+                            *ngIf="
+                              formControl['commercialName'].errors['pattern']
+                            "
+                          >
+                            Commercial Name must have characters only
+                          </div>
+                          <div
+                            *ngIf="
+                              formControl['commercialName'].errors['minlength']
+                            "
+                          >
+                            Add more characters
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="form-group row">
+                    <div class="col-sm-3 col-form-label">
+                      <label for="first-name">Statut</label>
+                    </div>
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          id="statut"
+                          class="form-control"
+                          name="statut"
+                          formControlName="statut"
+                          placeholder="Statut"
+                          [ngClass]="{
+                            'is-invalid':
+                              submitted && formControl['statut'].errors
+                          }"
+                        />
+                        <div
+                          *ngIf="formControl['statut'].errors"
+                          class="required-feedback"
+                        >
+                          <div
+                            *ngIf="formControl['statut'].errors['required']"
+                            class="required-feedback"
+                          >
+                            Statut is required
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-12">
+                  <div class="d-flex justify-content-end mb-2">
+                    <button
+                      type="reset"
+                      rippleEffect
+                      class="mr-1 btn btn-outline-secondary"
+                    >
+                      Reset
+                    </button>
+
+                    <button type="submit" class="btn btn-primary" rippleEffect>
+                      Save
+                    </button>
+                    <swal></swal>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

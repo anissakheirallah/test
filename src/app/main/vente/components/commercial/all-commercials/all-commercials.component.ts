@@ -160,10 +160,10 @@ export class AllCommercialsComponent implements OnInit {
     this.commercial.statut = this.form.value.statut;
 
     console.log(this.commercial);
-    this.updateCompany(this.commercial);
+    this.updateCommercial(this.commercial);
   }
 
-  updateCompany(commercial: Commercial): void {
+  updateCommercial(commercial: Commercial): void {
     this.commercialService.updateCommercial(commercial.id, commercial).subscribe(
       {
         next: (data) => {

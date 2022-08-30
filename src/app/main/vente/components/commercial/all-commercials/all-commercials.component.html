@@ -44,9 +44,9 @@
             [rows]="commercials"
             [selected]="chkBoxSelected"
           >
-            <ngx-datatable-column name="Service Name" [flexGrow]="1">
+            <ngx-datatable-column name="Commercial Name" [flexGrow]="1">
               <ng-template let-row="row" ngx-datatable-cell-template>
-                {{ row?.serviceName }}
+                {{ row?.commercialName }}
               </ng-template>
             </ngx-datatable-column>
 
@@ -176,30 +176,30 @@
       <div class="col-12">
         <div class="form-group row">
           <div class="col-sm-3 col-form-label">
-            <label for="first-name">Service Name</label>
+            <label for="first-name">Commercial Name</label>
           </div>
           <div class="col-sm-9">
             <div class="form-group">
               <input
                 type="name"
-                id="serviceName"
+                id="commercialName"
                 class="form-control"
-                name="serviceName"
-                formControlName="serviceName"
-                placeholder="Service Name"
+                name="commercialName"
+                formControlName="commercialName"
+                placeholder="Commercial Name"
                 [ngClass]="{ 'is-invalid': formControl['name'].errors }"
               />
               <div
-                *ngIf="formControl['serviceName'].errors"
+                *ngIf="formControl['commercialName'].errors"
                 class="invalid-feedback"
               >
-                <div *ngIf="formControl['serviceName'].errors['required']">
-                  Service Name is required
+                <div *ngIf="formControl['commercialName'].errors['required']">
+                  Commercial Name is required
                 </div>
-                <div *ngIf="formControl['serviceName'].errors['pattern']">
-                  Service Name must have characters only
+                <div *ngIf="formControl['commercialName'].errors['pattern']">
+                  Commercial Name must have characters only
                 </div>
-                <div *ngIf="formControl['serviceName'].errors['minlength']">
+                <div *ngIf="formControl['commercialName'].errors['minlength']">
                   Add more characters
                 </div>
               </div>
