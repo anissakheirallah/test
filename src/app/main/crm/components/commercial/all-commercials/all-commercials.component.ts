@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Commercial } from 'app/main/vente/models/commercial.model';
-import { CommercialService } from 'app/main/vente/services/commercial.service';
+import { Commercial } from 'app/main/crm/models/commercial.model';
+import { CommercialService } from 'app/main/crm/services/commercial.service';
 
 @Component({
   selector: 'app-all-commercials',
