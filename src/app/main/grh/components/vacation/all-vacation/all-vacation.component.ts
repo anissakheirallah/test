@@ -1,7 +1,6 @@
 
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NgbDateParserFormatter, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 import { RhRequestHoliday } from 'app/main/grh/models/rh-request-holiday.model';
@@ -15,7 +14,6 @@ import { HolidayService } from 'app/main/grh/services/holiday.service';
   encapsulation: ViewEncapsulation.None
 })
 export class AllVacationComponent implements OnInit {
-
 
   holiday: RhRequestHoliday = {
     id: null,
@@ -187,7 +185,6 @@ export class AllVacationComponent implements OnInit {
       centered: true,
       windowClass: 'modal modal-danger'
     });
-
   }
 
   deleteHoliday() {

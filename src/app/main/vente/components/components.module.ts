@@ -7,16 +7,19 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
+import { ProjectsComponent } from './projects/projects.component';
 
 const routes: Routes = [
   {
-    path: 'project',
-    loadChildren: () => import('./projects/projects.module').then(m => m.ProjectsModule)
-  },
+    path: "project",
+    component: ProjectsComponent
+  }
 ]
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ProjectsComponent
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

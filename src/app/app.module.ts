@@ -21,7 +21,6 @@ import { CvtechModule } from './main/CvTech/cvtech.module';
 import { VacationModule } from './main/grh/components/vacation/vacation.module';
 import { GrhModule } from './main/grh/grh.module';
 import { ComponentsModule } from './main/vente/components/components.module';
-import { ProjectsModule } from './main/vente/components/projects/projects.module';
 import { VenteModule } from './main/vente/vente.module';
 
 const appRoutes: Routes = [
@@ -85,7 +84,6 @@ const appRoutes: Routes = [
     VacationModule,
     VenteModule,
     ComponentsModule,
-    ProjectsModule
   ],
 
   bootstrap: [AppComponent]
