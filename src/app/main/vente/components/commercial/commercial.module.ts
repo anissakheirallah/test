@@ -14,11 +14,11 @@ import { AddCommercialComponent } from './add-commercial/add-commercial.componen
 const routes: Routes = 
 [
   {
-    path: 'addcompany',
+    path: 'addcommercial',
     component: AddCommercialComponent,
   },
   {
-    path: 'allcompanies', 
+    path: 'allcommercials', 
     loadChildren: () => import('./all-commercials/all-commercials.module').then(m => m.AllCommercialsModule)
   },
 ];

@@ -27,7 +27,10 @@ export const locale = {
         ALLENTITIES:"Toutes les entitées"
       },
       LEAD:{
-        APP: "Ventes"
+        APP: "Ventes",
+        COMMERCIAL:"Commercial",
+        ALLCOMMERCIAL:"Tous les Commercials",
+        ADDCOMMERCIAL:"Ajouter un Commercial"
       }
 
     }
