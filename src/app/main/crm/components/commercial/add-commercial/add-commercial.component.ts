@@ -15,8 +15,8 @@ export class AddCommercialComponent implements OnInit {
 
   commercial: Commercial = {
     id: null,
-    commercialName:'',
-	  statut:false,
+    commercialName: '',
+    statut: false,
     leads: []
   }
 
@@ -62,7 +62,7 @@ export class AddCommercialComponent implements OnInit {
 
     this.form = this.formBuilder.group(
       {
-        serviceName: [
+        commercialName: [
           '',
           [
             Validators.required,
@@ -70,8 +70,8 @@ export class AddCommercialComponent implements OnInit {
             Validators.pattern("[a-zA-Z]*")
           ]
         ],
-        statut: ['',Validators.required],
-       
+        statut: ['', Validators.required],
+
       }
     );
   }
@@ -83,7 +83,7 @@ export class AddCommercialComponent implements OnInit {
     this.submitted = true;
     if (this.form.invalid) {
       console.log(this.form.value);
-      
+
       return;
     }
     this.commercial = this.form.value;

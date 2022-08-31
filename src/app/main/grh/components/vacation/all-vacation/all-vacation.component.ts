@@ -204,7 +204,7 @@ export class AllVacationComponent implements OnInit {
     while (this.selectedList.length > 0) {
       this.selectedList.pop();
     }
-    this.selectedList.push(...selected);
+    this.selectedList.push(selected);
     if (this.selectedList.length > 1) {
       this.isDisabled = false;
     } else {
