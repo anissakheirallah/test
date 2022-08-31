@@ -8,6 +8,8 @@ export const environment = {
 
   UrlCvTech: 'http://localhost:8092/api',
   UrlCompany: 'http://localhost:8091/api',
+  UrlGrh: 'http://localhost:8093/api',
+  UrlVente: 'http://localhost:8094/api',
   
   apiUrl: 'http://localhost:4000',
   //apiBaseUrl: 'http://localhost:8092/api'
