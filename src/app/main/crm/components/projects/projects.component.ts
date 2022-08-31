@@ -22,21 +22,21 @@ export class ProjectsComponent implements OnInit {
     id: null,
     projectName: '',
     projectType: '',
+    status:null,
     startDate: null,
     finishDate: null,
     teams: null
   }
 
-  isSelected: boolean = false;
   isDisabled: boolean = true;
   ids = [];
   basicSelectedOption = 10;
-  selectedList?= [];
   projects: Project[] = [];
   idDelete: number;
+  isUpdate: number;
+  submitted = false;
 
   public ColumnMode = ColumnMode;
-  public SelectionType = SelectionType;
 
   page = 1;
   count = 5;
@@ -57,6 +57,17 @@ export class ProjectsComponent implements OnInit {
 
   get formControl(): { [key: string]: AbstractControl } {
     return this.form.controls;
+  }
+
+  public formEdit: FormGroup = new FormGroup({
+    projectName: new FormControl(''),
+    projectType: new FormControl(''),
+    startDate: new FormControl(''),
+    finishDate: new FormControl('')
+  });
+
+  get formEditControl(): { [key: string]: AbstractControl } {
+    return this.formEdit.controls;
   }
 
   ngOnInit(): void {
@@ -120,34 +131,9 @@ export class ProjectsComponent implements OnInit {
   }
 
 
-  onSelect({ selected }) {
-    console.log("sel1", selected);
-    while (this.selectedList.length > 0) {
-      this.selectedList.pop();
-    }
-    this.selectedList.push(selected);
-    if (this.selectedList.length > 1) {
-      this.isDisabled = false;
-    } else {
-      this.isDisabled = true;
-    }
-  }
-
-  onCheckedAll(allRowsSelected: any) {
-    if (allRowsSelected) {
-      this.selectedList.splice(0, this.selectedList.length);
-      this.isDisabled = false;
-      /*this.projects.forEach((project) => {
-        this.selectedList.push(project.id);
-      })*/
-    } else {
-      this.isDisabled = true;
-    }
-    console.log("total elements checked", this.selectedList)
-  }
-
   filterUpdate(event) {
     this.name = event.target.value.toLowerCase();
+    this.getAllProjects();
   }
 
   public pageChanged(event: any): void {
@@ -160,6 +146,7 @@ export class ProjectsComponent implements OnInit {
       size: this.basicSelectedOption,
       name: this.name
     };
+    console.log(params);
     this.projectService.getProjects(params).subscribe(response => {
       const { content, totalElements } = response;
       this.projects = content;
@@ -168,13 +155,6 @@ export class ProjectsComponent implements OnInit {
     );
   }
 
-
-  modalmultipledelete(modalDanger) {
-    /*this.modal = this.modalService.open(modalDanger, {
-      centered: true,
-      windowClass: 'modal modal-danger'
-    });*/
-  }
 
   createProject() {
     this.project.projectName = this.form.value.projectName;
@@ -189,6 +169,25 @@ export class ProjectsComponent implements OnInit {
         console.error(err);
       }
     });
+  }
+
+
+  updateProject(): void {
+    this.project.projectName = this.form.value.projectName;
+    this.project.projectType = this.form.value.projectType;
+    this.project.startDate = new Date(this.form.value.startDate.year, this.form.value.startDate.month, this.form.value.startDate.day);
+    this.project.finishDate = new Date(this.form.value.finishDate.year, this.form.value.finishDate.month, this.form.value.finishDate.day);
+    console.log("hana" + this.project);
+    this.projectService.updateProject(this.isUpdate, this.project).subscribe(
+      {
+        next: (data) => {
+          this.modalService.dismissAll("Cross click");
+          this.ngOnInit()
+          this.submitted = false;
+        }, error: (err) => {
+          console.error(err);
+        }
+      });
   }
 
 
@@ -253,4 +252,79 @@ export class ProjectsComponent implements OnInit {
       size: 'lg'
     });
   }
+
+  modalEdit(modalPrimaryedit, id) {
+
+    this.projectService.getProject(id).subscribe({
+      next: (data) => {
+        this.isUpdate = id;
+        this.formEdit.value.projectName = data.projectName;
+        this.formEdit.value.projectType = data.projectType;
+        this.formEdit.value.startDate = data.startDate;
+        this.formEdit.value.finishDate = data.finishDate;
+
+        let sd = this.project.startDate.toString().split('-');
+        let fd = this.project.finishDate.toString().split('-');
+
+        let ds = Number(sd[0]);
+        let ms = Number(sd[1]);
+        let ys = Number(sd[2]);
+
+        let df = Number(fd[0]);
+        let mf = Number(fd[1]);
+        let yf = Number(fd[2]);
+
+        this.form = this.formBuilder.group(
+          {
+            projectName: [
+              this.project.projectName,
+              [
+                Validators.required,
+                Validators.minLength(3)
+              ]
+            ],
+            projectType: [
+              this.project.projectType,
+              [
+                Validators.required,
+                Validators.minLength(3)
+              ]
+            ],
+            startDate: [
+              {
+                year: ys,
+                month: ms,
+                day: ds
+              },
+              [
+                Validators.required,
+                Validators.minLength(3)
+              ]
+            ],
+            finishDate: [
+              {
+                year: yf,
+                month: mf,
+                day: df
+              },
+              [
+                Validators.required,
+                Validators.minLength(3)
+              ]
+            ]
+          }
+        );
+
+      }, error: (err) => {
+        console.error(err);
+      }
+    });
+    this.modalService.open(modalPrimaryedit, {
+      centered: true,
+      size: 'lg',
+      windowClass: 'modal modal-primary',
+    });
+
+  }
+
 }
