@@ -86,8 +86,10 @@
                                         class="text-primary cursor-pointer"></i></a>-->
 
                                 <div class="custom-control custom-switch custom-switch-success">
-                                    <input type="checkbox" class="custom-control-input" id={{row.id}} />
-                                    <label class="custom-control-label" for={{row.id}}>
+                                    <input type="checkbox" class="custom-control-input" id={{row.id}}
+                                        [checked]="row.status"
+                                        (change)="modalOpenDanger(modalDanger, row?.id,!row.status)" />
+                                    <label class=" custom-control-label" for={{row.id}}>
                                         <span class="switch-icon-left"><i data-feather="check"></i></span>
                                         <span class="switch-icon-right"><i data-feather="x"></i></span>
                                     </label>
@@ -125,7 +127,7 @@
                     </button>
                 </div>
                 <div class="modal-body" tabindex="0" ngbAutofocus>
-                    Are you sure you want to delete the Project ?
+                    Are you sure you want to change this Project status ?
                 </div>
                 <div class="modal-footer">
 
@@ -133,8 +135,8 @@
                         Cancel
                     </button>
 
-                    <button type="button" class="btn btn-danger" (click)="deleteProject()" rippleEffect>
-                        Delete
+                    <button type="button" class="btn btn-danger" (click)="changeProjectStatus()" rippleEffect>
+                        Change
                     </button>
 
                 </div>
@@ -157,7 +159,7 @@
                             <div class="form-group">
                                 <label for="basicSelect">Project Name</label>
                                 <input type="text" id="prj-name" formControlName="name" class="form-control"
-                                    name="projectName" placeholder="Project Name" formControlName="projectName" />
+                                    placeholder="Project Name" formControlName="projectName" />
                             </div>
                         </div>
                         <div class="col-md-5 col-12">

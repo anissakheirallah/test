@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
+import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { Project } from '../../models/project.model';
 import { ProjectService } from '../../services/project.service';
 
@@ -22,7 +22,7 @@ export class ProjectsComponent implements OnInit {
     id: null,
     projectName: '',
     projectType: '',
-    status:null,
+    status: null,
     startDate: null,
     finishDate: null,
     teams: null
@@ -34,6 +34,7 @@ export class ProjectsComponent implements OnInit {
   projects: Project[] = [];
   idDelete: number;
   isUpdate: number;
+  projectStatus: boolean;
   submitted = false;
 
   public ColumnMode = ColumnMode;
@@ -41,6 +42,8 @@ export class ProjectsComponent implements OnInit {
   page = 1;
   count = 5;
   name = '';
+
+  private modal = null;
 
   constructor(private modalService: NgbModal, private calendar: NgbCalendar, public formatter: NgbDateParserFormatter,
     private projectService: ProjectService, private formBuilder: FormBuilder) { }
@@ -85,11 +88,6 @@ export class ProjectsComponent implements OnInit {
           },
           {
             name: 'Project',
-            isLink: true,
-            link: '/'
-          },
-          {
-            name: 'Add Project',
             isLink: false
           }
         ]
@@ -191,12 +189,27 @@ export class ProjectsComponent implements OnInit {
   }
 
 
-  modalOpenDanger(modalDanger, id: any) {
-    this.idDelete = id;
+  modalOpenDanger(modalDanger, id: any, status: boolean) {
+    this.isUpdate = id;
+    this.projectStatus = status;
+    this.modal = modalDanger;
     this.modalService.open(modalDanger, {
       centered: true,
       windowClass: 'modal modal-danger'
     });
+  }
+
+
+  changeProjectStatus() {
+    console.log(this.isUpdate + " " + this.projectStatus);
+    this.projectService.changeStatus(this.isUpdate, this.projectStatus).subscribe({
+      next: () => {
+        this.modal.close('Accept click')
+        this.getAllProjects()
+      }, error(err) {
+        console.log(err);
+      },
+    })
   }
 
   deleteProject() {
