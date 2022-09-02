@@ -26,7 +26,7 @@ export class ProjectService {
   }
 
   changeStatus(id: number, status: boolean): Observable<any> {
-    return this.httpClient.put(`${baseUrl}/project/status/${id}`, { status: status });
+    return this.httpClient.put(`${baseUrl}/project/status/${id}`, status );
   }
 
   deleteProject(id: number): Observable<any> {

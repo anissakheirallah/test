@@ -43,6 +43,8 @@ export class ProjectsComponent implements OnInit {
   count = 5;
   name = '';
 
+  private modal = null;
+
   constructor(private modalService: NgbModal, private calendar: NgbCalendar, public formatter: NgbDateParserFormatter,
     private projectService: ProjectService, private formBuilder: FormBuilder) { }
 
@@ -86,11 +88,6 @@ export class ProjectsComponent implements OnInit {
           },
           {
             name: 'Project',
-            isLink: true,
-            link: '/'
-          },
-          {
-            name: 'Add Project',
             isLink: false
           }
         ]
@@ -193,9 +190,9 @@ export class ProjectsComponent implements OnInit {
 
 
   modalOpenDanger(modalDanger, id: any, status: boolean) {
-    this.idDelete = id;
     this.isUpdate = id;
     this.projectStatus = status;
+    this.modal = modalDanger;
     this.modalService.open(modalDanger, {
       centered: true,
       windowClass: 'modal modal-danger'
@@ -204,12 +201,13 @@ export class ProjectsComponent implements OnInit {
 
 
   changeProjectStatus() {
+    console.log(this.isUpdate + " " + this.projectStatus);
     this.projectService.changeStatus(this.isUpdate, this.projectStatus).subscribe({
-      next() {
-        this.getAllProjects();
+      next: () => {
+        this.modal.close('Accept click')
+        this.getAllProjects()
       }, error(err) {
         console.log(err);
-        this.getAllProjects();
       },
     })
   }
