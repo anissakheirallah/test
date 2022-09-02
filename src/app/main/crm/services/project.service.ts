@@ -25,6 +25,10 @@ export class ProjectService {
     return this.httpClient.put(`${baseUrl}/project/${id}`, data);
   }
 
+  changeStatus(id: number, status: boolean): Observable<any> {
+    return this.httpClient.put(`${baseUrl}/project/status/${id}`, { status: status });
+  }
+
   deleteProject(id: number): Observable<any> {
     return this.httpClient.delete(`${baseUrl}/project/${id}`, { responseType: 'text' });
   }

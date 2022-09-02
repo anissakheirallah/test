@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
+import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { Project } from '../../models/project.model';
 import { ProjectService } from '../../services/project.service';
 
@@ -22,7 +22,7 @@ export class ProjectsComponent implements OnInit {
     id: null,
     projectName: '',
     projectType: '',
-    status:null,
+    status: null,
     startDate: null,
     finishDate: null,
     teams: null
@@ -34,6 +34,7 @@ export class ProjectsComponent implements OnInit {
   projects: Project[] = [];
   idDelete: number;
   isUpdate: number;
+  projectStatus: boolean;
   submitted = false;
 
   public ColumnMode = ColumnMode;
@@ -191,12 +192,26 @@ export class ProjectsComponent implements OnInit {
   }
 
 
-  modalOpenDanger(modalDanger, id: any) {
+  modalOpenDanger(modalDanger, id: any, status: boolean) {
     this.idDelete = id;
+    this.isUpdate = id;
+    this.projectStatus = status;
     this.modalService.open(modalDanger, {
       centered: true,
       windowClass: 'modal modal-danger'
     });
+  }
+
+
+  changeProjectStatus() {
+    this.projectService.changeStatus(this.isUpdate, this.projectStatus).subscribe({
+      next() {
+        this.getAllProjects();
+      }, error(err) {
+        console.log(err);
+        this.getAllProjects();
+      },
+    })
   }
 
   deleteProject() {
