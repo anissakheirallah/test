@@ -1,4 +1,4 @@
-<div class="content-wrapper container-xxl p-0">
+<!--<div class="content-wrapper container-xxl p-0">
   <div class="content-body">
     <app-content-header [contentHeader]="contentHeader"></app-content-header>
     <div class="row" id="basic-table">
@@ -24,7 +24,7 @@
                 Search
                 <input
                   type="search"
-                  [(ngModel)]="commercialName"
+                  [(ngModel)]="searchCommercial"
                   name="commercialName"
                   id="commercialName"
                   placeholder="Search by Name"
@@ -43,7 +43,6 @@
             [rowHeight]="58"
             rowHeight="auto"
             [rows]="commercials"
-            [selected]="chkBoxSelected"
           >
             <ngx-datatable-column name="Commercial Name" [flexGrow]="1">
               <ng-template let-row="row" ngx-datatable-cell-template>
@@ -156,7 +155,7 @@
       </div>
     </div>
   </div>
-</div>
+</div>-->
 
 <!-------------------------------edit------------------------------->
 
@@ -166,14 +165,14 @@
     <button
       type="button"
       class="close"
-      (click)="modal.dismiss('Cross click')"
+      (click)="modal.dismiss('Accept click')"
       aria-label="Close"
     >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <form
-    [formGroup]="form"
+    [formGroup]="formEdit"
     (ngSubmit)="onEditSubmit()"
     class="form form-horizontal"
   >
@@ -181,7 +180,7 @@
       <div class="col-12">
         <div class="form-group row">
           <div class="col-sm-3 col-form-label">
-            <label for="first-name">Commercial Name</label>
+            <label for="commercialName">Commercial Name</label>
           </div>
           <div class="col-sm-9">
             <div class="form-group">
@@ -190,23 +189,29 @@
                 id="commercialName"
                 class="form-control"
                 name="commercialName"
-                formControlName="commercialName"
+                formControlName="editCommercialName"
                 placeholder="Commercial Name"
                 [ngClass]="{
-                  'is-invalid': formControl['commercialName'].errors
+                  'is-invalid': formControl['editCommercialName'].errors
                 }"
               />
               <div
-                *ngIf="formControl['commercialName'].errors"
+                *ngIf="formControl['editCommercialName'].errors"
                 class="invalid-feedback"
               >
-                <div *ngIf="formControl['commercialName'].errors['required']">
+                <div
+                  *ngIf="formControl['editCommercialName'].errors['required']"
+                >
                   Commercial Name is required
                 </div>
-                <div *ngIf="formControl['commercialName'].errors['pattern']">
+                <div
+                  *ngIf="formControl['editCommercialName'].errors['pattern']"
+                >
                   Commercial Name must have characters only
                 </div>
-                <div *ngIf="formControl['commercialName'].errors['minlength']">
+                <div
+                  *ngIf="formControl['editCommercialName'].errors['minlength']"
+                >
                   Add more characters
                 </div>
               </div>
@@ -218,7 +223,7 @@
       <div class="col-12">
         <div class="form-group row">
           <div class="col-sm-3 col-form-label">
-            <label for="email">Statut</label>
+            <label for="statut">Statut</label>
           </div>
           <div class="col-sm-9">
             <input
@@ -227,14 +232,17 @@
               class="form-control"
               name="statut"
               placeholder="Statut"
-              formControlName="statut"
-              [ngClass]="{ 'is-invalid': formControl['statut'].errors }"
+              formControlName="editStatut"
+              [ngClass]="{ 'is-invalid': formControl['editStatut'].errors }"
             />
-            <div *ngIf="formControl['statut'].errors" class="invalid-feedback">
-              <div *ngIf="formControl['statut'].errors['required']">
+            <div
+              *ngIf="formControl['editStatut'].errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="formControl['staeditStatuttut'].errors['required']">
                 Statut is required
               </div>
-              <div *ngIf="formControl['statut'].errors['statut']">
+              <div *ngIf="formControl['editStatut'].errors['editStatut']">
                 Statut is invalid
               </div>
             </div>
@@ -256,7 +264,7 @@
     <button
       type="button"
       class="close"
-      (click)="modal.dismiss('Cross click')"
+      (click)="modal.dismiss('Accept click')"
       aria-label="Close"
     >
       <span aria-hidden="true">&times;</span>
@@ -271,7 +279,7 @@
       <div class="col-12">
         <div class="form-group row">
           <div class="col-sm-3 col-form-label">
-            <label for="first-name">Commercial Name</label>
+            <label for="commercialName">Commercial Name</label>
           </div>
           <div class="col-sm-9">
             <div class="form-group">
@@ -347,16 +355,149 @@
     <section id="ngx-datatable-kitchen-sink">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title text-primary">All Teams</h4>
+          <h4 class="card-title text-primary">All Commercials</h4>
+          <!-- Button trigger modal -->
         </div>
-        <div class="row">
-          <div class="col-12 mb-50">
-            <a class="btn btn-outline-danger float-right mr-1" rippleEffect>
-              Delete selected elements
-            </a>
+        <div class="d-flex flex-row justify-content-between align-items-center">
+          <div class="col-md-5 col-12">
+            <div
+              class="d-flex align-items-center justify-content-start pr-1 pb-1 pl-1 pl-md-0 pb-md-0"
+            >
+              <label class="d-flex align-items-center"
+                >Search
+                <input
+                  type="search"
+                  placeholder="Search by Name"
+                  class="form-control ml-25"
+                  (keyup)="filterByName($event)"
+                  (search)="filterByName($event)"
+              /></label>
+            </div>
           </div>
-          <div class="col-md-6 col-12">
-            <div class="d-flex justify-content-between align-items-center m-1">
+          <div>
+            <button
+              type="button"
+              (click)="modalAdd(modalPrimaryadd, commercial)"
+              class="btn btn-icon rounded-circle btn-primary mr-1"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="add project"
+              rippleEffect
+            >
+              <span [data-feather]="'plus'"></span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-icon rounded-circle btn-success mr-1"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="export projects"
+              rippleEffect
+            >
+              <span [data-feather]="'upload'"></span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-icon rounded-circle btn-warning mr-1"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="import project"
+              rippleEffect
+            >
+              <span [data-feather]="'download'"></span>
+            </button>
+          </div>
+        </div>
+        <ngx-datatable
+          [rowHeight]="45"
+          class="bootstrap core-bootstrap m-1"
+          [columnMode]="ColumnMode.force"
+          [headerHeight]="40"
+          [footerHeight]="50"
+          [scrollbarH]="false"
+          [limit]="pageSize"
+          [rows]="commercials"
+        >
+          <ngx-datatable-column
+            name="Commercial Name"
+            prop="commercialName"
+            headerClass="d-flex align-items-center justify-content-center"
+            cellClass="d-flex align-items-center justify-content-center"
+          >
+          </ngx-datatable-column>
+
+          <ngx-datatable-column
+            name="Status"
+            prop="statut"
+            headerClass="d-flex align-items-center justify-content-center"
+            cellClass="d-flex align-items-center justify-content-center"
+          >
+            <ng-template let-statut="value" ngx-datatable-cell-template>
+              <div
+                class="badge badge-pill"
+                [ngClass]="{
+                  'badge-light-success': statut == '1',
+                  'badge-light-danger': statut == '0'
+                }"
+              >
+                {{
+                  statut == "1"
+                    ? "Activé"
+                    : statut == "0"
+                    ? "Desactivé"
+                    : "Not Known"
+                }}
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column
+            name="Actions"
+            [sortable]="false"
+            headerClass="d-flex align-items-center justify-content-center"
+            cellClass="d-flex align-items-center justify-content-center"
+          >
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div class="d-flex align-items-center justify-content-center">
+                <a
+                  href="javascript:void(0)"
+                  class="d-flex align-items-center m-1"
+                  (click)="modalEdit(modalPrimaryedit, row.id)"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="edit project"
+                >
+                  <i data-feather="edit" class="text-primary cursor-pointer"></i
+                ></a>
+                <!--<a href="javascript:void(0)" class="d-flex align-items-center"
+                                  (click)="modalOpenDanger(modalDanger, row?.id)" data-toggle="tooltip"
+                                  data-placement="top" title="delete project"><i data-feather="trash-2"
+                                      class="text-primary cursor-pointer"></i></a>-->
+
+                <div class="custom-control custom-switch custom-switch-success">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    id="{{ row.id }}"
+                  />
+                  <label class="custom-control-label" for="{{ row.id }}">
+                    <span class="switch-icon-left"
+                      ><i data-feather="check"></i
+                    ></span>
+                    <span class="switch-icon-right"
+                      ><i data-feather="x"></i
+                    ></span>
+                  </label>
+                </div>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+        <div class="card-footer">
+          <div class="col-md-3 col-12">
+            <div
+              class="d-flex flex-row justify-content-between align-items-center"
+            >
               <label class="d-flex align-items-center"
                 >Show
                 <select
@@ -373,177 +514,50 @@
               >
             </div>
           </div>
-          <div class="col-md-6 col-12 d-flex justify-content-md-end">
-            <div
-              class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0"
-            >
-              <label class="d-flex align-items-center"
-                >Search<input
-                  type="search"
-                  placeholder="Search by Name"
-                  class="form-control ml-25"
-                  (keyup)="filterByName($event)"
-                  (search)="filterByName($event)"
-              /></label>
-            </div>
-          </div>
         </div>
-        <ngx-datatable
-          [rowHeight]="45"
-          class="bootstrap core-bootstrap"
-          [columnMode]="ColumnMode.force"
-          [headerHeight]="40"
-          [footerHeight]="50"
-          [scrollbarH]="false"
-          [selectionType]="SelectionType.checkbox"
-          [limit]="pageSize"
-          [rows]="commercials"
-        >
-          <ngx-datatable-column
-            [width]="40"
-            [sortable]="false"
-            [canAutoResize]="false"
-            [draggable]="false"
-            [resizeable]="false"
-            cellClass="d-flex align-items-center"
-          >
-            <ng-template
-              ngx-datatable-header-template
-              let-value="value"
-              let-allRowsSelected="allRowsSelected"
-              let-selectFn="selectFn"
-            >
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  [checked]="allRowsSelected"
-                  (change)="selectFn(!allRowsSelected)"
-                  id="headerChkbxRef"
-                  [vertical-align]="middle"
-                  cellClass="d-flex align-items-center"
-                />
-                <label
-                  class="custom-control-label"
-                  for="headerChkbxRef"
-                ></label>
-              </div>
-            </ng-template>
-            <ng-template
-              ngx-datatable-cell-template
-              let-rowIndex="rowIndex"
-              let-value="value"
-              let-isSelected="isSelected"
-              let-onCheckboxChangeFn="onCheckboxChangeFn"
-            >
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  [checked]="isSelected"
-                  (change)="onCheckboxChangeFn($event)"
-                  id="rowChkbxRef{{ rowIndex }}"
-                />
-                <label
-                  class="custom-control-label"
-                  for="rowChkbxRef{{ rowIndex }}"
-                ></label>
-              </div>
-            </ng-template>
-          </ngx-datatable-column>
-
-          <ngx-datatable-column
-            name="Commercial Name"
-            prop="commercialName"
-            cellClass="d-flex align-items-center"
-          >
-          </ngx-datatable-column>
-
-          <ngx-datatable-column name="Commercial Name" [flexGrow]="1">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              {{ row?.commercialName }}
-            </ng-template>
-          </ngx-datatable-column>
-
-          <ngx-datatable-column
-            name="Statut"
-            prop="statut"
-            headerClass="d-flex align-items-center justify-content-center"
-            cellClass="d-flex align-items-center justify-content-center"
-          >
-            <ng-template let-holidayType="value" ngx-datatable-cell-template>
-              <div
-                class="badge badge-pill"
-                [ngClass]="{
-                  'badge-light-success': statut == 'true',
-                  'badge-light-danger': statut == 'false'
-                }"
-              >
-                {{
-                  statut == "true"
-                    ? "true"
-                    : statut == "false"
-                    ? "false"
-                    : "Applied"
-                }}
-              </div>
-            </ng-template>
-          </ngx-datatable-column>
-
-          <ngx-datatable-column
-            name="Actions"
-            [sortable]="false"
-            headerClass="d-flex align-items-center justify-content-center"
-            cellClass="d-flex align-items-center justify-content-center"
-          >
-            <ng-template ngx-datatable-cell-template let-row="row">
-              <div class="d-flex align-items-center justify-content-center">
-                <div ngbDropdown container="body">
-                  <a
-                    ngbDropdownToggle
-                    href="javascript:void(0);"
-                    class="hide-arrow"
-                    id="dropdownBrowserState"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    <i
-                      data-feather="more-vertical"
-                      class="text-primary cursor-pointer mr-50"
-                    ></i>
-                  </a>
-                  <div
-                    ngbDropdownMenu
-                    class="dropdown-menu-right"
-                    aria-labelledby="dropdownBrowserState"
-                  >
-                    <a
-                      href="javascript:void(0)"
-                      ngbDropdownItem
-                      class="d-flex align-items-center"
-                      (click)="modalEdit(modalPrimaryedit, row.id)"
-                      ><i data-feather="archive" class="mr-50"></i> Edit</a
-                    >
-                    <a
-                      href="javascript:void(0)"
-                      ngbDropdownItem
-                      class="d-flex align-items-center"
-                      (click)="modalOpenDanger(modalDanger, row?.id)"
-                      ><i data-feather="trash-2" class="mr-50"></i> Delete</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </ng-template>
-          </ngx-datatable-column>
-        </ngx-datatable>
       </div>
     </section>
-  </div>
-</div>
 
-<!-----------   Modal Edit Team   ---------
+    <div class="modal-danger d-inline-block">
+      <ng-template #modalDanger let-modal>
+        <div class="modal-header">
+          <h5 class="modal-title" id="myModalLabel160">Confirm</h5>
+
+          <button
+            type="button"
+            class="close"
+            (click)="modal.dismiss('Cross click')"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" tabindex="0" ngbAutofocus>
+          Are you sure you want to delete the Project ?
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="modal.close('Accept click')"
+            rippleEffect
+          >
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="deleteProject()"
+            rippleEffect
+          >
+            Delete
+          </button>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-----------   Modal Edit Team   ---------
 
 <ng-template #modalPrimaryedit let-modal>
   <div class="modal-header">
@@ -685,7 +699,7 @@
   </div>
 </ng-template>-->
 
-<!-----------   Modal Danger   ---------
+    <!-----------   Modal Danger   ---------
 
 <div class="modal-danger d-inline-block">
   <ng-template #modalDanger let-modal>
@@ -726,7 +740,7 @@
   </ng-template>
 </div>-->
 
-<!-----------   Modal Danger for multiple delete  ---------
+    <!-----------   Modal Danger for multiple delete  ---------
 
 <div class="modal-danger d-inline-block">
   <ng-template #modalDangerMultiple let-modal>
@@ -766,3 +780,5 @@
     </div>
   </ng-template>
 </div>-->
+  </div>
+</div>

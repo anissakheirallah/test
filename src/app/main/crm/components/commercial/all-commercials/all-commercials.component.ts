@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 import { Commercial } from 'app/main/crm/models/commercial.model';
@@ -17,7 +18,6 @@ export class AllCommercialsComponent implements OnInit {
   contentHeader: { headerTitle: string; actionButton: boolean; breadcrumb: { type: string; links: ({ name: string; isLink: boolean; link: string; } | { name: string; isLink: boolean; link?: undefined; })[]; }; };
 
   commercials?: Commercial[];
-  public chkBoxSelected = [];
   pageSize = 5;
 
   public ColumnMode = ColumnMode;
@@ -26,7 +26,15 @@ export class AllCommercialsComponent implements OnInit {
   commercial: Commercial = {
     id: null,
     commercialName: '',
-    statut: false,
+    statut: null,
+    leads: []
+  }
+
+
+  editCommercial: Commercial = {
+    id: null,
+    commercialName: '',
+    statut: null,
     leads: []
   }
 
@@ -37,8 +45,15 @@ export class AllCommercialsComponent implements OnInit {
     statut: new FormControl(''),
   });
 
+
+  public formEdit: FormGroup = new FormGroup({
+    editCommercialName: new FormControl(''),
+    editStatut: new FormControl(''),
+  });
+
+
   submitted = false;
-  constructor(private modalService: NgbModal, private commercialService: CommercialService, private formBuilder: FormBuilder) { }
+  constructor(private modalService: NgbModal, private commercialService: CommercialService, private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.contentHeader = {
@@ -83,7 +98,7 @@ export class AllCommercialsComponent implements OnInit {
 
   page = 1;
   count = 5;
-  commercialName = '';
+  searchCommercial = '';
 
 
   //public pagePosition = 1;
@@ -92,7 +107,7 @@ export class AllCommercialsComponent implements OnInit {
 
 
   filterByName(event) {
-    this.commercialName = event.target.value.toLowerCase();
+    this.searchCommercial = event.target.value.toLowerCase();
     this.getCommercials();
   }
 
@@ -101,26 +116,26 @@ export class AllCommercialsComponent implements OnInit {
     this.getCommercials();
   }
 
-  getParams(page: number, pageSize: number, commercialName: string) {
-    let params: any = {};
-    if (page) {
-      params['page'] = page - 1;
-    }
-    if (pageSize) {
-      params['size'] = pageSize;
-    }
-    if (commercialName) {
-      params['commercialName'] = commercialName;
-    }
-
-    return params;
-  }
+  /* getParams(page: number, pageSize: number, commercialName: string) {
+     let params: any = {};
+     if (page) {
+       params['page'] = page - 1;
+     }
+     if (pageSize) {
+       params['size'] = pageSize;
+     }
+     if (commercialName) {
+       params['searchCommercial'] = commercialName;
+     }
+ 
+     return params;
+   }*/
 
   public getCommercials(): void {
     const params = {
       page: this.page - 1,
       size: this.pageSize,
-      commercialName: this.commercialName
+      name: this.searchCommercial
     }
     this.commercialService.getCommercials(params).subscribe(
       {
@@ -143,20 +158,22 @@ export class AllCommercialsComponent implements OnInit {
     console.log(id);
     this.commercialService.getCommercial(id).subscribe({
       next: (data) => {
-        this.commercial.id = data.id;
-        this.commercial.commercialName = data.commercialName;
-        this.commercial.statut = data.statut;
-        this.form = this.formBuilder.group(
+        console.log("--------------------------------------------")
+        console.log(data)
+        this.editCommercial.id = data.id;
+        this.editCommercial.commercialName = data.commercialName;
+        this.editCommercial.statut = data.statut;
+        this.formEdit = this.formBuilder.group(
           {
-            commercialName: [
-              this.commercial.commercialName,
+            editCommercialName: [
+              this.editCommercial.commercialName,
               [
                 Validators.required,
                 Validators.minLength(3),
                 Validators.pattern("[a-zA-Z ]*")
               ]
             ],
-            statut: [this.commercial.statut, Validators.required],
+            editStatut: [this.editCommercial.statut, Validators.required],
 
           }
         );
@@ -171,31 +188,30 @@ export class AllCommercialsComponent implements OnInit {
   }
 
 
+
+
+
   // Add
 
   modalAdd(modalPrimaryadd, commercial) {
     console.log(commercial);
-    this.commercialService.createCommercial(commercial).subscribe({
-      next: (data) => {
-        commercial = data;
-        this.form = this.formBuilder.group(
-          {
-            commercialName: [
-              commercial.commercialName,
-              [
-                Validators.required,
-                Validators.minLength(3),
-                Validators.pattern("[a-zA-Z ]*")
-              ]
-            ],
-            statut: [commercial.statut, Validators.required],
 
-          }
-        );
-      }, error: (err) => {
-        console.error(err);
+
+    this.form = this.formBuilder.group(
+      {
+        commercialName: [
+          commercial.commercialName,
+          [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.pattern("[a-zA-Z ]*")
+          ]
+        ],
+        statut: [commercial.statut, Validators.required],
+
       }
-    });
+    )
+
     this.modal = this.modalService.open(modalPrimaryadd, {
       centered: true,
       windowClass: 'modal modal-primary',
@@ -204,19 +220,23 @@ export class AllCommercialsComponent implements OnInit {
 
 
 
+
+
   private modal = null;
 
   onEditSubmit(): void {
-    if (this.form.invalid) {
-      console.log(this.form.value);
+    if (this.formEdit.invalid) {
+      console.log("////////////////////////////////////////////////")
+      console.log(this.formEdit.value);
+      alert("Ooops ! Something went wrong")
 
       return;
     }
-    this.commercial.commercialName = this.form.value.commercialName;
-    this.commercial.statut = this.form.value.statut;
-
-    console.log(this.commercial);
-    this.updateCommercial(this.commercial);
+    this.editCommercial.commercialName = this.formEdit.value.commercialName;
+    this.editCommercial.statut = this.formEdit.value.statut;
+    console.log("**************************************************")
+    console.log(this.editCommercial);
+    this.updateCommercial(this.editCommercial);
 
 
   }
@@ -283,6 +303,8 @@ export class AllCommercialsComponent implements OnInit {
           console.error(err);
         }
       });
+
+
   }
 
 }
