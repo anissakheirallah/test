@@ -52,11 +52,6 @@ const appRoutes: Routes = [
       import("./main/crm/crm.module").then((m) => m.CrmModule),
   },
   {
-    path: "test",
-    loadChildren: () =>
-      import("./main/test/test.module").then((m) => m.TestModule),
-  },
-  {
     path: "",
     redirectTo: "home",
     pathMatch: "full",
