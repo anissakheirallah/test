@@ -20,11 +20,10 @@ import { CompanyModule } from "./main/company/company.module";
 import { CvtechModule } from "./main/CvTech/cvtech.module";
 import { VacationModule } from "./main/grh/components/vacation/vacation.module";
 import { GrhModule } from "./main/grh/grh.module";
-import { ComponentsModule } from "./main/vente/components/components.module";
-import { ProjectsModule } from "./main/vente/components/projects/projects.module";
-import { VenteModule } from "./main/vente/vente.module";
 
 import { ReactiveFormsModule } from "@angular/forms";
+
+import { CrmModule } from "./main/crm/crm.module";
 
 const appRoutes: Routes = [
   {
@@ -48,9 +47,14 @@ const appRoutes: Routes = [
       import("./main/grh/grh.module").then((m) => m.GrhModule),
   },
   {
-    path: "",
+    path: "crm",
     loadChildren: () =>
-      import("./main/vente/vente.module").then((m) => m.VenteModule),
+      import("./main/crm/crm.module").then((m) => m.CrmModule),
+  },
+  {
+    path: "test",
+    loadChildren: () =>
+      import("./main/test/test.module").then((m) => m.TestModule),
   },
   {
     path: "",
@@ -89,6 +93,9 @@ const appRoutes: Routes = [
     GrhModule,
 
     ReactiveFormsModule,
+
+    VacationModule,
+    CrmModule,
   ],
 
   bootstrap: [AppComponent],
