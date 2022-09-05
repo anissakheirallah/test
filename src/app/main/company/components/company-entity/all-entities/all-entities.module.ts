@@ -9,6 +9,7 @@ import { ContentHeaderModule } from 'app/layout/components/content-header/conten
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CompanyentityDetailsComponent } from './companyentity-details/companyentity-details.component';
 import { AllEntitiesComponent } from './all-entities.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 const routes: Routes = [
   {
@@ -34,7 +35,8 @@ const routes: Routes = [
     NgbModule,
     NgSelectModule,
     FormsModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    SweetAlert2Module.forRoot()
   ],
 
   providers: []

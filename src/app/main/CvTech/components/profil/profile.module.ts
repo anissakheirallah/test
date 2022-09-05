@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { CoreCommonModule } from '@core/common.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -15,6 +15,7 @@ import { GlobalExperienceManagementComponent } from './global-experience-managem
 import { SkillsComponent } from './skills/skills.component';
 import { SituationComponent } from './situation/situation.component';
 import { CardSnippetModule } from '@core/components/card-snippet/card-snippet.module';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 const routes: Routes = [
   {
@@ -62,7 +63,9 @@ const routes: Routes = [
     NgSelectModule,
     FormsModule,
     CardSnippetModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    ReactiveFormsModule,
+    SweetAlert2Module.forRoot()
   ],
 
   providers: []

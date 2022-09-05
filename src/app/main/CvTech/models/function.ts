@@ -1,10 +1,10 @@
-export class Function 
-{
-    name: String;
-    description: String;
+export class Function {
+  id: number;
+  name: String;
+  description: String;
 
-    constructor(name: String, description: String) {
-        this.name = name;
-        this.description = description;
-    }
+  constructor(name: String, description: String) {
+    this.name = name;
+    this.description = description;
+  }
 }

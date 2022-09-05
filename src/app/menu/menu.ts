@@ -1,202 +1,352 @@
-import { CoreMenu } from '@core/types'
+import { CoreMenu } from "@core/types";
 
 export const menu: CoreMenu[] = [
   {
-    id: 'home',
-    title: 'MENU.HOME',
-    type: 'item',
-    icon: 'home',
-    url: 'home'
+    id: "home",
+    title: "MENU.HOME",
+    type: "item",
+    icon: "home",
+    url: "home",
   },
   {
-    id: 'cvtech',
-    title: 'MENU.cvtech',
-    type: 'collapsible',
-    icon: 'menu',
+    id: "cvtech",
+    title: "MENU.cvtech",
+    type: "collapsible",
+    icon: "menu",
+
+    children: [
+      // {
+      //   id: 'dashboard',
+      //   title: 'MENU.Dashboard',
+      //   type: 'item',
+      //   icon: 'monitor',
+      //   url: 'cvtech/dashboard',
+      // },
+      // {
+      //   id: 'cvs',
+      //   title: 'MENU.CVs',
+      //   type: 'item',
+      //   icon: 'file',
+      //   url: 'cvtech/cvs'
+      // },
+      {
+        id: "campaign",
+        title: "MENU.CVTECH.APP",
+        type: "collapsible",
+        icon: "folder-plus",
+        children: [
+          {
+            id: "allcampaigns",
+            title: "MENU.CVTECH.ALLCAMPAIGNS",
+            type: "item",
+            icon: "list",
+            url: "cvtech/campaign/allcampaigns",
+          },
+          {
+            id: "addcampaign",
+            title: "MENU.CVTECH.ADDCAMPAIGN",
+            type: "item",
+            icon: "plus-square",
+            url: "cvtech/campaign/addcampaign",
+          },
+        ],
+      },
+      {
+        id: "candidats",
+        title: "MENU.CVTECH.CANDIDAT",
+        type: "collapsible",
+        icon: "users",
+        children: [
+          {
+            id: "allcandidats",
+            title: "MENU.CVTECH.ALLCANDIDATS",
+            type: "item",
+            icon: "list",
+            url: "cvtech/candidats/allcandidats",
+          },
+          {
+            id: "addcandidat",
+            title: "MENU.CVTECH.ADDCANDIDAT",
+            type: "item",
+            icon: "plus-square",
+            url: "cvtech/candidats/addcandidat",
+          },
+        ],
+      },
+      {
+        id: "profil",
+        title: "Profil",
+        type: "collapsible",
+        icon: "book",
+        children: [
+          {
+            id: "edu",
+            title: "Education",
+            type: "item",
+            icon: "file",
+            url: "cvtech/profile/education",
+          },
+          {
+            id: "ge",
+            title: "Global Exprience",
+            type: "item",
+            icon: "file",
+            url: "cvtech/profile/experience",
+          },
+          {
+            id: "cs",
+            title: "Current Situation",
+            type: "item",
+            icon: "file",
+            url: "cvtech/profile/situation",
+          },
+          {
+            id: "skill",
+            title: "Skills",
+            type: "item",
+            icon: "file",
+            url: "cvtech/profile/skills",
+          },
+          {
+            id: "avail",
+            title: "Availabilty",
+            type: "item",
+            icon: "file",
+            url: "cvtech/profile/availabilty",
+          },
+          {
+            id: "func",
+            title: "Function",
+            type: "item",
+            icon: "file",
+            url: "cvtech/profile/function",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "companies",
+    type: "collapsible",
+    title: "MENU.COMPANY.APP",
+    icon: "menu",
 
     children: [
       {
-        id: 'dashboard',
-        title: 'MENU.Dashboard',
-        type: 'item',
-        icon: 'monitor',
-        url: 'cvtech/dashboard',
-      },
-      {
-        id: 'cvs',
-        title: 'MENU.CVs',
-        type: 'item',
-        icon: 'file',
-        url: 'cvtech/cvs'
-      },
-      {
-        id: 'campaign',
-        title: 'MENU.Campaign',
-        type: 'collapsible',
-        icon: 'folder-plus',
-        children:[
-          {
-            id: 'allcampaigns',
-            title: 'All campaigns',
-            type: 'item',
-            icon: 'list',
-            url: 'cvtech/campaign/allcampaigns'
-          },
-          {
-            id: 'addcampaign',
-            title: 'Add campaign',
-            type: 'item',
-            icon: 'plus-square',
-            url: 'cvtech/campaign/addcampaign'
-          },
-        ]
-      },
-      {
-        id: 'candidats',
-        title: 'Candidats',
-        type: 'collapsible',
-        icon: 'users',
-        children:[
-          {
-            id: 'allcandidats',
-            title: 'All candidats',
-            type: 'item',
-            icon: 'list',
-            url: 'cvtech/candidats/allcandidats'
-          },
-          {
-            id: 'addcandidat',
-            title: 'Add Candidat',
-            type: 'item',
-            icon: 'plus-square',
-            url: 'cvtech/candidats/addcandidat'
-          }
-        ]
-      },
-      {
-        id: 'profil',
-        title: 'Profil',
-        //translate: 'MENU.cvtech',
-        type: 'collapsible',
-        icon: 'book',
+        id: "company",
+        title: "MENU.COMPANY.COMP",
+        type: "collapsible",
+        icon: "grid",
+
         children: [
           {
-            id: 'edu',
-            title: 'Education',
-            type: 'item',
-            icon: 'file',
-            url: 'cvtech/profile/education'
+            id: "allcompanies",
+            title: "MENU.COMPANY.ALLCOMPANIES",
+            type: "item",
+            icon: "list",
+            url: "companies/company/allcompanies",
           },
           {
-            id: 'ge',
-            title: 'Global Exprience',
-            type: 'item',
-            icon: 'file',
-            url: 'cvtech/profile/experience'
+            id: "addcompany",
+            title: "MENU.COMPANY.ADDCOMPANY",
+            type: "item",
+            icon: "plus-square",
+            url: "companies/company/addcompany",
           },
-          {
-            id: 'cs',
-            title: 'Current Situation',
-            type: 'item',
-            icon: 'file',
-            url: 'cvtech/profile/situation'
-          },
-          {
-            id: 'skill',
-            title: 'Skills',
-            type: 'item',
-            icon: 'file',
-            url: 'cvtech/profile/skills'
-          },
-          {
-            id: 'avail',
-            title: 'Availabilty',
-            type: 'item',
-            icon: 'file',
-            url: 'cvtech/profile/availabilty'
-          },
-          {
-            id: 'func',
-            title: 'Function',
-            type: 'item',
-            icon: 'file',
-            url: 'cvtech/profile/function'
-          }
-        ]
+        ],
       },
-    ]
-
+      {
+        id: "Companyentity",
+        title: "MENU.COMPANY.COMPANYENTITY",
+        type: "collapsible",
+        icon: "grid",
+        children: [
+          {
+            id: "Companyentity",
+            title: "MENU.COMPANY.ALLENTITIES",
+            type: "item",
+            icon: "list",
+            url: "companies/company-entity/allentities",
+          },
+          {
+            id: "Companyentity",
+            title: "MENU.COMPANY.ADDCOMPANYENTITY",
+            type: "item",
+            icon: "plus-square",
+            url: "companies/company-entity/addcompanyentity",
+          },
+        ],
+      },
+      {
+        id: "Department",
+        title: "MENU.COMPANY.DEPARTMENT",
+        type: "item",
+        icon: "grid",
+        url: "companies/department/department",
+      },
+      {
+        id: "Team",
+        title: "MENU.COMPANY.TEAM",
+        type: "collapsible",
+        icon: "grid",
+        children: [
+          {
+            id: "allteams",
+            title: "MENU.COMPANY.ALLTEAMS",
+            type: "item",
+            icon: "plus-square",
+            url: "companies/team/allteams",
+          },
+        ],
+      },
+      {
+        id: "Project",
+        title: "MENU.COMPANY.PROJECT",
+        type: "collapsible",
+        icon: "grid",
+        children: [
+          {
+            id: "allprojects",
+            title: "MENU.COMPANY.ALLPROJECTS",
+            type: "item",
+            icon: "plus-square",
+            url: "companies/project/allprojects",
+          },
+        ],
+      },
+      {
+        id: "Employee",
+        title: "MENU.COMPANY.EMPLOYEE",
+        type: "collapsible",
+        icon: "grid",
+        children: [
+          {
+            id: "addemployee",
+            title: "MENU.COMPANY.ADDEMPLOYEE",
+            type: "item",
+            icon: "plus-square",
+            url: "companies/employee/addemployee",
+          },
+        ],
+      },
+    ],
   },
   {
-    id: 'companies',
-    type: 'collapsible',
-    title: 'MENU.COMPANY.APP',
-    icon: 'menu',
-
+    id: "leads",
+    type: "collapsible",
+    title: "MENU.LEAD.APP",
+    icon: "menu",
     children: [
       {
-        id: 'company',
-        title: 'MENU.COMPANY.COMP',
-        type: 'collapsible',
-        icon: 'grid',
+        id: "commercial",
+        title: "MENU.LEAD.COMMERCIAL",
+        type: "collapsible",
+        icon: "grid",
 
-        children:[
-          {
-            id: 'allcompanies',
-            title: 'MENU.COMPANY.ALLCOMPANIES',
-            type: 'item',
-            icon: 'list',
-            url: 'companies/company/allcompanies'
-          },
-          {
-            id: 'addcompany',
-            title: 'MENU.COMPANY.ADDCOMPANY',
-            type: 'item',
-            icon: 'plus-square',
-            url: 'companies/company/addcompany'
-          },
-        ]
-      },
-      {
-        id: 'Companyentity',
-        title: 'MENU.COMPANY.COMPANYENTITY',
-        type: 'collapsible',
-        icon: 'grid',
         children: [
           {
-            id: 'Companyentity',
-            title: 'MENU.COMPANY.ALLENTITIES',
-            type: 'item',
-            icon: 'list',
-            url: 'companies/company-entity/allentities'
+            id: "allcommercials",
+            title: "MENU.LEAD.ALLCOMMERCIAL",
+            type: "item",
+            icon: "list",
+            url: "crm/commercial/allcommercials",
           },
           {
-            id: 'Companyentity',
-            title: 'MENU.COMPANY.ADDCOMPANYENTITY',
-            type: 'item',
-            icon: 'plus-square',
-            url: 'companies/company-entity/addcompanyentity'
-          }
-        ]
+            id: "addcommercial",
+            title: "MENU.LEAD.ADDCOMMERCIAL",
+            type: "item",
+            icon: "plus-square",
+            url: "crm/commercial/addcommercial",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "GRH",
+    type: "collapsible",
+    title: "MENU.GRH.APP",
+    icon: "menu",
+    children: [
+      {
+        id: "visit",
+        title: "MENU.GRH.VISIT",
+        type: "item",
+        icon: "plus-square",
+        url: "grh/visit",
       },
       {
-        id: 'Department',
-        title: 'MENU.COMPANY.DEPARTMENT',
-        type: 'collapsible',
-        icon: 'grid',
+        id: "warningType",
+        title: "MENU.GRH.WARNINGTYPE",
+        type: "item",
+        icon: "plus-square",
+        url: "grh/warningType",
+      },
+      {
+        id: "warning",
+        title: "MENU.GRH.WARNING",
+        type: "item",
+        icon: "plus-square",
+        url: "grh/warning",
+      },
+      {
+        id: "requests",
+        title: "MENU.GRH.REQUESTS",
+        type: "collapsible",
+        icon: "grid",
         children: [
           {
-            id: 'adddepartment',
-            title: 'MENU.COMPANY.ADDDEPARTMENT',
-            type: 'item',
-            icon: 'plus-square',
-            url: 'companies/department/addDepartment'
-          }
-        ]
-      }
-    ]
-  }
-
-
-
-]
+            id: "allholidayrequests",
+            title: "MENU.GRH.ALLHOLIDAYREQUESTS",
+            type: "item",
+            icon: "list",
+            url: "grh/requests/all-holiday-requests",
+          },
+          {
+            id: "allabsencerequests",
+            title: "MENU.GRH.ALLABSENCEREQUESTS",
+            type: "item",
+            icon: "list",
+            url: "grh/requests/all-absence-requests",
+          },
+          {
+            id: "alldeparturerequests",
+            title: "MENU.GRH.ALLDEPARTUREREQUESTS",
+            type: "item",
+            icon: "list",
+            url: "grh/requests/all-departure-requests",
+          },
+          {
+            id: "allmaterialrequests",
+            title: "MENU.GRH.ALLMATERIALREQUESTS",
+            type: "item",
+            icon: "list",
+            url: "grh/requests/all-material-requests",
+          },
+        ],
+      },
+      {
+        id: "employees",
+        title: "MENU.GRH.EMPLOYEES",
+        type: "collapsible",
+        icon: "grid",
+        children: [
+          {
+            id: "allemployees",
+            title: "MENU.GRH.ALLEMPLOYEES",
+            type: "item",
+            icon: "plus-square",
+            url: "grh/employee/all-employees",
+          },
+          {
+            id: "warning",
+            title: "MENU.GRH.EMPLOYEEDEATAILS",
+            type: "item",
+            icon: "plus-square",
+            url: "grh/employee/employee-details",
+          },
+        ],
+      },
+    ],
+  },
+];

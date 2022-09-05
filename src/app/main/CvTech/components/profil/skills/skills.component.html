@@ -1,100 +1,350 @@
 <div class="content-wrapper container-xxl p-0">
-    <div class="content-body">
-        <app-content-header [contentHeader]="contentHeader"></app-content-header>
-        <section id="basic-carousel">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title text-primary">Add Skill</h4>
-                        </div>
-                        <div class="card-body">
-                            <form class="form form-horizontal" [formGroup]="skillForm" (ngSubmit)="addData()">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group row">
-                                            <div class="col-sm-3 col-form-label">
-                                                <label for="first-name">Name</label>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <input type="text" formControlName="name" id="skill-name" class="form-control" name="skill-name"
-                                                    placeholder="Name" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group row">
-                                            <div class="col-sm-3 col-form-label">
-                                                <label for="email-id">Description</label>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <textarea id="skill-desc" formControlName="description" placeholder="Description" name="skill-desc"  rows="2" wrap="soft" class="form-control" data-v-aa799a9e=""></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-9 offset-sm-3">
-                                        <button type="submit" rippleEffect class="btn btn-primary mr-1">Add</button>
-                                        <button type="reset" rippleEffect class="btn btn-outline-secondary">Reset</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-               
-
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+    <section id="basic-carousel">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title text-primary">Add Skill</h4>
             </div>
-        </section>
-        <div class="row" id="table-hover-animation">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title text-primary">All skills</h4>
-                        <div class="d-flex  justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
-                            <input type="search" placeholder="Search" class="form-control ml-25" />
-                        </div>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Name</th>
-                              <th>Description</th>
-                              <th>Actions</th>
-                            </tr>
-                          </thead>
-                          <tbody *ngFor="let obj of data, let i = index">
-                            <tr>
-                              <td>{{i + 1}}</td>
-                              <td>
-                               <span class="font-weight-bold">{{obj.name}}</span>
-                              </td>
-                              <td>{{obj.description}}</td>
-                              <td class="overflow-hidden">
-                                <div ngbDropdown container="body">
-                                  <button type="button" class="btn btn-sm hide-arrow" ngbDropdownToggle data-toggle="dropdown">
-                                    <i data-feather="more-horizontal"></i>
-                                  </button>
-                                  <div ngbDropdownMenu>
-                                    <a ngbDropdownItem href="javascript:void(0);">
-                                      <i data-feather="edit-2" class="mr-50"></i><span>Edit</span>
-                                    </a
-                                    >
-                                    <a ngbDropdownItem  (click)="deleteData(obj.id)">
-                                        <i data-feather="trash" class="mr-50"></i>
-                                        <span>Delete</span>
-                                    </a>
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+            <div class="card-body">
+              <form
+                class="form form-horizontal"
+                [formGroup]="skillForm"
+                (ngSubmit)="onSubmit()"
+              >
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group row">
+                      <div class="col-sm-3 col-form-label">
+                        <label for="Skill-name">Name</label>
                       </div>
+                      <div class="col-sm-9">
+                        <input
+                          type="text"
+                          formControlName="name"
+                          id="skill-name"
+                          class="form-control"
+                          name="skill-name"
+                          [ngClass]="{
+                            'is-invalid': submitted && f['name'].errors
+                          }"
+                          placeholder="Enter the skill's name"
+                        />
+                        <div
+                          *ngIf="submitted && f['name'].errors"
+                          class="invalid-feedback"
+                        >
+                          <div *ngIf="f['name'].errors['required']">
+                            The skill's name is required
+                          </div>
+                          <div *ngIf="f['name'].errors['pattern']">
+                            The skill's name must have characters only
+                          </div>
+                          <div *ngIf="f['name'].errors['minlength']">
+                            Add more characters
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="form-group row">
+                      <div class="col-sm-3 col-form-label">
+                        <label for="skill-desc">Description</label>
+                      </div>
+                      <div class="col-sm-9">
+                        <textarea
+                          id="skill-desc"
+                          formControlName="description"
+                          placeholder="Description"
+                          name="skill-desc"
+                          rows="2"
+                          wrap="soft"
+                          [ngClass]="{
+                            'is-invalid': submitted && f['description'].errors
+                          }"
+                          class="form-control"
+                          data-v-aa799a9e=""
+                        ></textarea>
+                        <div
+                          *ngIf="submitted && f['description'].errors"
+                          class="invalid-feedback"
+                        >
+                          <div *ngIf="f['description'].errors['required']">
+                            description is required
+                          </div>
+                          <div *ngIf="f['description'].errors['minlength']">
+                            description should have more than 3 characters
+                          </div>
+                          <div *ngIf="f['description'].errors['maxlength']">
+                            description shouldn't have more than 45 characters
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-9 offset-sm-3">
+                    <button
+                      type="submit"
+                      rippleEffect
+                      class="btn btn-primary mr-1"
+                    >
+                      Add
+                    </button>
+                    <button
+                      type="reset"
+                      rippleEffect
+                      class="btn btn-outline-secondary"
+                    >
+                      Reset
+                    </button>
+                  </div>
                 </div>
+              </form>
             </div>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <div class="row" id="basic-table">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title text-primary">All Skills</h4>
+            <div
+              class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0"
+            >
+              <input
+                type="search"
+                name="name"
+                id="name"
+                [(ngModel)]="name"
+                placeholder="Search by Name"
+                class="form-control ml-25"
+                (change)="getData()"
+              />
+            </div>
+          </div>
+
+          <ngx-datatable
+            class="bootstrap core-bootstrap ml-1"
+            [columnMode]="'flex'"
+            [headerHeight]="40"
+            [footerHeight]="50"
+            [rowHeight]="58"
+            rowHeight="auto"
+            [rows]="data"
+            [selected]="chkBoxSelected"
+          >
+            <ngx-datatable-column name="Name" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row?.name }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Description" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row?.description }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Actions" [flexGrow]="1">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <div class="d-flex align-items-center">
+                  <div ngbDropdown container="body">
+                    <a
+                      ngbDropdownToggle
+                      href="javascript:void(0);"
+                      class="hide-arrow"
+                      id="dropdownBrowserState"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <i
+                        data-feather="more-horizontal"
+                        class="text-primary cursor-pointer mr-50"
+                      ></i>
+                    </a>
+                    <div
+                      ngbDropdownMenu
+                      class="drodopwn-menu-right"
+                      aria-labelledby="dropdownBrowserState"
+                    >
+                      <a
+                        ngbDropdownItem
+                        href="javascript:void(0);"
+                        (click)="modalEdit(modalPrimaryedit, row.id)"
+                      >
+                        <i data-feather="edit-2" class="mr-50"></i>
+                        <span>Edit</span>
+                      </a>
+
+                      <a
+                        href="javascript:void(0)"
+                        ngbDropdownItem
+                        class="d-flex align-items-center"
+                        (click)="modalOpenDanger(modalDanger, row?.id)"
+                      >
+                        <i data-feather="trash-2" class="mr-50"></i> Delete
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+
+          <div class="col-lg-12">
+            <ngb-pagination
+              class="d-flex justify-content-end"
+              [directionLinks]="false"
+              [collectionSize]="totalPages"
+              [(page)]="pagePosition"
+              (pageChange)="pageChanged($event)"
+            >
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+
+<!------------------ Edit Skill ------------------->
+
+<ng-template #modalPrimaryedit let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Edit Skill</h5>
+
+    <button
+      type="button"
+      class="close"
+      (click)="modal.dismiss('Cross click')"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form
+    class="form form-horizontal"
+    [formGroup]="skillForm"
+    (ngSubmit)="edit()"
+  >
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+      <div class="col-12">
+        <div class="form-group row">
+          <div class="col-sm-3 col-form-label">
+            <label for="Skill-name">Name</label>
+          </div>
+          <div class="col-sm-9">
+            <input
+              type="text"
+              formControlName="name"
+              id="skill-name"
+              class="form-control"
+              name="skill-name"
+              [ngClass]="{
+                'is-invalid': f['name'].errors
+              }"
+              placeholder="Enter the skill's name"
+            />
+            <div *ngIf="f['name'].errors" class="invalid-feedback">
+              <div *ngIf="f['name'].errors['required']">
+                The skill's name is required
+              </div>
+              <div *ngIf="f['name'].errors['pattern']">
+                The skill's name must have characters only
+              </div>
+              <div *ngIf="f['name'].errors['minlength']">
+                Add more characters
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group row">
+          <div class="col-sm-3 col-form-label">
+            <label for="skill-desc">Description</label>
+          </div>
+          <div class="col-sm-9">
+            <textarea
+              id="skill-desc"
+              formControlName="description"
+              placeholder="Description"
+              name="skill-desc"
+              rows="2"
+              wrap="soft"
+              [ngClass]="{
+                'is-invalid': f['description'].errors
+              }"
+              class="form-control"
+              data-v-aa799a9e=""
+            ></textarea>
+            <div *ngIf="f['description'].errors" class="invalid-feedback">
+              <div *ngIf="f['description'].errors['required']">
+                description is required
+              </div>
+              <div *ngIf="f['description'].errors['minlength']">
+                description should have more than 3 characters
+              </div>
+              <div *ngIf="f['description'].errors['maxlength']">
+                description shouldn't have more than 45 characters
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" rippleEffect>Accept</button>
+    </div>
+  </form>
+</ng-template>
+
+<div class="modal-danger d-inline-block">
+  <!-- Modal -->
+  <ng-template #modalDanger let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">Confirm</h5>
+
+      <button
+        type="button"
+        class="close"
+        (click)="modal.dismiss('Cross click')"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+      Are you sure you want to delete the skill ?
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="modal.close('Accept click')"
+        rippleEffect
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="deleteData()"
+        routerLink="/reload"
+        rippleEffect
+      >
+        Delete
+      </button>
+    </div>
+  </ng-template>
+  <!-- / Modal -->
 </div>

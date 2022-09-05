@@ -29,4 +29,8 @@ export class EntityDepartmentService {
   deleteDepartment(id: number): Observable<any> {
     return this.httpClient.delete(`${baseUrl}/EntityDepartment/${id}`, { responseType: 'text' });
   }
+
+  getDepartments(params: any): Observable<any> {
+    return this.httpClient.get<EntityDepartment[]>(`${baseUrl}/EntityDepartment`, { params });
+  }
 }

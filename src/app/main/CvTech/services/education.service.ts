@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
@@ -26,5 +26,13 @@ export class EducationService {
   deleteEducation(id : number): Observable<any>
   {
     return this.http.delete(`${baseUrl}/education/${id}`,{responseType : 'text'});
+  }
+
+  getAllPagination(params: any): Observable<any> {
+    return this.http.get<Education[]>(`${baseUrl}/education`, { params });
+  }
+
+  update(data: any, id: number): Observable<HttpEvent<any>> {
+    return this.http.put<HttpEvent<any>>(`${baseUrl}/education/${id}`, data);
   }
 }

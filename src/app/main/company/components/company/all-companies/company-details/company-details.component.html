@@ -1,95 +1,112 @@
+
 <div class="content-wrapper container-xxl p-0">
-    <div class="content-body">
-      <app-content-header [contentHeader]="contentHeader"></app-content-header>   
-      <section class="horizontal-wizard">
-        <div id="stepper1" class="bs-stepper horizontal-wizard-example">
-          <div class="bs-stepper-header" style="height: 0px;">
-            <div class="step" data-target="#account-details">
-              <button class="step-trigger">
-               <!-- <span class="bs-stepper-box">1</span>-->
-                <span class="bs-stepper-label">
-                  <h5 class="bs-stepper-title"></h5>
-                </span>
-              </button>
-            </div>         
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>   
+
+    <div class="row" id="basic-table">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+
+            <div class="row media-list media-bordered">
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="media-body">
+                    <h5 class="media-heading"> Company name </h5>
+                    <p class="mb-0">
+                      {{company?.name}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class=" col-sm-6">
+                <div class="form-group">
+                  <div class="media-body">
+                    <h5 class="media-heading"> Email </h5>
+                    <p class="mb-0">
+                      {{company?.email}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="media col-sm-6">
+                <div class="form-group">
+                  <div class="media-body">
+                    <h5 class="media-heading"> Phone number </h5>
+                    <p class="mb-0">
+                      {{company?.phoneNumber}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="media col-sm-6">
+                <div class="form-group">
+                  <div class="media-body">
+                    <h5 class="media-heading"> Address </h5>
+                    <p class="mb-0">
+                      {{company?.address}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="media col-sm-6">
+                <div class="form-group">
+                  <div class="media-body">
+                    <h5 class="media-heading"> Website </h5>
+                    <p class="mb-0">
+                      {{company?.webSite}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="media col-sm-6">
+                <div class="form-group">
+                  <div class="media-body">
+                    <h5 class="media-heading"> Date </h5>
+                    <p class="mb-0">
+                      {{company?.timestamp  | date:'yyyy-MM-dd HH:mm' }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>   
           </div>
-          <div class="bs-stepper-content">
-            <form #HWForm="ngForm">
-              <div id="account-details" class="content">
-                <form #accountDetailsForm="ngForm">
-                  <div class="content-header">
-                    <h5>Company Details</h5>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col-md-6">
-                      <label class="form-label" for="companyname">Company name</label>
-                      <input
-                        type="text"
-                        name="companyname"
-                        id="companyname"
-                        class="form-control"
-                        disabled
-                        value={{company.name}}
-                      />                   
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label class="form-label" for="email">Email</label>
-                      <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        class="form-control"
-                        disabled
-                        value={{company.email}}
-                        aria-label="giantlink"
-                      />                
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group form-password-toggle col-md-6">
-                      <label class="form-label" for="website">website</label>
-                      <input
-                        type="text"
-                        name="website"
-                        id="website"
-                        class="form-control"
-                        disabled
-                        value={{company.webSite}}
-                        minlength="6"
-                      />
-                    </div>
-                    <div class="form-group form-password-toggle col-md-6">
-                      <label class="form-label" for="confirm-password">Address</label>
-                      <input
-                        type="text"
-                        name="address"
-                        id="address"
-                        class="form-control" required
-                        disabled
-                        value={{company.address}}
-                        minlength="6"
-                      />
-                    </div>
-                  </div>
-                </form>
-                <br>
-                <div class="content-header">
-                  <h5 class="mb-0">Company entities Details</h5>
-                </div>            
-             <div class="row">
-              <div class="col-12  mb-2">
+        </div>
+      </div>
+    </div>
+
+    <div class="row" id="basic-table">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+
+            <div class="content-header mb-2" >
+              <h5 class="mb-0"> Entities Details </h5>
+            </div>
+
+            <div class="row">
+              <div class="col-12 mb-2">
+
                 <button class="btn btn-primary ml-1" rippleEffect
-                (click)="modalAddentity(modalPrimaryAdd)">
-                  <i data-feather="plus" class="mr-0 mr-sm-1"></i>
-                  <span class="d-none d-sm-inline-block"
-                 
-                  >Add New entity</span>
-                </button>              
+                    (click)="modalAddentity(modalPrimaryAdd)">
+                        <i data-feather="plus" class="mr-0 mr-sm-1"></i>
+                        <span class="d-none d-sm-inline-block">Add New entity</span>
+                </button>
+
                 <label class="d-flex align-items-center float-right mr-1">
                   Search
-                  <input type="search" [(ngModel)]="name" name="name" id="name" placeholder="Search by Name" class="form-control ml-25"
-                  (keyup)="getentitiesofcompany()" />
+                  <input type="search" [(ngModel)]="name" name="name" id="name" 
+                      placeholder="Search by Name" class="form-control ml-25"
+                      (keyup)="getentitiesofcompany()" />
                 </label>
+
               </div>
             </div>
             
@@ -109,6 +126,12 @@
                   {{row?.name}}
                 </ng-template>
               </ngx-datatable-column>
+
+              <ngx-datatable-column name="Date" [flexGrow]="1.25">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{row?.timestamp | date:'yyyy-MM-dd HH:mm' }}
+                </ng-template>
+              </ngx-datatable-column>
               
 
               <ngx-datatable-column name="Actions" [flexGrow]="0.75" >
@@ -126,20 +149,22 @@
                       >
                         <i data-feather="more-horizontal" class="text-primary cursor-pointer mr-50"></i>
                       </a>
-                      <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
-                        <a ngbDropdownItem href="javascript:void(0);" routerLink="/company/companyentity-details/{{row.id}}">
-                          <i data-feather="info" class="mr-50"></i>
-                          <span>Details</span>
-                        </a>
-                        <a ngbDropdownItem href="javascript:void(0);" (click)="modalEdit(modalPrimaryedit,row.id)">
-                          <i data-feather="edit-2" class="mr-50"></i>
-                          <span>Edit</span>
-                        </a>
+
+                      <div ngbDropdownMenu class="dropdown-menu-right" 
+                            aria-labelledby="dropdownBrowserState">
+
+                            <a (click)="onSelect(row.id)"
+                              ngbDropdownItem class="d-flex align-items-center">
+                               <i data-feather="file-text" class="mr-50"></i> 
+                                 Details
+                            </a>
+
                         <a ngbDropdownItem href="javascript:void(0);"
-                        (click)="deleteCompanyEntity(row.id)"
-                          ><i data-feather="trash" class="mr-50"></i>
-                          <span>Delete</span>
+                                (click)="deleteEntity(row.id)">
+                              <i data-feather="trash" class="mr-50"></i>
+                              <span>Delete</span>
                         </a>
+
                       </div>
                     </div>
                   </div>
@@ -160,7 +185,7 @@
                     <span *ngIf="selectedMessage">
                       {{selectedCount.toLocaleString()}} {{selectedMessage}} / 
                     </span>
-                    {{rowCount.toLocaleString()}} {{totalMessage}}
+                      {{rowCount.toLocaleString()}} {{totalMessage}}
                   </div>
               </ng-template>
             </ngx-datatable-footer>
@@ -173,121 +198,68 @@
                 [(page)]="pagePosition"
                 (pageChange)="pageChanged($event)"
               >
-                <ng-template ngbPaginationPrevious
-                  ><span [data-feather]="'chevron-left'" [class]="'font-weight-bolder'"></span>Prev
+                <ng-template ngbPaginationPrevious>
+                  <span [data-feather]="'chevron-left'" [class]="'font-weight-bolder'">
+                  </span>Prev
                 </ng-template>
-                <ng-template ngbPaginationNext
-                  >Next<span [data-feather]="'chevron-right'" [class]="'font-weight-bolder'"></span>
+
+                <ng-template ngbPaginationNext>Next
+                  <span [data-feather]="'chevron-right'" [class]="'font-weight-bolder'">
+                  </span>
                 </ng-template>
+
               </ngb-pagination>
             </div>
 
-              </div>
-              <div id="personal-info" class="content">           
-              </div>
-              <div id="address" class="content"> 
-              </div>
-              <div id="social-links" class="content">      
-              </div>
-            </form>
           </div>
         </div>
-      </section> 
-    </div>
-  </div>
-  
-  <ng-template #modalPrimaryedit let-modal>
-    <div class="modal-header">
-        <h5 class="modal-title" id="myModalLabel160">Edit entity
-        </h5>
-        <button type="button" class="close"
-            (click)="modal.dismiss('Cross click')" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body" tabindex="0" ngbAutofocus>
-        <div class="col-12">
-            <div class="form-group row">
-                <div class="col-sm-3 col-form-label">
-                    <label for="nameeditc">Name</label>
-                </div>
-                <div class="col-sm-9">
-                    <input type="text" id="nameeditc" class="form-control"
-                        name="nameeditc"
-                        [(ngModel)]="options.name" />
-                </div>
-            </div>
-        </div>
-
-    <div class="col-12">
-      <div class="form-group row">
-          <div class="col-sm-3 col-form-label">
-              <label for="namec">Company</label>
-          </div>
-          <br>
-          <div class="col-sm-9">
-                  <select class="form-control" (change)="onChange($event)">
-                      <option *ngFor="let company of companies" id="ent"
-                      value="{{company.id}}">{{company.name}}</option>
-                  </select>
-          </div>
       </div>
+    </div> 
   </div>
-        
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary"
-            (click)="updateEntity();
-            modal.close('Accept click')"
-            rippleEffect>
-            Accept
-        </button>
-    </div>
-</ng-template>
+</div>
+
+ <!------------------ Add Entity ------------------->
 
 <ng-template #modalPrimaryAdd let-modal>
   <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel160">Add entity</h5>
+      <h5 class="modal-title" id="myModalLabel160"> Add entity </h5>
       <button type="button" class="close"
           (click)="modal.dismiss('Cross click')" aria-label="Close">
           <span aria-hidden="true">&times;</span>
       </button>
   </div>
   <div class="modal-body" tabindex="0" ngbAutofocus>
+
       <div class="col-12">
           <div class="form-group row">
               <div class="col-sm-3 col-form-label">
-                  <label for="entityname">Name of entity</label>
+                  <label for="addentity"> Name of entity </label>
               </div>
               <div class="col-sm-9">
-                  <input type="text" id="entityname" class="form-control"
-                      name="entityname" [(ngModel)]="companyEntity.name"
-                     />
+                  <input type="text" id="addentity" class="form-control"
+                      name="addentity" [(ngModel)]="entity.name"
+                  />
               </div>
           </div>
       </div>
 
-  <div class="col-12">
-    <div class="form-group row">
-        <div class="col-sm-3 col-form-label">
-            <label for="namec">Company</label>
-        </div>
-        <br>
-        <div class="col-sm-9">
-                <select class="form-control" (change)="onChange($event)">
-                    <option *ngFor="let company of companies" id="ent"
-                    value="{{company.id}}">{{company.name}}</option>
-                </select>
-        </div>
-    </div>
-</div>
-
-      
+      <div class="col-12">
+          <div class="form-group row">
+            <div class="col-sm-3 col-form-label">
+                <label for="addcompany"> Company </label>
+            </div>
+            <div class="col-sm-9">
+              <input type="text" id="addcompany" class="form-control"
+                name="addcompany" [(ngModel)]="company.name" disabled
+              />
+            </div>
+          </div>
+      </div>  
   </div>
+
   <div class="modal-footer">
       <button type="button" class="btn btn-primary"
-          (click)="saveDepartment($event);modal.close('Accept click')"
-          rippleEffect>
+          (click)="addentity($event);modal.close('Accept click')" rippleEffect>
           Accept
       </button>
   </div>

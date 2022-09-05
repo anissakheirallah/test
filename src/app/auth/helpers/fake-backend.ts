@@ -24,10 +24,10 @@ import { User, Role } from 'app/auth/models';
 const users: User[] = [
   {
     id: 1,
-    email: 'admin@demo.com',
+    email: 'admin@giantlink.com',
     password: 'admin',
-    firstName: 'John',
-    lastName: 'Doe',
+    firstName: 'Responsable',
+    lastName: 'RH',
     avatar: 'avatar-s-11.jpg',
     role: Role.Admin
   },
