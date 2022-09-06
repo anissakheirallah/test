@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Stepper from 'bs-stepper';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CompanyEntity } from '../../../../models/company-entity.model';
@@ -15,52 +15,24 @@ import { CompanyEntityService } from '../../../../services/company-entity.servic
 export class CompanyDetailsComponent implements OnInit {
   public contentHeader: object;
 
-  selectedcompany:any;
-
   company_id:any;
+  company:Company;
   entities:Array<CompanyEntity>;
   companies?:Company[];
-  company_edit:any;
-
-  company:Company={
-    id:null,
-    name:'',
-    address: '',
-    email:'',
-    phoneNumber:'',
-    webSite:'',
-    image:'',
-    entities:[]
-  };
-
-  options:CompanyEntity = {
-    id:null,
-    name: '',
-    timestamp:'',
-    departements:[],
-    company_id:null
-  }
-
-  // private
-
-  private horizontalWizardStepper: Stepper;
-  private bsStepper;
 
   constructor(private companyservice:CompanyService,
     private companyEntityService:CompanyEntityService,
     private route:ActivatedRoute,
     private modalService: NgbModal,
-    private entityService:CompanyEntityService) {}
+    private entityService:CompanyEntityService,
+    private router:Router) {}
 
- 
   ngOnInit() {
-    this.horizontalWizardStepper = new Stepper(document.querySelector('#stepper1'), {});
-    this.bsStepper = document.querySelectorAll('.bs-stepper');
-
+   
     this.company_id= this.route.snapshot.params["company_id"];
-    console.log(this.getCompany(this.company_id));
-
-    // content header
+    this.getCompany(this.company_id)
+    this.getCompanies();
+    
     this.contentHeader = {
       headerTitle: 'Company',
       actionButton: true,
@@ -80,7 +52,7 @@ export class CompanyDetailsComponent implements OnInit {
           {
             name: 'All Companies',
             isLink: true,
-            link: '/'
+            link: '/companies/company/allcompanies'
           },
           {
             name: 'Company details',
@@ -89,32 +61,77 @@ export class CompanyDetailsComponent implements OnInit {
         ]
       }
     };
-
-    this.getCompanies();
   }
 
+  // ------------ GET company details ------------
+
   getCompany(id:any):Company{
-      this.companyservice.getCompany(id).subscribe({
-        next:(data)=>{
-          this.company=data;
-          this.entities=data.entities;
-      },
-        error:(err) =>{
-          console.error(err);
-        }
-      });
-      return this.company;
+    this.companyservice.getCompany(id).subscribe({
+      next:(data:any)=>{
+        console.log(data);
+        
+        this.company=data;
+        this.entities=data.companyEntityResponses;
+    },
+      error:(err) =>{
+        console.error(err);
+      }
+    });
+    return this.company;
+  }
+
+   // ------------ Add entity to company ------------
+
+    entity: CompanyEntity = {
+      id:null,
+      name: '',
+      timestamp:'',
+      departements:[],
+      company_id:null
     }
 
-     // Select 
+    modalAddentity(modalPrimaryAdd) {
+      this.modalService.open(modalPrimaryAdd, {
+        centered: true,
+        windowClass: 'modal modal-primary'
+      });
+    }
+
+    addentity(event:any): void {
+      const data = {
+         name: this.entity.name,
+         company_id: this.company_id
+       }
+       this.entityService.createCompanyEntity(data).subscribe(
+         { next: (data) => {
+             this.ngOnInit();
+           }, error: (err) => {
+             console.error(err);
+           }
+         });
+     }
+
+      // ------------ Delete entity from company ------------
+
+    deleteEntity(id: number): void {
+      this.companyEntityService.deleteCompanyEntity(id).subscribe(
+          data => {
+            this.company=this.getCompany(this.company_id);
+            this.entities=this.company.entities;
+          },
+          error => console.log(error));
+    }
+
+    // ------------ GET companies for select ------------
 
      getCompanies(): void {
       const params = this.getParams(this.page, this.pageSize, this.searchTitle);
       this.companyservice.getCompanies(params).subscribe(
         {
           next: (data) => {
-            console.log("data",data);
+            
             const { content, totalElements } = data;
+            console.log(content);
             this.companies = content;
             this.count = totalElements;
           }, error: (err) => {
@@ -123,20 +140,6 @@ export class CompanyDetailsComponent implements OnInit {
         }
       );
     }
-
-     // delete entity
-
-     deleteCompanyEntity(id: number): void {
-      this.companyEntityService.deleteCompanyEntity(id)
-        .subscribe(
-          data => {
-            console.log(data);
-            this.company=this.getCompany(this.company_id);
-            this.entities=this.company.entities;
-          },
-          error => console.log(error));
-    }
-
 
     // pagination and search
 
@@ -168,80 +171,6 @@ export class CompanyDetailsComponent implements OnInit {
       }
     }
 
-    // Add entity to company
-
-    companyEntity: CompanyEntity = {
-      id:null,
-      name: '',
-      timestamp:'',
-      departements:[],
-      company_id:null
-    }
-
-    modalAddentity(modalPrimaryAdd) {
-      this.modalService.open(modalPrimaryAdd, {
-        centered: true,
-        windowClass: 'modal modal-primary'
-      });
-    }
-
-    addentity(event:any): void {
-      console.log("name" ,this.company_id)
-      const data = {
-         name: this.companyEntity.name,
-         company_id: this.company_edit
-       }
-       this.entityService.createCompanyEntity(data).subscribe(
-         {
-           next: (data) => {
-             this.entities=this.company.entities;
-             console.log(data);
-           }, error: (err) => {
-             console.error(err);
-           }
-         });
-     }
-     
-    onChange(e: any) {
-      this.company_edit=e.target.value;
-      console.log("company id ",this.company_edit)
-    }
-
-    // update entity 
-
-    updateEntity(): void {
-    const data = {
-      id: this.options.id,
-      name: this.options.name,
-      company_id: this.company_edit
-    }
-    this.companyEntityService.updateCompanyEntity(data.id, data).subscribe(
-      {
-        next: (data) => {
-          this.company=this.getCompany(this.company_id);
-          this.entities=this.company.entities;
-        }, error: (err) => {
-          console.error(err);
-        }
-      });
-  }
-
-  modalEdit(modalPrimaryedit, id) {
-    console.log(id);
-    this.companyEntityService.getCompanyEntity(id).subscribe({
-      next: (data) => {
-        this.options = data;
-        this.options.company_id=this.company_id
-      }, error: (err) => {
-        console.error(err);
-      }
-    });
-    this.modalService.open(modalPrimaryedit, {
-      centered: true,
-      windowClass: 'modal modal-primary',
-    });
-  }
-
     public getentitiesofcompany(): void {
       const params = {
         page : this.page-1,
@@ -260,6 +189,10 @@ export class CompanyDetailsComponent implements OnInit {
           }
         }
       );
+    }
+
+    onSelect(row:any){
+      this.router.navigate(['companies/company-entity/allentities/companyentity-details',row]);
     }
      
   

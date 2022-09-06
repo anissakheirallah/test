@@ -1,10 +1,13 @@
-export class RhRequest {
-    id: number;
-    datetime: Date;
-    employee_id: Number;
+export abstract class RhRequest {
+  id: number;
+  requestDate: Date;
+  city: String;
+  employee_id: number;
+  requeststatus_id: number;
 
-    constructor(datetime: Date, employee_id: Number) {
-        this.datetime = datetime;
-        this.employee_id = employee_id;
-    }
+  constructor(city: String, employee_id: number, requeststatus_id: number) {
+    this.city = city;
+    this.employee_id = employee_id;
+    this.requeststatus_id = requeststatus_id;
+  }
 }

@@ -19,7 +19,7 @@ export class AllCandidatsComponent implements OnInit {
 
   public chkBoxSelected = [];
 
-  constructor(private modalService: NgbModal, private AllCandidatService: AllCandidatService) { }
+  constructor(private modalService: NgbModal, private allCandidatService: AllCandidatService) { }
 
 
   ngOnInit(): void {
@@ -66,6 +66,7 @@ export class AllCandidatsComponent implements OnInit {
 
   page = 1;
   count = 0;
+  public sizeSelect: number = 2;
   email = '';
   phone = '';
   name = ''
@@ -101,13 +102,13 @@ export class AllCandidatsComponent implements OnInit {
   getAllUsers(): void {
     const params = {
       page : this.page-1,
-      size : 4,
+      size : this.sizeSelect,
       email : this.email,
       phone : this.phone,
       name : this.name
     }
     
-    this.AllCandidatService.getAllPagination(params).subscribe(
+    this.allCandidatService.getAllPagination(params).subscribe(
       {
         next: (response: any) => {
           const { content, totalElements, totalPages } = response;
@@ -138,7 +139,7 @@ export class AllCandidatsComponent implements OnInit {
       
        this.modal.close('Accept click')
        window.location.reload();
-       this.AllCandidatService.DeleteCandidatById(this.id).subscribe({
+       this.allCandidatService.DeleteCandidatById(this.id).subscribe({
          next: () => {
            console.log("Campaigns , deleted !", this.id);
            this.ngOnInit();

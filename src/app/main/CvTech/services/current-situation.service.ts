@@ -18,6 +18,9 @@ export class CurrentSituationService {
   {
     return this.http.get<CurrentSituation[]>(`${baseUrl}/situation`)
   }
+  getAllPagination(params: any): Observable<any> {
+    return this.http.get<any>(`${baseUrl}/situation`, { params });
+  }
 
   addSituation(cs : CurrentSituation) : Observable<any>
   {

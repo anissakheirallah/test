@@ -1,70 +1,70 @@
 <div class="content-wrapper container-xxl p-0">
-    <div class="content-body">
-      <app-content-header [contentHeader]="contentHeader"></app-content-header>   
-      <section class="horizontal-wizard">
-        <div id="stepper2" class="bs-stepper horizontal-wizard-example">
-          <div class="bs-stepper-header">
-            <div class="step" data-target="#account-details">
-              <button class="step-trigger">
-                <span class="bs-stepper-label">
-                  <h4 class="bs-stepper-title">Company entity Details</h4>
-                </span>
-              </button>
-            </div>         
-          </div>
-          <div class="bs-stepper-content">
-            <form #HWForm="ngForm">
-              <div id="account-details" class="content">
-                <form #accountDetailsForm="ngForm">
-                  
-                  <div class="row">
-                    <div class="form-group col-md-6">
-                      <label class="form-label" for="companyname">Company entity name</label>
-                      <input
-                        type="text"
-                        name="companyunitname"
-                        id="companyunitname"
-                        class="form-control"
-                        value="{{companyEntity.name}}"
-                        disabled
-                      />                   
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label class="form-label" for="email">Company name</label>
-                      <input
-                        type="text"
-                        name="companyname"
-                        id="companyname"
-                        class="form-control"
-                        aria-label="giantlink"
-                        value="{{companyEntity.timestamp}}"
-                        disabled
-                      />                
-                    </div>
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>   
+
+    <div class="row" id="basic-table">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+
+            <div class="row media-list media-bordered">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="media-body">
+                    <h5 class="media-heading"> Entity name </h5>
+                    <p class="mb-0">
+                      {{entity?.name}}
+                    </p>
                   </div>
-                </form>
-                  <br>
-                <div class="content-header">
-                  <h5 class="mb-0">Departments Details</h5>
                 </div>
-                <div class="row">
-                  <div class="col-12  mb-2">
-                    <button class="btn btn-primary ml-1" rippleEffect
+              </div>
+
+              <div class=" col-sm-6">
+                <div class="form-group">
+                  <div class="media-body">
+                    <h5 class="media-heading"> Date </h5>
+                    <p class="mb-0">
+                      {{entity?.timestamp | date:'yyyy-MM-dd HH:mm'}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>   
+          </div>
+        </div>
+      </div>
+    </div>
+    
+ <div class="row" id="basic-table">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+
+            <div class="content-header mb-2" >
+              <h5 class="mb-0"> Departments Details </h5>
+            </div>
+
+            <div class="row">
+              <div class="col-12 mb-2">
+                <button class="btn btn-primary ml-1" rippleEffect
                     (click)="modalAddentity(modalPrimaryAdd)">
                       <i data-feather="plus" class="mr-0 mr-sm-1"></i>
                       <span class="d-none d-sm-inline-block">
-                        Add New Department
+                        Add New department
                       </span>
-                    </button>              
-                    <label class="d-flex align-items-center float-right mr-1">
-                      Search
-                      <input type="search" [(ngModel)]="name" name="name" id="name" 
-                      placeholder="Search by Name" class="form-control ml-25"/>
-                    </label>
-                  </div>
-                </div>
-                
-                <ngx-datatable class="bootstrap core-bootstrap ml-1" 
+                </button>
+
+                <label class="d-flex align-items-center float-right mr-1">
+                  Search
+                  <input type="search" [(ngModel)]="name" name="name" id="name" 
+                    placeholder="Search by Name" class="form-control ml-25"
+                    (keyup)="getCompanyEntities()" />
+                </label>
+              </div>
+            </div>
+            
+            <ngx-datatable class="bootstrap core-bootstrap ml-1" 
                   [columnMode]="'flex'" 
                   [headerHeight]="40"
                   [footerHeight]="50" 
@@ -80,8 +80,13 @@
                       {{row?.name}}
                     </ng-template>
                   </ngx-datatable-column>
+
+                  <ngx-datatable-column name="Date" [flexGrow]="1">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{row?.timestamp | date:'yyyy-MM-dd HH:mm'}}
+                    </ng-template>
+                  </ngx-datatable-column>
                   
-    
                   <ngx-datatable-column name="Actions" [flexGrow]="0.75" >
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       <div class="d-flex align-items-center">
@@ -100,11 +105,16 @@
                           <div ngbDropdownMenu class="dropdown-menu-right" 
                             aria-labelledby="dropdownBrowserState">
                             
-                            <a ngbDropdownItem href="javascript:void(0);" 
+                            <a ngbDropdownItem href="javascript:void(0);">
+                              <i data-feather="edit-2" class="mr-50"></i>
+                              <span>Details</span>
+                            </a>
+                            
+                           <!-- <a ngbDropdownItem href="javascript:void(0);" 
                             (click)="modalEdit(modalPrimaryedit,row.id)">
                               <i data-feather="edit-2" class="mr-50"></i>
-                              <span>Edit</span>
-                            </a>
+                              <span>Details</span>
+                            </a>-->
 
                             <a ngbDropdownItem href="javascript:void(0);"
                             (click)="deleteDepartment(row.id)">
@@ -132,137 +142,81 @@
                         <span *ngIf="selectedMessage">
                           {{selectedCount.toLocaleString()}} {{selectedMessage}} / 
                         </span>
-                        {{rowCount.toLocaleString()}} {{totalMessage}}
+                          {{rowCount.toLocaleString()}} {{totalMessage}}
                       </div>
                   </ng-template>
                 </ngx-datatable-footer>
-    
-                <div class="col-lg-12">
-                  <ngb-pagination
-                    class="d-flex justify-content-end"
-                    [directionLinks]="false"
-                    [collectionSize]="totalPages"
-                    [(page)]="pagePosition"
-                    (pageChange)="pageChanged($event)"
-                  >
-                    <ng-template ngbPaginationPrevious>
-                      <span [data-feather]="'chevron-left'" [class]="'font-weight-bolder'">
-                      </span>Prev
-                    </ng-template>
+                
+            <div class="col-lg-12">
+              <ngb-pagination
+                class="d-flex justify-content-end"
+                [directionLinks]="false"
+                [collectionSize]="totalPages"
+                [(page)]="pagePosition"
+                (pageChange)="pageChanged($event)"
+              >
+                <ng-template ngbPaginationPrevious>
+                  <span [data-feather]="'chevron-left'" [class]="'font-weight-bolder'">
+                  </span>Prev
+                </ng-template>
 
-                    <ng-template ngbPaginationNext>
-                      Next
-                      <span [data-feather]="'chevron-right'" [class]="'font-weight-bolder'">
-                      </span>
-                    </ng-template>
+                <ng-template ngbPaginationNext>Next
+                  <span [data-feather]="'chevron-right'" [class]="'font-weight-bolder'">
+                  </span>
+                </ng-template>
 
-                  </ngb-pagination>
-                </div>
-
-              </div>
-              <div id="personal-info" class="content">           
-              </div>
-              <div id="address" class="content"> 
-              </div>
-              <div id="social-links" class="content">      
-              </div>
-            </form>
+              </ngb-pagination>
+            </div>
           </div>
         </div>
-      </section>  
+      </div>
     </div>
   </div>
-  
+</div>
 
-  <ng-template #modalPrimaryedit let-modal>
-    <div class="modal-header">
-        <h5 class="modal-title" id="myModalLabel160">Edit Department
-        </h5>
-        <button type="button" class="close"
-            (click)="modal.dismiss('Cross click')" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body" tabindex="0" ngbAutofocus>
-        <div class="col-12">
-            <div class="form-group row">
-                <div class="col-sm-3 col-form-label">
-                    <label for="nameeditdep">Name of department</label>
-                </div>
-                <div class="col-sm-9">
-                    <input type="text" id="nameeditdep" class="form-control"
-                        name="nameeditdep"
-                        [(ngModel)]="options.name" />
-                </div>
+<ng-template #modalPrimaryAdd let-modal>
+<div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160"> Add department </h5>
+    <button type="button" class="close"
+        (click)="modal.dismiss('Cross click')" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" tabindex="0" ngbAutofocus>
+
+    <div class="col-12">
+        <div class="form-group row">
+            <div class="col-sm-3 col-form-label">
+                <label for="addDeprt"> Name of department </label>
+            </div>
+            <div class="col-sm-9">
+                <input type="text" id="addDeprt" class="form-control"
+                    name="addDeprt" [(ngModel)]="department.name">
             </div>
         </div>
+    </div>
+
     <div class="col-12">
       <div class="form-group row">
           <div class="col-sm-3 col-form-label">
-              <label for="namec">Entity </label>
+              <label for="addEntity"> Entity </label>
           </div>
+          <br>
           <div class="col-sm-9">
-            <select class="form-control" (change)="onChange($event)">
-              <option *ngFor="let entity of entities" id="comp"
-              value="{{entity.id}}">{{entity.name}}</option>
-          </select>
+            <input type="text" id="addEntity" class="form-control"
+                  name="addEntity" [(ngModel)]="entity.name" disabled
+            />
           </div>
       </div>
-  </div>       
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary"
-            (click)="updateDepartment();modal.close('Accept click')"
-            rippleEffect>
-            Accept
-        </button>
-    </div>
-</ng-template>
-
-<ng-template #modalPrimaryAdd let-modal>
-  <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel160">Add department</h5>
-      <button type="button" class="close"
-          (click)="modal.dismiss('Cross click')" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
-  </div>
-  <div class="modal-body" tabindex="0" ngbAutofocus>
-      <div class="col-12">
-          <div class="form-group row">
-              <div class="col-sm-3 col-form-label">
-                  <label for="entityname">Name of department</label>
-              </div>
-              <div class="col-sm-9">
-                  <input type="text" id="entityname" class="form-control"
-                      name="entityname" [(ngModel)]="department.name"
-                     />
-              </div>
-          </div>
-      </div>
-  <div class="col-12">
-    <div class="form-group row">
-        <div class="col-sm-3 col-form-label">
-            <label for="namec">Company entity</label>
-        </div>
-        <br>
-        <div class="col-sm-9">
-          <select class="form-control" (change)="onChange($event)">
-            <option *ngFor="let entity of entities" id="comp"
-            value="{{entity.id}}">{{entity.name}}</option>
-        </select>
-        </div>
     </div>
 </div>
-  </div>
-  <div class="modal-footer">
-      <button type="button" class="btn btn-primary"
-          (click)="saveDepartment();modal.close('Accept click')"
-          rippleEffect>
-          Accept
-      </button>
-  </div>
-</ng-template>
 
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary"
+        (click)="saveDepartment();modal.close('Accept click')"rippleEffect>
+        Accept
+    </button>
+</div>
+</ng-template>
 
 

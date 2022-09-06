@@ -9,6 +9,7 @@ export class Company {
 	phoneNumber:string;
 	image:string;
 	webSite:string;
+    timestamp:string;
     entities:Array<CompanyEntity>=[];
 
     constructor(name:string,address:string,email:string,phonenumber:string,website:string){

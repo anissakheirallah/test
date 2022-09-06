@@ -25,6 +25,10 @@ export class GlobalExperienceService implements OnInit {
       return this.http.get<GlobalExperience[]>(`${baseUrl}/experience`)
   }
 
+  getAllPagination(params: any): Observable<any> {
+    return this.http.get<GlobalExperience[]>(`${baseUrl}/experience`, { params });
+  }
+
   addExperience(experience : GlobalExperience)
   {
     return this.http.post(`${baseUrl}/experience`,experience)
