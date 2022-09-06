@@ -32,6 +32,9 @@ export const locale = {
         ALLPROJECTS: "All projects",
         EMPLOYEE: "Employee",
         ADDEMPLOYEE: "Add employee",
+        ALLEMPLOYEES:"All employees",
+        JOB:"Job",
+        ALLJOBS:"All jobs"
       },
       CVTECH: {
         APP: "Campagn",

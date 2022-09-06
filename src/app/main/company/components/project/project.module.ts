@@ -1,24 +1,25 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { CoreCommonModule } from '@core/common.module';
-import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
+import { AllProjectsComponent } from './all-projects/all-projects.component';
 
-const routes: Routes = [
-  
-  {
-    path: '',
-    loadChildren: () => import('./components/components.module').then(m => m.ComponentsModule)
-  },
-  
+const routes: Routes = 
+[
+    {
+        path: 'allprojects',
+        component: AllProjectsComponent,
+      }
 ];
 
 @NgModule({
   declarations: [
+    AllProjectsComponent
   ],
   imports: [
     CommonModule,
@@ -28,10 +29,9 @@ const routes: Routes = [
     NgbModule,
     NgSelectModule,
     FormsModule,
-    NgxDatatableModule,
-    NgbPaginationModule
+    NgxDatatableModule
   ],
 
   providers: []
 })
-export class CompanyModule { }
+export class ProjectModule { }

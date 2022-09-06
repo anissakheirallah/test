@@ -20,6 +20,8 @@ export const locale = {
       COMPANYENTITY:"entité",
       SELECTENTITY:"Choisir une entité",
       SELECTCOMPANY:"Choisir Compagnie",
+      JOBB:"Fonction",
+      PROJECTT:"Projet",
       TEAM: {
         ALLTEAMS: 'Toutes les équipes',
         ADDNEWTEAM:"Ajouter une équipe",
@@ -59,6 +61,30 @@ export const locale = {
         VALIDATIONMINLENGTH:"Le nom du département doit comporter plus de 3 caractères !",
         DELETEREQUEST:"Voulez-vous vraiment supprimer le département ?",
         DELETESELECTEDREQUEST:"Êtes-vous sûr de vouloir supprimer les départements sélectionnés ?",
+      },
+      JOB:{
+        ALLJOBS:"Toutes les fonctions",
+        ADDNEWJOB:"Ajouter une nouvelle fonction",
+        ADDJOB:"Ajout de fonction",
+        NAMEJOB:"Nom du fonction",
+        EDITJOB:"Edition de fonction",
+        ENTERJOB:"Entrez le nom du fonction",
+        VALIDATIONREQUIRED:"Le nom du fonction est obligatoire !",
+        VALIDATIONMINLENGTH:"Le nom du fonction doit comporter plus de 3 caractères !",
+        DELETEREQUEST:"Voulez-vous vraiment supprimer la fonction ?",
+        DELETESELECTEDREQUEST:"Êtes-vous sûr de vouloir supprimer les fonctions sélectionnés ?",
+      },
+      PROJECT:{
+        ALLPROJECTS:"Tous les projets",
+        ADDNEWPROJECT:"Ajouter un nouveau projet",
+        ADDPROJECT:"Ajout de projet",
+        NAMEPROJECT:"Nom du projet",
+        EDITPROJECT:"Edition de projet",
+        ENTERPROJECT:"Entrez le nom du projet",
+        VALIDATIONREQUIRED:"Le nom du projet est obligatoire !",
+        VALIDATIONMINLENGTH:"Le nom du projet doit comporter plus de 3 caractères !",
+        DELETEREQUEST:"Voulez-vous vraiment supprimer le projet ?",
+        DELETESELECTEDREQUEST:"Êtes-vous sûr de vouloir supprimer les projets sélectionnés ?",
       }       
     }
 }

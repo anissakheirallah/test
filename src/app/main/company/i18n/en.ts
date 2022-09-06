@@ -20,6 +20,8 @@ export const locale = {
       COMPANYENTITY:"Company entity",
       SELECTENTITY:"Select company entity",
       SELECTCOMPANY:"Select company",
+      JOBB:"Job",
+      PROJECTT:"Project",
       TEAM: {
         ALLTEAMS: 'All teams',
         ADDNEWTEAM:"Add New Team",
@@ -59,6 +61,30 @@ export const locale = {
         VALIDATIONMINLENGTH:"The department's name should be more than 3 character!",
         DELETEREQUEST:"Are you sure you want to delete the department ?",
         DELETESELECTEDREQUEST:" Are you sure you want to delete the selected departments ?",
-      }     
+      },     
+      JOB:{
+        ALLJOBS: "All jobs",
+        ADDNEWJOB:"Add new job",
+        ADDJOB:"Add job",
+        NAMEJOB:"Name of job",
+        EDITJOB:"Edit job",
+        ENTERJOB:"Enter the job's name",
+        VALIDATIONREQUIRED:"The job's name is required",
+        VALIDATIONMINLENGTH:"The job's name should be more than 3 character!",
+        DELETEREQUEST:"Are you sure you want to delete the job ?",
+        DELETESELECTEDREQUEST:" Are you sure you want to delete the selected jobs ?",
+      },
+      PROJECT:{
+        ALLPROJECTS: "All projects",
+        ADDNEWPROJECT:"Add new project",
+        ADDPROJECT:"Add project",
+        NAMEPROJECT:"Name of project",
+        EDITPROJECT:"Edit project",
+        ENTERPROJECT:"Enter the project's name",
+        VALIDATIONREQUIRED:"The project's name is required",
+        VALIDATIONMINLENGTH:"The project's name should be more than 3 character!",
+        DELETEREQUEST:"Are you sure you want to delete the project ?",
+        DELETESELECTEDREQUEST:" Are you sure you want to delete the selected projects ?",
+      }
     }
 }
