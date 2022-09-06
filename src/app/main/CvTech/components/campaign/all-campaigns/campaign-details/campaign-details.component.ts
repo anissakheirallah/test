@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AllCampaign } from '../../../../models/all-campaign.model';
-import { AllCampaignService } from '../../../../services/all-campaign.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Candidat } from '../../../../models/candidat.model';
-import { Postulation } from '../../../../models/postulation.model';
-import { PostulationResponse } from '../../../../models/postulation-response.model';
-import { PostulationService } from '../../../../services/postulation.service';
+import { Candidate } from 'app/main/CvTech/models/candidate.model';
 import { AllCandidatService } from 'app/main/CvTech/services/all-candidat.service';
+import { AllCampaignService } from '../../../../services/all-campaign.service';
+import { PostulationService } from '../../../../services/postulation.service';
 
 @Component({
   selector: 'app-campaign-details',
@@ -62,10 +59,10 @@ export class CampaignDetailsComponent implements OnInit {
   }
 
   // ------- Get All Candidats ------- //
-  Postulations?: PostulationResponse[];
-  postulatedCandidats: Candidat[] = [];
+  Postulations?: any[];
+  postulatedCandidats: Candidate[] = [];
 
-  Candidats?: Candidat[];
+  Candidats?: Candidate[];
   public getCandidats() {
     const params = {
       page: this.page - 1,
@@ -81,14 +78,14 @@ export class CampaignDetailsComponent implements OnInit {
           this.count = totalElements;
           this.totalPages = totalPages * 10;
           this.Candidats = response.content;
-          this.postulatedCandidats=[]
-          
+          this.postulatedCandidats = []
+
           this.Postulations.forEach(p => {
             this.postulatedCandidats.push(p.candidat);
           })
           this.postulatedCandidats.forEach(candid => {
-            this.Candidats.forEach((candidat,index) => {
-              if(candidat.id == candid.id) {
+            this.Candidats.forEach((candidat, index) => {
+              if (candidat.id == candid.id) {
                 this.Candidats.splice(index, 1);
               }
             })
@@ -123,7 +120,7 @@ export class CampaignDetailsComponent implements OnInit {
 
   // ------- Get One Campaign By Id ------- //
   campainId: number = this.route.snapshot.params["campaign_id"];
-  Campaign?: AllCampaign;
+  Campaign?: any;
   getCampaign() {
     this.AllCampaignService.getbyid(this.campainId).subscribe(
       {
@@ -139,7 +136,7 @@ export class CampaignDetailsComponent implements OnInit {
   }
 
   // ------- Postulation ---------- //
-  postulation: Postulation;
+  postulation: any;
   postulatCandidat(): void {
     console.log(this.candidatIds);
     this.candidatIds.forEach(id => {
@@ -164,8 +161,8 @@ export class CampaignDetailsComponent implements OnInit {
 
     });
     console.log(this.candidatIds);
-    this.candidatIds=[];
-    
+    this.candidatIds = [];
+
   }
 
   // ---------- Delete Selected Candidats ------------ //

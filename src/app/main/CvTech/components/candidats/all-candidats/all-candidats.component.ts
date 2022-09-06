@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AllCandidat } from '../../../models/all-candidat.model';
-import { AllCandidatService } from "../../../services/all-candidat.service";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Candidate } from 'app/main/CvTech/models/candidate.model';
+import { CandidateService } from 'app/main/CvTech/services/candidate.service';
 
 
 
@@ -19,7 +19,7 @@ export class AllCandidatsComponent implements OnInit {
 
   public chkBoxSelected = [];
 
-  constructor(private modalService: NgbModal, private allCandidatService: AllCandidatService) { }
+  constructor(private modalService: NgbModal, private candidateService: CandidateService) { }
 
 
   ngOnInit(): void {
@@ -97,7 +97,7 @@ export class AllCandidatsComponent implements OnInit {
 
     return params;
   }
-  Users?: AllCandidat[];
+  Users?: Candidate[];
 
   getAllUsers(): void {
     const params = {
@@ -108,7 +108,7 @@ export class AllCandidatsComponent implements OnInit {
       name : this.name
     }
     
-    this.allCandidatService.getAllPagination(params).subscribe(
+    this.candidateService.getAllPagination(params).subscribe(
       {
         next: (response: any) => {
           const { content, totalElements, totalPages } = response;
@@ -139,7 +139,7 @@ export class AllCandidatsComponent implements OnInit {
       
        this.modal.close('Accept click')
        window.location.reload();
-       this.allCandidatService.DeleteCandidatById(this.id).subscribe({
+       this.candidateService.DeleteCandidatById(this.id).subscribe({
          next: () => {
            console.log("Campaigns , deleted !", this.id);
            this.ngOnInit();

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AllCampaignService } from '../../../services/all-campaign.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AllCampaign } from '../../../models/all-campaign.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -72,7 +71,7 @@ export class AllCampaignsComponent implements OnInit {
   }
 
   public chkBoxSelected = [];
-  Campains? : AllCampaign[];
+  Campains? : any[];
 
   public getAllCampaigns(): void {
     const params = {

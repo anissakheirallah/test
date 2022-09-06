@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AllCandidatService } from '../../../../services/all-candidat.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AllCandidat } from '../../../../models/all-candidat.model';
-
-//added by saad for form input validation....
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SafeKeyedRead } from '@angular/compiler';
+import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Candidate } from 'app/main/CvTech/models/candidate.model';
+import { CandidateService } from 'app/main/CvTech/services/candidate.service';
 
 
 @Component({
@@ -21,22 +18,24 @@ export class CandidatDetailsComponent implements OnInit {
     this.model = this.modalService.open(modalForm);
   }
 
-  constructor(private route: ActivatedRoute, private AllCandidatService: AllCandidatService, private modalService: NgbModal, private formBuilder: FormBuilder) { }
+  constructor(private route: ActivatedRoute, private candidateService: CandidateService, private modalService: NgbModal, private formBuilder: FormBuilder) { }
 
   id: number = this.route.snapshot.params["candidat_id"];
   contentHeader: { headerTitle: string; actionButton: boolean; breadcrumb: { type: string; links: ({ name: string; isLink: boolean; link: string; } | { name: string; isLink: boolean; link?: undefined; })[]; }; };
 
-  User?: AllCandidat = {
+  candidate?: Candidate = {
     id: 0,
-    civility: undefined,
-    name: undefined,
-    email: undefined,
-    phone: undefined,
-    adress: undefined,
-    city: undefined,
-    country: undefined,
-    birthDate: undefined,
-    message: undefined
+    civility: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    adress: '',
+    city: '',
+    country: '',
+    birthDate: new Date(),
+    message: '',
+    availability: ''
   };
 
   // added by saad.................. 
@@ -56,41 +55,41 @@ export class CandidatDetailsComponent implements OnInit {
   submitted = false;
 
   getCandidat() {
-    this.AllCandidatService.getbyid(this.id).subscribe(
+    this.candidateService.getbyid(this.id).subscribe(
       {
         next: (response: any) => {
-          this.User = response;
+          this.candidate = response;
           this.form = this.formBuilder.group(
             {
               name: [
-                this.User.name,
+                this.candidate.firstName,
                 [
                   Validators.required,
                   Validators.minLength(3),
                   Validators.pattern("[a-zA-Z ]*")
                 ]
               ],
-              birthDate: [this.User.birthDate, Validators.required],
-              civility: [this.User.civility, Validators.required],
-              country: [this.User.country, Validators.required],
-              email: [this.User.email, [Validators.required, Validators.email]],
+              birthDate: [this.candidate.birthDate, Validators.required],
+              civility: [this.candidate.civility, Validators.required],
+              country: [this.candidate.country, Validators.required],
+              email: [this.candidate.email, [Validators.required, Validators.email]],
               phone: [
-                this.User.phone,
+                this.candidate.phone,
                 [
                   Validators.required,
                   Validators.pattern(/(\+212|0)([ \-_/]*)(\d[ \-_/]*){9}/g),
-      
+
                 ]
               ],
-              city: [this.User.city,
+              city: [this.candidate.city,
               [
                 Validators.required,
                 Validators.pattern("[a-zA-Z ]*")
               ]
               ],
-              adress: [this.User.adress, Validators.required],
+              adress: [this.candidate.adress, Validators.required],
               message: [
-                this.User.message,
+                this.candidate.message,
                 [
                   Validators.required,
                   Validators.minLength(10),
@@ -148,17 +147,17 @@ export class CandidatDetailsComponent implements OnInit {
     };
 
     console.log(this.form.value);
-    
+
   }
 
 
 
   updateCandidat(id: number): void {
 
-    this.User = this.form.value;
-    console.log(this.User);
+    this.candidate = this.form.value;
+    console.log(this.candidate);
 
-    this.AllCandidatService.update(this.User, id).subscribe({
+    this.candidateService.update(this.candidate, id).subscribe({
       next: (data) => {
         this.model.close()
         console.log(data);
