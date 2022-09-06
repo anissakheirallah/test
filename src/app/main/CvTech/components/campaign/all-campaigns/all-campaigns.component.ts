@@ -59,8 +59,9 @@ export class AllCampaignsComponent implements OnInit {
   }
   // -------------------- pagination & search
   page = 1;
+  public sizeSelect: number = 2;
+  name = '';
   count = 0;
-  name = ''
   public pagePosition = 1;
   public totalPages=0;
   
@@ -70,28 +71,13 @@ export class AllCampaignsComponent implements OnInit {
     this.getAllCampaigns();
   }
 
-  getParams(page: number, pageSize: number, name: string) {
-    let params: any = {};
-    if (page) {
-      params['page'] = page - 1;
-    }
-    if (pageSize) {
-      params['size'] = pageSize;
-    }
-    if (name) {
-      params['name'] = name;
-    }
-
-    return params;
-  }
-
   public chkBoxSelected = [];
   Campains? : AllCampaign[];
 
   public getAllCampaigns(): void {
     const params = {
       page : this.page-1,
-      size : 3,
+      size : this.sizeSelect,
       name : this.name
     }
     this.AllCampaignService.getAllPagination(params).subscribe(
@@ -108,7 +94,7 @@ export class AllCampaignsComponent implements OnInit {
       }
     );
   }
-
+  public pageAdvancedNoEllipses = 8;
   private modal=null;
   private id=0;
 

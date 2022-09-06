@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
@@ -28,4 +28,14 @@ export class AvailabiltyService {
   {
     return this.http.delete(`${baseUrl}/availablity/${id}`,{responseType : 'text'})
   }
+
+  public getAllPagination( params: any ): Observable<any>
+  {
+    return this.http.get<Availability[]>(`${baseUrl}/availablity`, { params } )
+  }
+
+  update(data: any, id: number): Observable<HttpEvent<any>> {
+    return this.http.put<HttpEvent<any>>(`${baseUrl}/availablity/${id}`, data);
+  }
+
 }

@@ -1,5 +1,6 @@
 export class Availability 
 {
+    id:number;
     name: String;
     description: String;
 

@@ -15,9 +15,10 @@ import { SafeKeyedRead } from '@angular/compiler';
   styleUrls: ['./candidat-details.component.scss']
 })
 export class CandidatDetailsComponent implements OnInit {
+  model: import("@ng-bootstrap/ng-bootstrap").NgbModalRef;
 
   modalOpenForm(modalForm) {
-    this.modalService.open(modalForm);
+    this.model = this.modalService.open(modalForm);
   }
 
   constructor(private route: ActivatedRoute, private AllCandidatService: AllCandidatService, private modalService: NgbModal, private formBuilder: FormBuilder) { }
@@ -159,6 +160,7 @@ export class CandidatDetailsComponent implements OnInit {
 
     this.AllCandidatService.update(this.User, id).subscribe({
       next: (data) => {
+        this.model.close()
         console.log(data);
       }, error: (err) => {
         console.log(err);
