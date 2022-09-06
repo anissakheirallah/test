@@ -7,7 +7,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { AddEmployeeComponent } from './employee/add-employee/add-employee.component';
 
 
 const routes: Routes = 
@@ -32,6 +31,14 @@ const routes: Routes =
     path: 'employee',
     loadChildren: () => import('./employee/employee.module').then(m => m.EmployeeModule)
   },
+  {
+    path: 'project',
+    loadChildren: () => import('./project/project.module').then(m => m.ProjectModule)
+  },
+  {
+    path: 'job',
+    loadChildren: () => import('./job/job.module').then(m => m.JobModule)
+  }
 
 ];
 

@@ -9,6 +9,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ContentHeaderModule } from "app/layout/components/content-header/content-header.module";
 import { AddEmployeeComponent } from "./add-employee/add-employee.component";
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { AllEmployeesComponent } from './all-employees/all-employees.component';
 
 const routes: Routes = 
 [
@@ -16,11 +17,17 @@ const routes: Routes =
         path: 'addemployee',
         component: AddEmployeeComponent,
       },
+      {
+        path: 'allemployees',
+        component: AllEmployeesComponent,
+      },
+      
 ];
 
 @NgModule({
   declarations: [
-    AddEmployeeComponent
+    AddEmployeeComponent,
+    AllEmployeesComponent
   ],
   imports: [
     CommonModule,
