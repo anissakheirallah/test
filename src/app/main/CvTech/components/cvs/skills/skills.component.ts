@@ -1,15 +1,14 @@
-import { HttpErrorResponse, HttpResponse } from "@angular/common/http";
-import { Component, NgModule, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
   AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from "@angular/forms";
-import { Skill } from "../../../models/skill";
-import { SkillService } from "../../../services/skill.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Skill } from "app/main/CvTech/models/skill.model";
+import { SkillService } from "../../../services/skill.service";
 
 @Component({
   selector: "app-skills",
@@ -50,7 +49,7 @@ export class SkillsComponent implements OnInit {
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private skillService: SkillService
-  ) {}
+  ) { }
 
   public skillForm: FormGroup = new FormGroup({
     name: new FormControl(""),

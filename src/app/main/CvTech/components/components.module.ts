@@ -19,10 +19,6 @@ const routes: Routes =
       loadChildren: () => import('./campaign/campaign.module').then(m => m.CampaignModule)
     },
     {
-      path: 'profile',
-      loadChildren: () => import('./profil/profile.module').then(m => m.ProfileModule)
-    },
-    {
       path: 'candidats',
       loadChildren: () => import('./candidats/candidats.module').then(m => m.CandidatsModule)
     },
@@ -51,7 +47,6 @@ const routes: Routes =
     NgxDatatableModule,
     CampaignModule,
     CandidatsModule,
-    NgbModule,
   ],
 
   providers: []

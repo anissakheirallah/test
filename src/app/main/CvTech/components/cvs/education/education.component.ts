@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Education } from 'app/main/CvTech/models/education';
+import { Education } from 'app/main/cvtech/models/education.model';
 import { EducationService } from 'app/main/CvTech/services/education.service';
 import Swal from 'sweetalert2';
 

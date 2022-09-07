@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { GlobalExperience } from 'app/main/CvTech/models/global-experience';
+import { GlobalExperience } from 'app/main/CvTech/models/global-experience.model';
 import { GlobalExperienceService } from 'app/main/CvTech/services/global-experience.service';
 
 @Component({
@@ -30,13 +30,13 @@ export class GlobalExperienceComponent implements OnInit {
     name: new FormControl(""),
     description: new FormControl(""),
   });
-  public exp: GlobalExperience = { name: "", description: "" };
+  public exp: GlobalExperience = { id: null, name: "", description: "" };
   public data?: GlobalExperience[];
 
   constructor(
     private modalService: NgbModal,
     private exprienceService: GlobalExperienceService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllData();
@@ -125,6 +125,7 @@ export class GlobalExperienceComponent implements OnInit {
   addData(): void {
     this.exp = this.exprienceForm.value;
     const experienceData = {
+      id:null,
       name: this.exp.name,
       description: this.exp.description,
     };
@@ -146,7 +147,7 @@ export class GlobalExperienceComponent implements OnInit {
   modalOpenDanger(modalDanger, id: any) {
     this.id = id;
     console.log(id);
-    
+
     this.modal = this.modalService.open(modalDanger, {
       centered: true,
       windowClass: "modal modal-danger",

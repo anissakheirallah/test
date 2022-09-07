@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Candidate } from 'app/main/CvTech/models/candidate.model';
-import { AllCandidatService } from 'app/main/CvTech/services/all-candidat.service';
+import { CandidateService } from 'app/main/CvTech/services/candidate.service';
 import { AllCampaignService } from '../../../../services/all-campaign.service';
-import { PostulationService } from '../../../../services/postulation.service';
 
 @Component({
   selector: 'app-campaign-details',
@@ -17,8 +16,7 @@ export class CampaignDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private AllCampaignService: AllCampaignService,
     private modalService: NgbModal,
-    private AllCandidatService: AllCandidatService,
-    private PostulationService: PostulationService,
+    private AllCandidatService: CandidateService,
   ) { }
 
   contentHeader: { headerTitle: string; actionButton: boolean; breadcrumb: { type: string; links: ({ name: string; isLink: boolean; link: string; } | { name: string; isLink: boolean; link?: undefined; })[]; }; };
@@ -147,18 +145,6 @@ export class CampaignDetailsComponent implements OnInit {
         campaign_id: this.campainId,
       };
 
-      this.PostulationService.post(data).subscribe({
-        next: (data) => {
-          console.log(data);
-          document.getElementById('close-model')?.click();
-
-          this.ngOnInit();
-        },
-        error: (err) => {
-          console.error(err);
-        },
-      });
-
     });
     console.log(this.candidatIds);
     this.candidatIds = [];
@@ -166,19 +152,6 @@ export class CampaignDetailsComponent implements OnInit {
   }
 
   // ---------- Delete Selected Candidats ------------ //
-  deleteSelectedCandidat(id: number) {
-    this.PostulationService.deletebyid(id).subscribe(
-      {
-        next: () => {
-          console.log("deleted ! ", id);
-          this.ngOnInit();
-        },
-        error: (err) => {
-          console.error(err);
-        }
-      }
-    );
-  }
 
 
   ngOnInit(): void {

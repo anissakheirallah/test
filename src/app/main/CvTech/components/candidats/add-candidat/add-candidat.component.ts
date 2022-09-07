@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Candidate } from 'app/main/CvTech/models/candidate.model';
+import { CandidateService } from 'app/main/CvTech/services/candidate.service';
 import Swal from 'sweetalert2';
-import { AllCandidat } from '../../../models/all-candidat.model';
-import { AllCandidatService } from '../../../services/all-candidat.service';
-
 
 
 @Component({
@@ -15,17 +14,19 @@ import { AllCandidatService } from '../../../services/all-candidat.service';
 export class AddCandidatComponent implements OnInit {
   contentHeader: { headerTitle: string; actionButton: boolean; breadcrumb: { type: string; links: ({ name: string; isLink: boolean; link: string; } | { name: string; isLink: boolean; link?: undefined; })[]; }; };
 
-  public candidat: AllCandidat = {
+  public candidat: Candidate = {
     id: 0,
     civility: undefined,
-    name: undefined,
+    firstName: undefined,
+    lastName: undefined,
     email: undefined,
     phone: undefined,
     adress: undefined,
     city: undefined,
     country: undefined,
     birthDate: undefined,
-    message: undefined
+    message: undefined,
+    availability: undefined
   }
 
 
@@ -42,7 +43,7 @@ export class AddCandidatComponent implements OnInit {
   });
   submitted = false;
   constructor(private formBuilder: FormBuilder,
-    private AllCandidatService: AllCandidatService,
+    private candidatService: CandidateService,
     private router: Router,
   ) { }
 
@@ -133,7 +134,7 @@ export class AddCandidatComponent implements OnInit {
 
   }
   private addNewCandidat() {
-    this.AllCandidatService.addCandidat(this.candidat).subscribe(
+    this.candidatService.addCandidat(this.candidat).subscribe(
       {
         next: (response: any) => {
           console.log(response);

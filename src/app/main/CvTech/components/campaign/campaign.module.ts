@@ -30,10 +30,12 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AddCampaignComponent,
+    FunctionComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    CoreCommonModule,
     CoreCommonModule,
     ContentHeaderModule,
     NgbModule,

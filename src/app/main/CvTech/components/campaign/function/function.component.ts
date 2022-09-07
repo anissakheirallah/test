@@ -7,9 +7,9 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { Function } from "app/main/CvTech/models/function";
 import { FunctionService } from "app/main/CvTech/services/function.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Function } from "app/main/CvTech/models/function.model";
 
 @Component({
   selector: "app-function",

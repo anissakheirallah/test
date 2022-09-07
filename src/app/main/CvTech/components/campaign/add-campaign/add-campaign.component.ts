@@ -1,16 +1,14 @@
-import { Component, OnInit, OnDestroy, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { Router } from "@angular/router";
-import { AllCampaignService } from "app/main/CvTech/services/all-campaign.service";
-import { EducationService } from "app/main/CvTech/services/education.service";
-import { FunctionService } from "app/main/CvTech/services/function.service";
-import { SkillService } from "app/main/CvTech/services/skill.service";
-import { GlobalExperienceService } from "app/main/CvTech/services/global-experience.service";
-import { CurrentSituationService } from "app/main/CvTech/services/current-situation.service";
-import { AvailabiltyService } from "app/main/CvTech/services/availabilty.service";
-import Swal from "sweetalert2";
 import { Education } from "app/main/cvtech/models/education.model";
 import { GlobalExperience } from "app/main/CvTech/models/global-experience.model";
 import { Skill } from "app/main/CvTech/models/skill.model";
+import { AllCampaignService } from "app/main/CvTech/services/all-campaign.service";
+import { EducationService } from "app/main/CvTech/services/education.service";
+import { FunctionService } from "app/main/CvTech/services/function.service";
+import { GlobalExperienceService } from "app/main/CvTech/services/global-experience.service";
+import { SkillService } from "app/main/CvTech/services/skill.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: "app-add-campaign",
@@ -30,9 +28,7 @@ export class AddCampaignComponent implements OnInit {
     private SkillService: SkillService,
     private FunctionService: FunctionService,
     private GlobalExperienceService: GlobalExperienceService,
-    private CurrentSituationService: CurrentSituationService,
-    private AvailabiltyService: AvailabiltyService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.contentHeader = {
