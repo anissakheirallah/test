@@ -3,37 +3,27 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { CoreCommonModule } from '@core/common.module';
+import { CoreCardModule } from '@core/components/core-card/core-card.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
-import { ComponentModule } from './campaign/component/component.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { AddCampaignComponent } from './add-campaign/add-campaign.component';
 
-
-const routes: Routes =
-  [
-    {
-      path: 'campaign',
-      loadChildren: () => import('./campaign/campaign.module').then(m => m.CampaignModule)
-    },
-    {
-      path: 'candidates',
-      loadChildren: () => import('./candidate/candidate.module').then(m => m.CandidateModule)
-    },
-    {
-      path: 'cvs',
-      loadChildren: () => import('./cvs/cvs.module').then(m => m.CvsModule)
-    },
-    {
-      path: 'dashboard',
-      component: DashboardComponent,
-    },
-  ];
+const routes: Routes = [
+  {
+    path: 'add',
+    component: AddCampaignComponent
+  },
+  {
+    path: 'allcampaigns',
+    loadChildren: () => import('./all-campaign/all-campaign.module').then(m => m.AllCampaignModule)
+  },
+]
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    AddCampaignComponent
   ],
   imports: [
     CommonModule,
@@ -44,10 +34,7 @@ const routes: Routes =
     NgSelectModule,
     FormsModule,
     NgxDatatableModule,
-    ComponentModule,
-    //CampaignModule,
-  ],
-
-  providers: []
+    CoreCardModule
+  ]
 })
-export class ComponentsModule { }
+export class ComponentModule { }
