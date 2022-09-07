@@ -27,6 +27,8 @@ import { CrmModule } from "./main/crm/crm.module";
 import { ForumsComponent } from './main/workSpace/components/forums/forums.component';
 import { DocumentsComponent } from './main/workSpace/components/documents/documents.component';
 import { ConfigurationComponent } from './main/workSpace/components/configuration/configuration.component';
+import {ContentHeaderModule} from "./layout/components/content-header/content-header.module";
+
 
 const appRoutes: Routes = [
   {
@@ -68,38 +70,39 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [AppComponent, ForumsComponent, DocumentsComponent, ConfigurationComponent],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    RouterModule.forRoot(appRoutes, {
-      scrollPositionRestoration: "enabled", // Add options right here
-      relativeLinkResolution: "legacy",
-    }),
-    TranslateModule.forRoot(),
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        RouterModule.forRoot(appRoutes, {
+            scrollPositionRestoration: "enabled", // Add options right here
+            relativeLinkResolution: "legacy",
+        }),
+        TranslateModule.forRoot(),
 
-    //NgBootstrap
-    NgbModule,
-    ToastrModule.forRoot(),
+        //NgBootstrap
+        NgbModule,
+        ToastrModule.forRoot(),
 
-    // Core modules
-    CoreModule.forRoot(coreConfig),
-    CoreCommonModule,
-    CoreSidebarModule,
-    CoreThemeCustomizerModule,
+        // Core modules
+        CoreModule.forRoot(coreConfig),
+        CoreCommonModule,
+        CoreSidebarModule,
+        CoreThemeCustomizerModule,
 
-    // App modules
-    LayoutModule,
-    SampleModule,
-    CvtechModule,
-    CompanyModule,
-    GrhModule,
+        // App modules
+        LayoutModule,
+        SampleModule,
+        CvtechModule,
+        CompanyModule,
+        GrhModule,
 
-    ReactiveFormsModule,
+        ReactiveFormsModule,
 
-    VacationModule,
-    CrmModule,
-  ],
+        VacationModule,
+        CrmModule,
+        ContentHeaderModule,
+    ],
 
   bootstrap: [AppComponent],
 })
