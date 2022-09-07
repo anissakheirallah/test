@@ -2,6 +2,7 @@ export const locale = {
   lang: "en",
   data: {
     MENU: {
+<<<<<<< HEAD
       HOME: "Home",
       SAMPLE: "Sample",
       Dashboard: "Dashboard",
@@ -16,8 +17,23 @@ export const locale = {
       GSC: "skill area management",
       GFS: "desired function management",
       adduser: "Add new user",
+=======
+      HOME: 'Home',
+      SAMPLE: 'Sample',
+      Dashboard: 'Dashboard',
+      CVs: 'CVs',
+      Users: 'Users',
+      Campaign: 'Campaign',
+      cvtech: 'CvTech',
+      Settings: 'Settings',
+      GNE: 'Education level management',
+      GEG: 'Global experience management',
+      GSC: 'skill area management',
+      GFS: 'desired function management',
+      adduser: 'Add new user',
+>>>>>>> a916fadae7fe522f40f1db8236b4609451b6e1b8
       COMPANY: {
-        APP: "Companies",
+        APP: 'Companies',
         COMP: "Company",
         COMPANYENTITY: "Company entity",
         DEPARTMENT: "Department",
@@ -33,9 +49,9 @@ export const locale = {
         ALLPROJECTS: "All projects",
         EMPLOYEE: "Employee",
         ADDEMPLOYEE: "Add employee",
-        ALLEMPLOYEES:"All employees",
-        JOB:"Job",
-        ALLJOBS:"All jobs"
+        ALLEMPLOYEES: "All employees",
+        JOB: "Job",
+        ALLJOBS: "All jobs"
       },
       CVTECH: {
         APP: "Campagn",
@@ -51,8 +67,15 @@ export const locale = {
         COMMERCIAL: "Commercial",
         ALLCOMMERCIAL: "All Commercials",
         ADDCOMMERCIAL: "Add Commercial",
+        PROJECT: "Project",
+        ALLPROJECTS: "All Projects",
+        PRODUCT: "Product",
+        ALLPRODUCTS: "All Products",
+        SERVICE: "Service",
+        ALLSERVICES: "All Services",
+        SERVICETYPE: "Service Type",
+        ALLSERVICETYPES: "All Service Types"
       },
-
       GRH: {
         APP: "GRH",
         GRH: "Human resource management",
