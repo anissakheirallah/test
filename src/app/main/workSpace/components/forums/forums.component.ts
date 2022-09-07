@@ -8,7 +8,18 @@ import { Component, OnInit } from '@angular/core';
 export class ForumsComponent implements OnInit {
 
 
-  public showReportIcons = true;
+
+
+  public carouselImages = {
+    one: 'assets/images/slider/01.jpg',
+    two: 'assets/images/slider/02.jpg',
+    three: 'assets/images/slider/03.jpg',
+    four: 'assets/images/slider/04.jpg',
+    five: 'assets/images/slider/05.jpg',
+    six: 'assets/images/slider/06.jpg'
+  };
+
+
 
   constructor() { }
 
