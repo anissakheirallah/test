@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
-import { Skill } from "../models/skill";
 import { environment } from "environments/environment";
+import { Skill } from "../models/skill.model";
 
 const baseUrl = environment.UrlCvTech;
 
