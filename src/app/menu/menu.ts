@@ -227,6 +227,28 @@ export const menu: CoreMenu[] = [
             icon: "plus-square",
             url: "companies/employee/addemployee",
           },
+          {
+            id: "allemployees",
+            title: "MENU.COMPANY.ALLEMPLOYEES",
+            type: "item",
+            icon: "list",
+            url: "companies/employee/allemployees",
+          },
+        ],
+      },
+      {
+        id: "Job",
+        title: "MENU.COMPANY.JOB",
+        type: "collapsible",
+        icon: "grid",
+        children: [
+          {
+            id: "alljobs",
+            title: "MENU.COMPANY.ALLJOBS",
+            type: "item",
+            icon: "plus-square",
+            url: "companies/job/alljobs",
+          },
         ],
       },
     ],
@@ -245,18 +267,76 @@ export const menu: CoreMenu[] = [
 
         children: [
           {
-            id: "allcommercials",
+            id: "allCommercials",
             title: "MENU.LEAD.ALLCOMMERCIAL",
             type: "item",
             icon: "list",
-            url: "crm/commercial/allcommercials",
+            url: "crm/commercial",
           },
+        ],
+      },
+
+      {
+        id: "project",
+        title: "MENU.LEAD.PROJECT",
+        type: "collapsible",
+        icon: "grid",
+
+        children: [
           {
-            id: "addcommercial",
-            title: "MENU.LEAD.ADDCOMMERCIAL",
+            id: "allprojects",
+            title: "MENU.LEAD.ALLPROJECTS",
             type: "item",
-            icon: "plus-square",
-            url: "crm/commercial/addcommercial",
+            icon: "list",
+            url: "crm/project",
+          },
+        ],
+      },
+      {
+        id: "product",
+        title: "MENU.LEAD.PRODUCT",
+        type: "collapsible",
+        icon: "grid",
+
+        children: [
+          {
+            id: "allproducts",
+            title: "MENU.LEAD.ALLPRODUCTS",
+            type: "item",
+            icon: "list",
+            url: "crm/product",
+          },
+        ],
+      },
+      {
+        id: "service",
+        title: "MENU.LEAD.SERVICE",
+        type: "collapsible",
+        icon: "grid",
+
+        children: [
+          {
+            id: "allservices",
+            title: "MENU.LEAD.ALLSERVICES",
+            type: "item",
+            icon: "list",
+            url: "crm/service",
+          },
+        ],
+      },
+      {
+        id: "serviceType",
+        title: "MENU.LEAD.SERVICETYPE",
+        type: "collapsible",
+        icon: "grid",
+
+        children: [
+          {
+            id: "allServiceTypes",
+            title: "MENU.LEAD.ALLSERVICETYPES",
+            type: "item",
+            icon: "list",
+            url: "crm/serviceType",
           },
         ],
       },
@@ -289,11 +369,13 @@ export const menu: CoreMenu[] = [
         icon: "plus-square",
         url: "grh/warning",
       },
+
       {
         id: "requests",
         title: "MENU.GRH.REQUESTS",
         type: "collapsible",
         icon: "grid",
+
         children: [
           {
             id: "allholidayrequests",
