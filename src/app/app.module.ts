@@ -24,6 +24,9 @@ import { GrhModule } from "./main/grh/grh.module";
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { CrmModule } from "./main/crm/crm.module";
+import { ForumsComponent } from './main/workSpace/components/forums/forums.component';
+import { DocumentsComponent } from './main/workSpace/components/documents/documents.component';
+import { ConfigurationComponent } from './main/workSpace/components/configuration/configuration.component';
 
 const appRoutes: Routes = [
   {
@@ -52,6 +55,11 @@ const appRoutes: Routes = [
       import("./main/crm/crm.module").then((m) => m.CrmModule),
   },
   {
+    path: "workSpace",
+    loadChildren: () =>
+        import("./main/workSpace/workSpace.module").then((m)=>m.WorkSpaceModule),
+  },
+  {
     path: "",
     redirectTo: "home",
     pathMatch: "full",
@@ -59,7 +67,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ForumsComponent, DocumentsComponent, ConfigurationComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

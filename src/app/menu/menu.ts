@@ -349,4 +349,33 @@ export const menu: CoreMenu[] = [
       },
     ],
   },
+
+    //Menu GL_WorkSpace
+  {
+    id: "WorkSpace",
+    type: "collapsible",
+    title: "WorkSpace",
+    icon: "menu",
+    children: [
+      {
+        id: "forums",
+        title: "FORUMS",
+        type: "item",
+        icon: "plus-square",
+        url: "workSpace/forums",
+      },
+      {
+        id: "Documents",
+        title: "Documents",
+        type: "collapsible",
+        icon: "grid",
+      },
+      {
+        id: "Configuration",
+        title: "Configuration",
+        type: "collapsible",
+        icon: "grid",
+      },
+    ],
+  },
 ];
