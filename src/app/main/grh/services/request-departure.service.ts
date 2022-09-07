@@ -47,39 +47,102 @@ export class RequestDepartureService {
     );
   }
 
-  getPendingDepartureRequests(): Observable<any> {
+  getPendingDepartureRequests(params: any): Observable<any> {
     return this.httpClient.get<RequestDeparture[]>(
-      `${baseUrl}/requestdeparture/getPending`
+      `${baseUrl}/requestdeparture/getPendingWithPagination`,
+      {
+        params,
+      }
     );
   }
 
-  getAcceptedDepartureRequests(): Observable<any> {
+  getAcceptedDepartureRequests(params: any): Observable<any> {
     return this.httpClient.get<RequestDeparture[]>(
-      `${baseUrl}/requestdeparture/getAccepted`
+      `${baseUrl}/requestdeparture/getAcceptedWithPagination`,
+      {
+        params,
+      }
     );
   }
 
-  getRefusedDepartureRequests(): Observable<any> {
+  getRefusedDepartureRequests(params: any): Observable<any> {
     return this.httpClient.get<RequestDeparture[]>(
-      `${baseUrl}/requestdeparture/getRefused`
+      `${baseUrl}/requestdeparture/getRefusedWithPagination`,
+      {
+        params,
+      }
     );
   }
 
-  getPendingDepartureRequestsOfAnEmployee(id: number): Observable<any> {
+  getPendingDepartureRequestsOfAnEmployee(
+    params: any,
+    id: number
+  ): Observable<any> {
     return this.httpClient.get<RequestDeparture[]>(
-      `${baseUrl}/requestdeparture/getPendingOfAnEmployee${id}`
+      `${baseUrl}/requestdeparture/getPendingOfAnEmployeeWithPagination/${id}`,
+      {
+        params,
+      }
     );
   }
 
-  getAcceptedDepartureRequestsOfAnEmployee(id: number): Observable<any> {
+  getAcceptedDepartureRequestsOfAnEmployee(
+    params: any,
+    id: number
+  ): Observable<any> {
     return this.httpClient.get<RequestDeparture[]>(
-      `${baseUrl}/requestdeparture/getAcceptedOfAnEmployee${id}`
+      `${baseUrl}/requestdeparture/getAcceptedOfAnEmployeeWithPagination/${id}`,
+      {
+        params,
+      }
     );
   }
 
-  getRefusedDepartureRequestsOfAnEmployee(id: number): Observable<any> {
+  getRefusedDepartureRequestsOfAnEmployee(
+    params: any,
+    id: number
+  ): Observable<any> {
     return this.httpClient.get<RequestDeparture[]>(
-      `${baseUrl}/requestdeparture/getRefusedOfAnEmployee${id}`
+      `${baseUrl}/requestdeparture/getRefusedOfAnEmployeeWithPagination/${id}`,
+      {
+        params,
+      }
     );
   }
+
+  // getPendingDepartureRequests(): Observable<any> {
+  //   return this.httpClient.get<RequestDeparture[]>(
+  //     `${baseUrl}/requestdeparture/getPending`
+  //   );
+  // }
+
+  // getAcceptedDepartureRequests(): Observable<any> {
+  //   return this.httpClient.get<RequestDeparture[]>(
+  //     `${baseUrl}/requestdeparture/getAccepted`
+  //   );
+  // }
+
+  // getRefusedDepartureRequests(): Observable<any> {
+  //   return this.httpClient.get<RequestDeparture[]>(
+  //     `${baseUrl}/requestdeparture/getRefused`
+  //   );
+  // }
+
+  // getPendingDepartureRequestsOfAnEmployee(id: number): Observable<any> {
+  //   return this.httpClient.get<RequestDeparture[]>(
+  //     `${baseUrl}/requestdeparture/getPendingOfAnEmployee${id}`
+  //   );
+  // }
+
+  // getAcceptedDepartureRequestsOfAnEmployee(id: number): Observable<any> {
+  //   return this.httpClient.get<RequestDeparture[]>(
+  //     `${baseUrl}/requestdeparture/getAcceptedOfAnEmployee${id}`
+  //   );
+  // }
+
+  // getRefusedDepartureRequestsOfAnEmployee(id: number): Observable<any> {
+  //   return this.httpClient.get<RequestDeparture[]>(
+  //     `${baseUrl}/requestdeparture/getRefusedOfAnEmployee${id}`
+  //   );
+  // }
 }

@@ -1,3 +1,4 @@
+import { Employee } from "./employee.model";
 import { RhRequest } from "./rh-request.model";
 
 export class RequestRecuperationHoliday extends RhRequest {
@@ -10,6 +11,7 @@ export class RequestRecuperationHoliday extends RhRequest {
   returnTime: Date;
 
   constructor(
+    employee: Employee,
     city: String,
     employee_id: number,
     requeststatus_id: number,
@@ -21,7 +23,7 @@ export class RequestRecuperationHoliday extends RhRequest {
     returnDate: Date,
     returnTime: Date
   ) {
-    super(city, employee_id, requeststatus_id);
+    super(employee, city, employee_id, requeststatus_id);
     this.numberofdays = numberofdays;
     this.startDate = startDate;
     this.startTime = startTime;

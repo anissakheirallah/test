@@ -1,15 +1,30 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
-import { Project } from '../../models/project.model';
-import { ProjectService } from '../../services/project.service';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
+import {
+  NgbCalendar,
+  NgbDate,
+  NgbDateParserFormatter,
+  NgbModal,
+} from "@ng-bootstrap/ng-bootstrap";
+import {
+  ColumnMode,
+  DatatableComponent,
+  SelectionType,
+} from "@swimlane/ngx-datatable";
+import { Project } from "../../models/project.model";
+import { ProjectService } from "../../services/project.service";
 
 @Component({
-  selector: 'app-projects',
-  templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  selector: "app-projects",
+  templateUrl: "./projects.component.html",
+  styleUrls: ["./projects.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ProjectsComponent implements OnInit {
   public contentHeader: object;
@@ -20,13 +35,13 @@ export class ProjectsComponent implements OnInit {
 
   project: Project = {
     id: null,
-    projectName: '',
-    projectType: '',
-    status:null,
+    projectName: "",
+    projectType: "",
+    status: null,
     startDate: null,
     finishDate: null,
-    teams: null
-  }
+    teams: null,
+  };
 
   isDisabled: boolean = true;
   ids = [];
@@ -40,19 +55,23 @@ export class ProjectsComponent implements OnInit {
 
   page = 1;
   count = 5;
-  name = '';
+  name = "";
 
-  constructor(private modalService: NgbModal, private calendar: NgbCalendar, public formatter: NgbDateParserFormatter,
-    private projectService: ProjectService, private formBuilder: FormBuilder) { }
+  constructor(
+    private modalService: NgbModal,
+    private calendar: NgbCalendar,
+    public formatter: NgbDateParserFormatter,
+    private projectService: ProjectService,
+    private formBuilder: FormBuilder
+  ) {}
 
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
-
   public form: FormGroup = new FormGroup({
-    projectName: new FormControl(''),
-    projectType: new FormControl(''),
-    startDate: new FormControl(''),
-    finishDate: new FormControl('')
+    projectName: new FormControl(""),
+    projectType: new FormControl(""),
+    startDate: new FormControl(""),
+    finishDate: new FormControl(""),
   });
 
   get formControl(): { [key: string]: AbstractControl } {
@@ -60,10 +79,10 @@ export class ProjectsComponent implements OnInit {
   }
 
   public formEdit: FormGroup = new FormGroup({
-    projectName: new FormControl(''),
-    projectType: new FormControl(''),
-    startDate: new FormControl(''),
-    finishDate: new FormControl('')
+    projectName: new FormControl(""),
+    projectType: new FormControl(""),
+    startDate: new FormControl(""),
+    finishDate: new FormControl(""),
   });
 
   get formEditControl(): { [key: string]: AbstractControl } {
@@ -73,63 +92,36 @@ export class ProjectsComponent implements OnInit {
   ngOnInit(): void {
     this.getAllProjects();
     this.contentHeader = {
-      headerTitle: 'Vente',
+      headerTitle: "Vente",
       actionButton: true,
       breadcrumb: {
-        type: '',
+        type: "",
         links: [
           {
-            name: 'Home',
+            name: "Home",
             isLink: true,
-            link: '/'
+            link: "/",
           },
           {
-            name: 'Project',
+            name: "Project",
             isLink: true,
-            link: '/'
+            link: "/",
           },
           {
-            name: 'Add Project',
-            isLink: false
-          }
-        ]
-      }
-    }
+            name: "Add Project",
+            isLink: false,
+          },
+        ],
+      },
+    };
 
-    this.form = this.formBuilder.group(
-      {
-        projectName: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(3)
-          ]
-        ],
-        projectType: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(3),
-          ]
-        ],
-        startDate: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(3),
-          ]
-        ],
-        finishDate: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(3),
-          ]
-        ]
-      }
-    );
+    this.form = this.formBuilder.group({
+      projectName: ["", [Validators.required, Validators.minLength(3)]],
+      projectType: ["", [Validators.required, Validators.minLength(3)]],
+      startDate: ["", [Validators.required, Validators.minLength(3)]],
+      finishDate: ["", [Validators.required, Validators.minLength(3)]],
+    });
   }
-
 
   filterUpdate(event) {
     this.name = event.target.value.toLowerCase();
@@ -144,58 +136,71 @@ export class ProjectsComponent implements OnInit {
     const params = {
       page: this.page - 1,
       size: this.basicSelectedOption,
-      name: this.name
+      name: this.name,
     };
     console.log(params);
-    this.projectService.getProjects(params).subscribe(response => {
+    this.projectService.getProjects(params).subscribe((response) => {
       const { content, totalElements } = response;
       this.projects = content;
       console.log(this.projects);
-    }
-    );
+    });
   }
-
 
   createProject() {
     this.project.projectName = this.form.value.projectName;
     this.project.projectType = this.form.value.projectType;
-    this.project.startDate = new Date(this.form.value.startDate.year, this.form.value.startDate.month, this.form.value.startDate.day);
-    this.project.finishDate = new Date(this.form.value.finishDate.year, this.form.value.finishDate.month, this.form.value.finishDate.day);
+    this.project.startDate = new Date(
+      this.form.value.startDate.year,
+      this.form.value.startDate.month,
+      this.form.value.startDate.day
+    );
+    this.project.finishDate = new Date(
+      this.form.value.finishDate.year,
+      this.form.value.finishDate.month,
+      this.form.value.finishDate.day
+    );
     console.log("hana" + this.project);
     this.projectService.createProject(this.project).subscribe({
       next: (data) => {
         console.log(data);
-      }, error: (err) => {
+      },
+      error: (err) => {
         console.error(err);
-      }
+      },
     });
   }
-
 
   updateProject(): void {
     this.project.projectName = this.form.value.projectName;
     this.project.projectType = this.form.value.projectType;
-    this.project.startDate = new Date(this.form.value.startDate.year, this.form.value.startDate.month, this.form.value.startDate.day);
-    this.project.finishDate = new Date(this.form.value.finishDate.year, this.form.value.finishDate.month, this.form.value.finishDate.day);
+    this.project.startDate = new Date(
+      this.form.value.startDate.year,
+      this.form.value.startDate.month,
+      this.form.value.startDate.day
+    );
+    this.project.finishDate = new Date(
+      this.form.value.finishDate.year,
+      this.form.value.finishDate.month,
+      this.form.value.finishDate.day
+    );
     console.log("hana" + this.project);
-    this.projectService.updateProject(this.isUpdate, this.project).subscribe(
-      {
-        next: (data) => {
-          this.modalService.dismissAll("Cross click");
-          this.ngOnInit()
-          this.submitted = false;
-        }, error: (err) => {
-          console.error(err);
-        }
-      });
+    this.projectService.updateProject(this.isUpdate, this.project).subscribe({
+      next: (data) => {
+        this.modalService.dismissAll("Cross click");
+        this.ngOnInit();
+        this.submitted = false;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
-
 
   modalOpenDanger(modalDanger, id: any) {
     this.idDelete = id;
     this.modalService.open(modalDanger, {
       centered: true,
-      windowClass: 'modal modal-danger'
+      windowClass: "modal modal-danger",
     });
   }
 
@@ -203,17 +208,23 @@ export class ProjectsComponent implements OnInit {
     this.projectService.deleteProject(this.idDelete).subscribe({
       next: () => {
         this.getAllProjects();
-      }, error(err) {
+      },
+      error(err) {
         console.log(err);
       },
-    })
+    });
   }
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
       this.project.startDate = new Date(date.year, date.month - 1, date.day);
-    } else if (this.fromDate && !this.toDate && date && date.after(this.fromDate)) {
+    } else if (
+      this.fromDate &&
+      !this.toDate &&
+      date &&
+      date.after(this.fromDate)
+    ) {
       this.toDate = date;
       this.project.finishDate = new Date(date.year, date.month - 1, date.day);
     } else {
@@ -249,12 +260,11 @@ export class ProjectsComponent implements OnInit {
   modalOpen(modalBasic) {
     this.modalService.open(modalBasic, {
       centered: true,
-      size: 'lg'
+      size: "lg",
     });
   }
 
   modalEdit(modalPrimaryedit, id) {
-
     this.projectService.getProject(id).subscribe({
       next: (data) => {
         this.isUpdate = id;
@@ -263,8 +273,8 @@ export class ProjectsComponent implements OnInit {
         this.formEdit.value.startDate = data.startDate;
         this.formEdit.value.finishDate = data.finishDate;
 
-        let sd = this.project.startDate.toString().split('-');
-        let fd = this.project.finishDate.toString().split('-');
+        let sd = this.project.startDate.toString().split("-");
+        let fd = this.project.finishDate.toString().split("-");
 
         let ds = Number(sd[0]);
         let ms = Number(sd[1]);
@@ -274,57 +284,41 @@ export class ProjectsComponent implements OnInit {
         let mf = Number(fd[1]);
         let yf = Number(fd[2]);
 
-        this.form = this.formBuilder.group(
-          {
-            projectName: [
-              this.project.projectName,
-              [
-                Validators.required,
-                Validators.minLength(3)
-              ]
-            ],
-            projectType: [
-              this.project.projectType,
-              [
-                Validators.required,
-                Validators.minLength(3)
-              ]
-            ],
-            startDate: [
-              {
-                year: ys,
-                month: ms,
-                day: ds
-              },
-              [
-                Validators.required,
-                Validators.minLength(3)
-              ]
-            ],
-            finishDate: [
-              {
-                year: yf,
-                month: mf,
-                day: df
-              },
-              [
-                Validators.required,
-                Validators.minLength(3)
-              ]
-            ]
-          }
-        );
-
-      }, error: (err) => {
+        this.form = this.formBuilder.group({
+          projectName: [
+            this.project.projectName,
+            [Validators.required, Validators.minLength(3)],
+          ],
+          projectType: [
+            this.project.projectType,
+            [Validators.required, Validators.minLength(3)],
+          ],
+          startDate: [
+            {
+              year: ys,
+              month: ms,
+              day: ds,
+            },
+            [Validators.required, Validators.minLength(3)],
+          ],
+          finishDate: [
+            {
+              year: yf,
+              month: mf,
+              day: df,
+            },
+            [Validators.required, Validators.minLength(3)],
+          ],
+        });
+      },
+      error: (err) => {
         console.error(err);
-      }
+      },
     });
     this.modalService.open(modalPrimaryedit, {
       centered: true,
-      size: 'lg',
-      windowClass: 'modal modal-primary',
+      size: "lg",
+      windowClass: "modal modal-primary",
     });
-
   }
-
 }

@@ -1,17 +1,18 @@
 export class Visit {
   id: number;
-  datetime: Date;
-  name: String;
-  cin: String;
-  visitPurpose: String;
-  observation: String;
+  datetime: string;
+  name: string;
+  cin: string;
+  visitPurpose: string;
+  observation: string;
   employee_id: number;
 
   constructor(
-    name: String,
-    cin: String,
-    visitPurpose: String,
-    observation: String,
+    name: string,
+    datetime: string,
+    cin: string,
+    visitPurpose: string,
+    observation: string,
     employee_id: number
   ) {
     this.name = name;
@@ -19,5 +20,6 @@ export class Visit {
     this.visitPurpose = visitPurpose;
     this.observation = observation;
     this.employee_id = employee_id;
+    this.datetime = datetime;
   }
 }
