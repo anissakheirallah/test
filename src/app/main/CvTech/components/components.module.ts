@@ -7,8 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
-import { CampaignModule } from './campaign/campaign.module';
-import { CandidatsModule } from './candidats/candidats.module';
+import { ComponentModule } from './campaign/component/component.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 
@@ -19,8 +18,8 @@ const routes: Routes =
       loadChildren: () => import('./campaign/campaign.module').then(m => m.CampaignModule)
     },
     {
-      path: 'candidats',
-      loadChildren: () => import('./candidats/candidats.module').then(m => m.CandidatsModule)
+      path: 'candidates',
+      loadChildren: () => import('./candidate/candidate.module').then(m => m.CandidateModule)
     },
     {
       path: 'cvs',
@@ -45,8 +44,8 @@ const routes: Routes =
     NgSelectModule,
     FormsModule,
     NgxDatatableModule,
-    CampaignModule,
-    CandidatsModule,
+    ComponentModule,
+    //CampaignModule,
   ],
 
   providers: []

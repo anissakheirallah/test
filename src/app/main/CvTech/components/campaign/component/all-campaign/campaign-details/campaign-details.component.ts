@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Candidate } from 'app/main/CvTech/models/candidate.model';
+import { AllCampaignService } from 'app/main/CvTech/services/all-campaign.service';
 import { CandidateService } from 'app/main/CvTech/services/candidate.service';
-import { AllCampaignService } from '../../../../services/all-campaign.service';
 
 @Component({
   selector: 'app-campaign-details',
@@ -11,6 +11,7 @@ import { AllCampaignService } from '../../../../services/all-campaign.service';
   styleUrls: ['./campaign-details.component.scss']
 })
 export class CampaignDetailsComponent implements OnInit {
+
 
   constructor(
     private route: ActivatedRoute,
@@ -196,9 +197,5 @@ export class CampaignDetailsComponent implements OnInit {
     };
 
   }
-
-
-
-
 
 }

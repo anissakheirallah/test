@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 export class AddCandidatComponent implements OnInit {
   contentHeader: { headerTitle: string; actionButton: boolean; breadcrumb: { type: string; links: ({ name: string; isLink: boolean; link: string; } | { name: string; isLink: boolean; link?: undefined; })[]; }; };
 
-  public candidat: Candidate = {
+  public candidate: Candidate = {
     id: 0,
     civility: undefined,
     firstName: undefined,
@@ -29,6 +29,9 @@ export class AddCandidatComponent implements OnInit {
     availability: undefined
   }
 
+  modalOpenForm(modalForm) {
+    //this.model = this.modalService.open(modalForm);
+  }
 
   public form: FormGroup = new FormGroup({
     civility: new FormControl(''),
@@ -128,13 +131,13 @@ export class AddCandidatComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    this.candidat = this.form.value;
+    this.candidate = this.form.value;
 
     this.addNewCandidat();
 
   }
   private addNewCandidat() {
-    this.candidatService.addCandidat(this.candidat).subscribe(
+    this.candidatService.addCandidat(this.candidate).subscribe(
       {
         next: (response: any) => {
           console.log(response);

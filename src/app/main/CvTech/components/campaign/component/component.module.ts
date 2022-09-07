@@ -1,30 +1,29 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { CoreCommonModule } from '@core/common.module';
+import { CoreCardModule } from '@core/components/core-card/core-card.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { CandidatDetailsComponent } from './candidat-details/candidat-details.component';
-import { AllCandidatsComponent } from './all-candidats.component';
+import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
+import { AddCampaignComponent } from './add-campaign/add-campaign.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: AllCandidatsComponent,
+    path: 'add',
+    component: AddCampaignComponent
   },
   {
-    path: 'candidat-details/:candidat_id', 
-    component: CandidatDetailsComponent
-  }
-];
+    path: 'allcampaigns',
+    loadChildren: () => import('./all-campaign/all-campaign.module').then(m => m.AllCampaignModule)
+  },
+]
 
 @NgModule({
   declarations: [
-    CandidatDetailsComponent,
-    AllCandidatsComponent
+    AddCampaignComponent
   ],
   imports: [
     CommonModule,
@@ -34,9 +33,8 @@ const routes: Routes = [
     NgbModule,
     NgSelectModule,
     FormsModule,
-    NgxDatatableModule
-  ],
-
-  providers: []
+    NgxDatatableModule,
+    CoreCardModule
+  ]
 })
-export class AllCandidatsModule { }
+export class ComponentModule { }

@@ -100,22 +100,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-12">
-                  <div class="form-group row">
-                    <div class="col-sm-3 col-form-label">
-                      <label for="contact-info">Situation</label>
-                    </div>
-                    <div class="col-sm-9">
-                      <ng-select [items]="situation" [addTag]="selectAddTagMethod" [hideSelected]="true" multiple="true"
-                        bindLabel="name" [(ngModel)]="situationSelected" name="name">
-                        <ng-template ng-label-tmp let-item="item" let-clear="clear">
-                          <span class="ng-value-label"> {{ item.name }}</span>
-                          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
-                        </ng-template>
-                      </ng-select>
-                    </div>
-                  </div>
-                </div>
+
                 <div class="col-12">
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label">
@@ -132,22 +117,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-12">
-                  <div class="form-group row">
-                    <div class="col-sm-3 col-form-label">
-                      <label for="contact-info">Availability</label>
-                    </div>
-                    <div class="col-sm-9">
-                      <ng-select [items]="availablity" [addTag]="selectAddTagMethod" [hideSelected]="true"
-                        multiple="true" bindLabel="name" [(ngModel)]="availablitySelected" name="name">
-                        <ng-template ng-label-tmp let-item="item" let-clear="clear">
-                          <span class="ng-value-label"> {{ item.name }}</span>
-                          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
-                        </ng-template>
-                      </ng-select>
-                    </div>
-                  </div>
-                </div>
+
                 <div class="col-12">
                   <div class="form-group row">
                     <div class="col-sm-3 col-form-label">
@@ -175,10 +145,8 @@
           <div class="d-flex justify-content-end mb-2">
             <button type="reset" rippleEffect class="mr-1 btn btn-outline-secondary">Reset</button>
 
-            <button type="submit" (click)="AddCampaign()" class="btn btn-primary"
-              rippleEffect>Save</button>
+            <button type="submit" (click)="AddCampaign()" class="btn btn-primary" rippleEffect>Save</button>
             <!-- Swal of Sweet Alert With Position center -->
-            <swal></swal>
             <!--/ Swal of Sweet Alert With Position center -->
           </div>
         </div>

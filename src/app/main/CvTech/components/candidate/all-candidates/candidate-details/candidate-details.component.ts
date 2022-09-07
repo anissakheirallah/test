@@ -5,13 +5,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Candidate } from 'app/main/CvTech/models/candidate.model';
 import { CandidateService } from 'app/main/CvTech/services/candidate.service';
 
-
 @Component({
-  selector: 'app-candidat-details',
-  templateUrl: './candidat-details.component.html',
-  styleUrls: ['./candidat-details.component.scss']
+  selector: 'app-candidate-details',
+  templateUrl: './candidate-details.component.html',
+  styleUrls: ['./candidate-details.component.scss']
 })
-export class CandidatDetailsComponent implements OnInit {
+export class CandidateDetailsComponent implements OnInit {
+
   model: import("@ng-bootstrap/ng-bootstrap").NgbModalRef;
 
   modalOpenForm(modalForm) {
@@ -185,4 +185,5 @@ export class CandidatDetailsComponent implements OnInit {
     this.submitted = false;
     this.form.reset();
   }
+
 }

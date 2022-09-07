@@ -1,23 +1,21 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { Router } from "@angular/router";
-import { Education } from "app/main/cvtech/models/education.model";
-import { GlobalExperience } from "app/main/CvTech/models/global-experience.model";
-import { Skill } from "app/main/CvTech/models/skill.model";
-import { AllCampaignService } from "app/main/CvTech/services/all-campaign.service";
-import { EducationService } from "app/main/CvTech/services/education.service";
-import { FunctionService } from "app/main/CvTech/services/function.service";
-import { GlobalExperienceService } from "app/main/CvTech/services/global-experience.service";
-import { SkillService } from "app/main/CvTech/services/skill.service";
-import Swal from "sweetalert2";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Education } from 'app/main/cvtech/models/education.model';
+import { GlobalExperience } from 'app/main/CvTech/models/global-experience.model';
+import { Skill } from 'app/main/CvTech/models/skill.model';
+import { AllCampaignService } from 'app/main/CvTech/services/all-campaign.service';
+import { EducationService } from 'app/main/CvTech/services/education.service';
+import { FunctionService } from 'app/main/CvTech/services/function.service';
+import { GlobalExperienceService } from 'app/main/CvTech/services/global-experience.service';
+import { SkillService } from 'app/main/CvTech/services/skill.service';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: "app-add-campaign",
-  templateUrl: "./add-campaign.component.html",
-  styleUrls: ["./add-campaign.component.scss"],
-  encapsulation: ViewEncapsulation.None,
+  selector: 'app-add-campaign',
+  templateUrl: './add-campaign.component.html',
+  styleUrls: ['./add-campaign.component.scss']
 })
 export class AddCampaignComponent implements OnInit {
-  // public
   public contentHeader: object;
 
   constructor(
@@ -158,4 +156,5 @@ export class AddCampaignComponent implements OnInit {
   selectAddTagMethod(name) {
     return { name: name, tag: true };
   }
+
 }

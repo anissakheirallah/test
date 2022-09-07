@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { AllCampaignService } from '../../../services/all-campaign.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
+import { AllCampaignService } from 'app/main/CvTech/services/all-campaign.service';
 
 @Component({
-  selector: 'app-all-campaigns',
-  templateUrl: './all-campaigns.component.html',
-  styleUrls: ['./all-campaigns.component.scss']
+  selector: 'app-all-campaign',
+  templateUrl: './all-campaign.component.html',
+  styleUrls: ['./all-campaign.component.scss']
 })
-export class AllCampaignsComponent implements OnInit {
+export class AllCampaignComponent implements OnInit {
+
 
   contentHeader: { headerTitle: string; actionButton: boolean; breadcrumb: { type: string; links: ({ name: string; isLink: boolean; link: string; } | { name: string; isLink: boolean; link?: undefined; })[]; }; };
   router: any;
-  
-  constructor(private modalService: NgbModal, private AllCampaignService : AllCampaignService) {}
 
-  ngOnInit(): void 
-  {
+  constructor(private modalService: NgbModal, private AllCampaignService: AllCampaignService) { }
+
+  ngOnInit(): void {
     this.getAllCampaigns()
     //
 
@@ -62,8 +61,8 @@ export class AllCampaignsComponent implements OnInit {
   name = '';
   count = 0;
   public pagePosition = 1;
-  public totalPages=0;
-  
+  public totalPages = 0;
+
 
   public pageChanged(event: any): void {
     this.page = event;
@@ -71,22 +70,22 @@ export class AllCampaignsComponent implements OnInit {
   }
 
   public chkBoxSelected = [];
-  Campains? : any[];
+  Campains?: any[];
 
   public getAllCampaigns(): void {
     const params = {
-      page : this.page-1,
-      size : this.sizeSelect,
-      name : this.name
+      page: this.page - 1,
+      size: this.sizeSelect,
+      name: this.name
     }
     this.AllCampaignService.getAllPagination(params).subscribe(
       {
         next: (response: any) => {
           const { content, totalElements, totalPages } = response;
           this.count = totalElements;
-          this.totalPages = totalPages*10
+          this.totalPages = totalPages * 10
           this.Campains = response.content
-          
+
         }, error: (err) => {
           console.error(err);
         }
@@ -94,40 +93,40 @@ export class AllCampaignsComponent implements OnInit {
     );
   }
   public pageAdvancedNoEllipses = 8;
-  private modal=null;
-  private id=0;
+  private modal = null;
+  private id = 0;
 
-  modalOpenDanger(modalDanger, id:any) {
-    this.id=id
+  modalOpenDanger(modalDanger, id: any) {
+    this.id = id
     this.modal = this.modalService.open(modalDanger, {
       centered: true,
       windowClass: 'modal modal-danger'
     });
   }
 
-    // delFunc(id){
-    //   //console.log("Delete ",id);
-    //   this.deleteCampaign(id);
-    //   this.router.navigateByUrl("/reload");
-    // }
+  // delFunc(id){
+  //   //console.log("Delete ",id);
+  //   this.deleteCampaign(id);
+  //   this.router.navigateByUrl("/reload");
+  // }
 
 
-    
+
   // ------------- delete campaign 
-  deleteCampaign(){
-   console.log(this.id);
-   
+  deleteCampaign() {
+    console.log(this.id);
+
     this.modal.close('Accept click')
     window.location.reload();
     this.AllCampaignService.DeleteCampaignById(this.id).subscribe({
       next: () => {
         console.log("Campaigns , deleted !", this.id);
         this.ngOnInit();
-      
+
       },
       error: (err) => {
         console.log(err);
-        
+
       }
     })
   }
