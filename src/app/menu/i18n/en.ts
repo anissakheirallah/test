@@ -14,23 +14,25 @@ export const locale = {
       GEG: 'Global experience management',
       GSC: 'skill area management',
       GFS: 'desired function management',
-      adduser:'Add new user',
-      COMPANY:{
+      adduser: 'Add new user',
+      COMPANY: {
         APP: 'Companies',
-        COMP:"Company",
-        COMPANYENTITY:"Company entity",
-        DEPARTMENT:"Department",
-        ALLCOMPANIES:"All Companies",
-        ADDCOMPANY:"Add company",
-        ALLENTITIES:"All entities",
-        ADDCOMPANYENTITY:"Add entity",
-        ADDDEPARTMENT:"Add department"
+        COMP: "Company",
+        COMPANYENTITY: "Company entity",
+        DEPARTMENT: "Department",
+        ALLCOMPANIES: "All Companies",
+        ADDCOMPANY: "Add company",
+        ALLENTITIES: "All entities",
+        ADDCOMPANYENTITY: "Add entity",
+        ADDDEPARTMENT: "Add department"
       },
-       LEAD:{
+      LEAD: {
         APP: "Leads",
-        COMMERCIAL:"Commercial",
-        ALLCOMMERCIAL:"All Commercials",
-        ADDCOMMERCIAL:"Add Commercial"
+        COMMERCIAL: "Commercial",
+        ALLCOMMERCIAL: "All Commercials",
+        ADDCOMMERCIAL: "Add Commercial",
+        PROJECT: "Project",
+        ALLPROJECTS: "All Projects",
       }
     }
   }

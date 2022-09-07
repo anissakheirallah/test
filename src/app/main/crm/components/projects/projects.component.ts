@@ -4,6 +4,7 @@ import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbModal } from '@ng-boot
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { Project } from '../../models/project.model';
 import { ProjectService } from '../../services/project.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-projects',
@@ -44,6 +45,7 @@ export class ProjectsComponent implements OnInit {
   name = '';
 
   private modal = null;
+  $swal: any;
 
   constructor(private modalService: NgbModal, private calendar: NgbCalendar, public formatter: NgbDateParserFormatter,
     private projectService: ProjectService, private formBuilder: FormBuilder) { }
@@ -189,27 +191,57 @@ export class ProjectsComponent implements OnInit {
   }
 
 
-  modalOpenDanger(modalDanger, id: any, status: boolean) {
+  modalOpenDanger(id: any, status: boolean) {
     this.isUpdate = id;
     this.projectStatus = status;
-    this.modal = modalDanger;
-    this.modalService.open(modalDanger, {
-      centered: true,
-      windowClass: 'modal modal-danger'
-    });
+    //this.modal = modalDanger;
+    //this.modalService.open(modalDanger, {
+    //  centered: true,
+    // windowClass: 'modal modal-danger'
+    // });
   }
 
 
   changeProjectStatus() {
-    console.log(this.isUpdate + " " + this.projectStatus);
-    this.projectService.changeStatus(this.isUpdate, this.projectStatus).subscribe({
-      next: () => {
-        this.modal.close('Accept click')
-        this.getAllProjects()
-      }, error(err) {
-        console.log(err);
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, change it!',
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-outline-danger ml-1',
       },
+      buttonsStyling: false,
+
+    }).then(result => {
+      if (result.value) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Changed!',
+          text: 'Your project status has been changed.',
+          customClass: {
+            confirmButton: 'btn btn-success',
+          },
+        })
+
+
+        this.projectService.changeStatus(this.isUpdate, this.projectStatus).subscribe({
+          next: () => {
+            this.getAllProjects();
+            //this.modal.close('Accept click');
+          }, error(err) {
+            console.log(err);
+          },
+        })
+
+      }
     })
+
+
+
   }
 
   deleteProject() {
@@ -340,4 +372,41 @@ export class ProjectsComponent implements OnInit {
 
   }
 
+
+
+
+
+  // confirm texrt
+  confirmText() {
+    this.$swal({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-outline-danger ml-1',
+      },
+      buttonsStyling: false,
+    }).then(result => {
+      if (result.value) {
+        this.$swal({
+          icon: 'success',
+          title: 'Deleted!',
+          text: 'Your file has been deleted.',
+          customClass: {
+            confirmButton: 'btn btn-success',
+          },
+        })
+      }
+    })
+  }
+
+
 }
+
+
+
+
+

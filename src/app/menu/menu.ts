@@ -210,21 +210,38 @@ export const menu: CoreMenu[] = [
 
         children: [
           {
-            id: 'allcommercials',
+            id: 'allCommercials',
             title: 'MENU.LEAD.ALLCOMMERCIAL',
             type: 'item',
             icon: 'list',
-            url: 'crm/commercial/allcommercials'
+            url: 'crm/commercial'
           },
+
+        ]
+      },
+
+      {
+        id: 'project',
+        title: 'MENU.LEAD.PROJECT',
+        type: 'collapsible',
+        icon: 'grid',
+
+        children: [
           {
-            id: 'addcommercial',
-            title: 'MENU.LEAD.ADDCOMMERCIAL',
+            id: 'allcommercials',
+            title: 'MENU.LEAD.ALLPROJECTS',
             type: 'item',
-            icon: 'plus-square',
-            url: 'crm/commercial/addcommercial'
+            icon: 'list',
+            url: 'crm/project'
           },
+
         ]
       }
+
+
+
+
+
     ]
   }
 

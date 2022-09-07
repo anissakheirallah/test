@@ -1,24 +1,25 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
-import { Commercial } from 'app/main/crm/models/commercial.model';
-import { CommercialService } from 'app/main/crm/services/commercial.service';
-import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
+import { Commercial } from '../../models/commercial.model';
+import { CommercialService } from '../../services/commercial.service';
 
 @Component({
-  selector: 'app-all-commercials',
-  templateUrl: './all-commercials.component.html',
-  styleUrls: ['./all-commercials.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  selector: 'app-commercial',
+  templateUrl: './commercial.component.html',
+  styleUrls: ['./commercial.component.scss']
 })
-export class AllCommercialsComponent implements OnInit {
+export class CommercialComponent implements OnInit {
 
   contentHeader: { headerTitle: string; actionButton: boolean; breadcrumb: { type: string; links: ({ name: string; isLink: boolean; link: string; } | { name: string; isLink: boolean; link?: undefined; })[]; }; };
 
   commercials?: Commercial[];
   pageSize = 5;
+
+
 
   public ColumnMode = ColumnMode;
   public SelectionType = SelectionType;
@@ -47,13 +48,14 @@ export class AllCommercialsComponent implements OnInit {
 
 
   public formEdit: FormGroup = new FormGroup({
-    editCommercialName: new FormControl(''),
-    editStatut: new FormControl(''),
+    commercialName: new FormControl(''),
+    statut: new FormControl(''),
   });
 
 
   submitted = false;
-  constructor(private modalService: NgbModal, private commercialService: CommercialService, private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private modalService: NgbModal,
+    private commercialService: CommercialService, private formBuilder: FormBuilder, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.contentHeader = {
@@ -92,6 +94,10 @@ export class AllCommercialsComponent implements OnInit {
     return this.form.controls;
   }
 
+  get EditFormControl(): { [key: string]: AbstractControl } {
+    return this.formEdit.controls;
+  }
+
   //  pagination & search
 
   @ViewChild(DatatableComponent) table: DatatableComponent;
@@ -100,9 +106,6 @@ export class AllCommercialsComponent implements OnInit {
   count = 5;
   searchCommercial = '';
 
-
-  //public pagePosition = 1;
-  //public totalPages = 0;
 
 
 
@@ -115,21 +118,6 @@ export class AllCommercialsComponent implements OnInit {
     this.page = event;
     this.getCommercials();
   }
-
-  /* getParams(page: number, pageSize: number, commercialName: string) {
-     let params: any = {};
-     if (page) {
-       params['page'] = page - 1;
-     }
-     if (pageSize) {
-       params['size'] = pageSize;
-     }
-     if (commercialName) {
-       params['searchCommercial'] = commercialName;
-     }
- 
-     return params;
-   }*/
 
   public getCommercials(): void {
     const params = {
@@ -158,14 +146,13 @@ export class AllCommercialsComponent implements OnInit {
     console.log(id);
     this.commercialService.getCommercial(id).subscribe({
       next: (data) => {
-        console.log("--------------------------------------------")
         console.log(data)
         this.editCommercial.id = data.id;
         this.editCommercial.commercialName = data.commercialName;
         this.editCommercial.statut = data.statut;
         this.formEdit = this.formBuilder.group(
           {
-            editCommercialName: [
+            commercialName: [
               this.editCommercial.commercialName,
               [
                 Validators.required,
@@ -173,7 +160,7 @@ export class AllCommercialsComponent implements OnInit {
                 Validators.pattern("[a-zA-Z ]*")
               ]
             ],
-            editStatut: [this.editCommercial.statut, Validators.required],
+            statut: [this.editCommercial.statut, Validators.required],
 
           }
         );
@@ -193,21 +180,22 @@ export class AllCommercialsComponent implements OnInit {
 
   // Add
 
-  modalAdd(modalPrimaryadd, commercial) {
-    console.log(commercial);
+  modalAdd(modalPrimaryadd, addedCommercial) {
+
+    console.log(addedCommercial);
 
 
     this.form = this.formBuilder.group(
       {
         commercialName: [
-          commercial.commercialName,
+          addedCommercial.commercialName,
           [
             Validators.required,
             Validators.minLength(3),
             Validators.pattern("[a-zA-Z ]*")
           ]
         ],
-        statut: [commercial.statut, Validators.required],
+        statut: [addedCommercial.statut, Validators.required],
 
       }
     )
@@ -226,15 +214,12 @@ export class AllCommercialsComponent implements OnInit {
 
   onEditSubmit(): void {
     if (this.formEdit.invalid) {
-      console.log("////////////////////////////////////////////////")
       console.log(this.formEdit.value);
-      alert("Ooops ! Something went wrong")
-
+      this.toastrWarning("Oooops!! Something went wrong .")
       return;
     }
     this.editCommercial.commercialName = this.formEdit.value.commercialName;
     this.editCommercial.statut = this.formEdit.value.statut;
-    console.log("**************************************************")
     console.log(this.editCommercial);
     this.updateCommercial(this.editCommercial);
 
@@ -243,6 +228,7 @@ export class AllCommercialsComponent implements OnInit {
 
   onAddSubmit(): void {
     if (this.form.invalid) {
+      this.toastrWarning("Oooops!! Something went wrong .")
       console.log(this.form.value);
 
       return;
@@ -283,6 +269,22 @@ export class AllCommercialsComponent implements OnInit {
     })
   }
 
+  // Success
+  toastrSuccess(message: string) {
+    this.toastr.success('👋 ' + message, 'Success!', {
+      toastClass: 'toast ngx-toastr',
+      positionClass: 'toast-top-right'
+    });
+  }
+
+  // Warning
+  toastrWarning(message: string) {
+    this.toastr.warning('👋 ' + message, 'Warning!', {
+      toastClass: 'toast ngx-toastr',
+      positionClass: 'toast-top-right'
+    });
+  }
+
   // add
 
   saveCommercial(commercial: Commercial): void {
@@ -291,12 +293,15 @@ export class AllCommercialsComponent implements OnInit {
       {
         next: (data) => {
           console.log(data);
-          Swal.fire({
-            icon: 'success',
-            title: 'Your work has been saved',
-            showConfirmButton: false,
-            timer: 1500
-          });
+          this.modal.close('Accept click');
+          this.toastrSuccess(" Commercial added successfully !! ");
+          // Swal.fire({
+          //   icon: 'success',
+          //   title: 'Your work has been saved',
+          //   showConfirmButton: false,
+          //   timer: 1500
+          // });
+
           this.ngOnInit()
           this.submitted = false;
         }, error: (err) => {

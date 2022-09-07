@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
@@ -21,6 +21,7 @@ import { CrmModule } from './main/crm/crm.module';
 import { CvtechModule } from './main/CvTech/cvtech.module';
 import { VacationModule } from './main/grh/components/vacation/vacation.module';
 import { GrhModule } from './main/grh/grh.module';
+
 
 const appRoutes: Routes = [
   {
@@ -52,6 +53,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
+
   declarations: [
     AppComponent
   ],
@@ -68,6 +70,9 @@ const appRoutes: Routes = [
     //NgBootstrap
     NgbModule,
     ToastrModule.forRoot(),
+    // ToastrModule.forRoot({
+    //   toastComponent: CustomToastComponent
+    // }),
 
     // Core modules
     CoreModule.forRoot(coreConfig),
