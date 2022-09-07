@@ -32,6 +32,9 @@ export const locale = {
         ALLPROJECTS: "Tous les projets",
         EMPLOYEE: "Employé",
         ADDEMPLOYEE: "Ajouter employé",
+        ALLEMPLOYEES:"Tous les employés",
+        JOB:"Fonction",
+        ALLJOBS:"Toutes les fonctions"
       },
       CVTECH: {
         APP: "Campagnes",

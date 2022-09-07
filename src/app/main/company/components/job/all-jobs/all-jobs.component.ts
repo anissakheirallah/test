@@ -1,36 +1,34 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { EntityDepartmentService } from 'app/main/company/services/entity-department.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TeamService } from 'app/main/company/services/team.service';
-import { Team } from 'app/main/company/models/team.model';
-import { EntityDepartment } from 'app/main/company/models/entity-department.model';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CoreTranslationService } from '@core/services/translation.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EntityDepartment } from 'app/main/company/models/entity-department.model';
 import Swal from 'sweetalert2';
-import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 import { locale as en } from '../../../i18n/en';
 import { locale as fr } from '../../../i18n/fr';
-import { CoreTranslationService } from '@core/services/translation.service';
-
+import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
+import { Job } from 'app/main/company/models/job.model';
+import { ProjectService } from 'app/main/company/services/project.service';
+import { JobService } from 'app/main/company/services/job.service';
 
 @Component({
-  selector: 'app-all-teams',
-  templateUrl: './all-teams.component.html',
-  styleUrls: ['./all-teams.component.scss'],
+  selector: 'app-all-jobs',
+  templateUrl: './all-jobs.component.html',
+  styleUrls: ['./all-jobs.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AllTeamsComponent implements OnInit {
-  team: Team = {
+export class AllJobsComponent implements OnInit {
+  job: Job = {
     id: null,
-    teamName: '',
-    teamDesc: '',
-    departement_id: null,
-    employees: null,
-    departement:null
+    name: '',
+    description: '',
+    project:null,
+    project_id:null
   }
 
-  idDepartment: any;
-  departments?: EntityDepartment[];
-  teams: any;
+  idProject: any;
+  projects?: EntityDepartment[];
+  jobs: any;
   submitted = false;
   
   isSelected: boolean = false;
@@ -49,9 +47,9 @@ export class AllTeamsComponent implements OnInit {
 
 
   constructor(private modalService: NgbModal,
-    private departmentservice: EntityDepartmentService,
+    private projectService: ProjectService,
     private formBuilder: FormBuilder,
-    private teamService: TeamService,
+    private jobService: JobService,
     private _coreTranslationService: CoreTranslationService) {
       this._coreTranslationService.translate(en, fr);
   }
@@ -64,10 +62,10 @@ export class AllTeamsComponent implements OnInit {
     const val = event.target.value.toLowerCase();
     // filter our data
     const temp = this.tempData.filter(function (d) {
-      return d.teamName.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // update the rows
-    this.teams = temp;
+    this.jobs = temp;
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }
@@ -79,12 +77,12 @@ export class AllTeamsComponent implements OnInit {
 
   getAllteams() {
     const params = { page: this.page - 1, size: 5000, name: this.name };
-    this.teamService.getTeams(params).subscribe(response => {
+    this.jobService.getJobs(params).subscribe(response => {
       const { content, totalElements } = response;
       // this.rows = content;
       this.count = totalElements;
       this.tempData = content;
-      this.teams = content;
+      this.jobs = content;
     }
     );
   }
@@ -92,8 +90,8 @@ export class AllTeamsComponent implements OnInit {
   // ------------ Validation ------------
 
   public form: FormGroup = new FormGroup({
-    teamName: new FormControl(''),
-    teamDesc: new FormControl('')
+    name: new FormControl(''),
+    description: new FormControl('')
   });
 
   get formControl(): { [key: string]: AbstractControl } {
@@ -102,23 +100,23 @@ export class AllTeamsComponent implements OnInit {
 
   // ------------ Add Team ------------
 
-  AddTeam(): void {
+  AddJob(): void {
     this.submitted = true;
     if (this.form.invalid) {
       return;
     }
-    this.team = this.form.value;
-    this.team.departement_id = this.idDepartment;
-    this.createTeam(this.team);
+    this.job = this.form.value;
+    this.job.project_id = this.idProject;
+    this.createJob(this.job);
   }
 
-  createTeam(team: Team): void {
-    this.teamService.createTeam(team).subscribe(
+  createJob(job: Job): void {
+    this.jobService.createJob(job).subscribe(
       {
         next: (data) => {
           Swal.fire({
             icon: 'success',
-            title: 'Team has been saved with success',
+            title: 'Job has been saved with success',
             showConfirmButton: false,
             timer: 1500
           });
@@ -141,29 +139,29 @@ export class AllTeamsComponent implements OnInit {
 
   onChange(e: any) {
     
-    this.idDepartment = e.target.value;
-    console.log("id dep",this.idDepartment);
+    this.idProject = e.target.value;
+    console.log("id project",this.idProject);
   }
 
   // ------------ Edit Team ------------
 
   modalEdit(modalPrimaryedit, id) {
-    this.teamService.getTeam(id).subscribe({
+    this.jobService.getJob(id).subscribe({
       next: (data) => {
-        console.log("department team: ",data.departement);
-        this.team = data;
-        this.team.departement_id = this.idDepartment;
+        console.log("project team: ",data.project);
+        this.job = data;
+        this.job.project_id = this.idProject;
         this.form = this.formBuilder.group(
           {
-            teamName: [
-              this.team.teamName,
+            name: [
+              this.job.name,
               [
                 Validators.required,
                 Validators.minLength(3)
               ]
             ],
-            teamDesc: [
-              this.team.teamDesc,
+            description: [
+              this.job.description,
               [
                 Validators.required,
                 Validators.minLength(3)
@@ -181,19 +179,19 @@ export class AllTeamsComponent implements OnInit {
     });
   }
 
-  updateTeam(): void {
+  updateJob(): void {
     this.submitted = true;
     if (this.form.invalid) {
       return;
     }
-    this.team.teamName = this.form.value.teamName;
-    this.team.teamDesc = this.form.value.teamDesc;
-    this.team.departement_id = this.idDepartment;
-    this.editTeam(this.team);
+    this.job.name = this.form.value.name;
+    this.job.description = this.form.value.description;
+    this.job.project_id = this.idProject;
+    this.editJob(this.job);
   }
 
-  editTeam(team: Team): void {
-    this.teamService.updateTeam(team.id, team).subscribe(
+  editJob(job: Job): void {
+    this.jobService.updateJob(job.id, job).subscribe(
       {
         next: (data) => {
           this.modalService.dismissAll("Cross click");
@@ -208,19 +206,19 @@ export class AllTeamsComponent implements OnInit {
   // ------------ Delete Team ------------ 
 
   private modal = null;
-  private idTeam = 0;
+  private idJob = 0;
 
   modalOpenDanger(modalDanger, id: any) {
-    this.idTeam = id;
+    this.idJob = id;
     this.modal = this.modalService.open(modalDanger, {
       centered: true,
       windowClass: 'modal modal-danger'
     });
   }
 
-  deleteTeam() {
+  deleteJob() {
     this.modal.close('Accept click');
-    this.teamService.deleteTeam(this.idTeam).subscribe({
+    this.jobService.deleteJob(this.idJob).subscribe({
       next: () => {
         this.ngOnInit();
       },
@@ -232,15 +230,16 @@ export class AllTeamsComponent implements OnInit {
 
   // ------------ GET departments for select ------------
 
-  getDepartments(): void {
+  getprojects(): void {
     const params = { page: this.page - 1, size: 8, name: this.name };
-    this.departmentservice.getDepartments(params).subscribe(
+    this.projectService.getProjects(params).subscribe(
       {
         next: (data) => {
           const { content, totalElements } = data;
-          this.departments = content;
+          this.projects = content;
           this.count = totalElements;
-          this.idDepartment = this.departments[0].id;
+          this.idProject = this.projects[0].id;
+          console.log("projects",this.projects);
         }, error: (err) => {
           console.error(err);
         }
@@ -288,7 +287,7 @@ export class AllTeamsComponent implements OnInit {
     this.selectedList.forEach((item) => {
       this.ids.push(item.id)
     });
-    this.teamService.deleteMultipleTeam(this.ids).subscribe({
+    this.jobService.deleteMultipleJob(this.ids).subscribe({
       next: () => {
         location.reload();
         //this.modalService.dismissAll("Cross click");
@@ -310,7 +309,7 @@ export class AllTeamsComponent implements OnInit {
   ngOnInit() {
     //this.isSelected = true;
     this.getAllteams()
-    this.getDepartments();
+    this.getprojects();
     this.isDisabled = true;
 
     this.contentHeader = {
@@ -344,14 +343,14 @@ export class AllTeamsComponent implements OnInit {
 
     this.form = this.formBuilder.group(
       {
-        teamName: [
+        name: [
           '',
           [
             Validators.required,
             Validators.minLength(3)
           ]
         ],
-        teamDesc: [
+        description: [
           '',
           [
             Validators.required,

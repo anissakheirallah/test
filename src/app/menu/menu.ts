@@ -227,6 +227,28 @@ export const menu: CoreMenu[] = [
             icon: "plus-square",
             url: "companies/employee/addemployee",
           },
+          {
+            id: 'allemployees',
+            title: 'MENU.COMPANY.ALLEMPLOYEES',
+            type: 'item',
+            icon: 'list',
+            url: 'companies/employee/allemployees'
+          }
+        ],
+      },
+      {
+        id: "Job",
+        title: "MENU.COMPANY.JOB",
+        type: "collapsible",
+        icon: "grid",
+        children: [
+          {
+            id: "alljobs",
+            title: "MENU.COMPANY.ALLJOBS",
+            type: "item",
+            icon: "plus-square",
+            url: "companies/job/alljobs",
+          },
         ],
       },
     ],

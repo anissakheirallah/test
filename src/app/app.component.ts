@@ -19,6 +19,9 @@ import { locale as menuFrench } from 'app/menu/i18n/fr';
 import { locale as menuGerman } from 'app/menu/i18n/de';
 import { locale as menuPortuguese } from 'app/menu/i18n/pt';
 
+import {locale as companyEnglish} from 'app/main/company/i18n/en';
+import {locale as companyFrensh} from 'app/main/company/i18n/fr';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -75,7 +78,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this._translateService.setDefaultLang('en');
 
     // Set the translations for the menu
-    this._coreTranslationService.translate(menuEnglish, menuFrench, menuGerman, menuPortuguese);
+    this._coreTranslationService.translate(menuEnglish, menuFrench, menuGerman, menuPortuguese,companyEnglish,companyFrensh);
 
     // Set the private defaults
     this._unsubscribeAll = new Subject();
