@@ -1,5 +1,5 @@
-export class Education {
-    
+export class Skill {
+
     id: number;
     name: String;
     description: String;

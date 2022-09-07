@@ -1,4 +1,4 @@
-export class Education {
+export class Language {
     
     id: number;
     name: String;

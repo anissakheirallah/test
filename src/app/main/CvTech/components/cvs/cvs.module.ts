@@ -7,33 +7,31 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
-import { ComponentModule } from './campaign/component/component.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { EducationComponent } from './education/education.component';
+import { GlobalExperienceComponent } from './global-experience/global-experience.component';
+import { SkillsComponent } from './skills/skills.component';
 
+const routes: Routes = [
+  {
+    path: 'education',
+    component: EducationComponent,
+  },
+  {
+    path: 'experience',
+    component: GlobalExperienceComponent,
+  },
+  {
+    path: 'skills',
+    component: SkillsComponent,
+  },
 
-const routes: Routes =
-  [
-    {
-      path: 'campaign',
-      loadChildren: () => import('./campaign/campaign.module').then(m => m.CampaignModule)
-    },
-    {
-      path: 'candidates',
-      loadChildren: () => import('./candidate/candidate.module').then(m => m.CandidateModule)
-    },
-    {
-      path: 'cvs',
-      loadChildren: () => import('./cvs/cvs.module').then(m => m.CvsModule)
-    },
-    {
-      path: 'dashboard',
-      component: DashboardComponent,
-    },
-  ];
+];
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    SkillsComponent,
+    EducationComponent,
+    GlobalExperienceComponent
   ],
   imports: [
     CommonModule,
@@ -44,10 +42,6 @@ const routes: Routes =
     NgSelectModule,
     FormsModule,
     NgxDatatableModule,
-    ComponentModule,
-    //CampaignModule,
-  ],
-
-  providers: []
+  ]
 })
-export class ComponentsModule { }
+export class CvsModule { }

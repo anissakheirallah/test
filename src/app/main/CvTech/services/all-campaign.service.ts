@@ -1,9 +1,8 @@
 
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import { AllCampaign } from '../models/all-campaign.model';
-import { HttpClient, HttpClientModule, HttpEvent, HttpRequest } from '@angular/common/http';
 
 const baseUrl = environment.UrlCvTech;
 
@@ -12,22 +11,22 @@ const baseUrl = environment.UrlCvTech;
 })
 export class AllCampaignService {
 
-  constructor(private http : HttpClient) { }
-  
-  getAllCampaign(): Observable<AllCampaign[]> {
-    return this.http.get<AllCampaign[]>(`${baseUrl}/campaign`);
+  constructor(private http: HttpClient) { }
+
+  getAllCampaign(): Observable<any[]> {
+    return this.http.get<any[]>(`${baseUrl}/campaign`);
   }
 
-  getbyid(id: number): Observable<AllCampaign> {
-    return this.http.get<AllCampaign>(`${baseUrl}/campaign/${id}`);
+  getbyid(id: number): Observable<any> {
+    return this.http.get<any>(`${baseUrl}/campaign/${id}`);
   }
 
   getAllPagination(params: any): Observable<any> {
-    return this.http.get<AllCampaign[]>(`${baseUrl}/campaign`, { params });
+    return this.http.get<any[]>(`${baseUrl}/campaign`, { params });
   }
 
-  DeleteCampaignById(id : number): Observable<HttpEvent<any>> {
-   return this.http.delete<HttpEvent<any>>(`${baseUrl}/campaign/${id}`); 
+  DeleteCampaignById(id: number): Observable<HttpEvent<any>> {
+    return this.http.delete<HttpEvent<any>>(`${baseUrl}/campaign/${id}`);
   }
 
   addCampaign(data: any): Observable<any> {
