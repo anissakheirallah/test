@@ -11,12 +11,12 @@ export const locale = {
       cvtech: "CvTech",
       Settings: "Parametres",
       GNE: "gestion des niveau d'études",
-      GEG: "gestion des expériences globale",
-      GSC: "gestion des secteurs de compétence",
-      GFS: "gestion des fonctions souhaité",
-      adduser: "Ajouter un utilisateur",
+      GEG: 'gestion des expériences globale',
+      GSC: 'gestion des secteurs de compétence',
+      GFS: 'gestion des fonctions souhaité',
+      adduser: 'Ajouter un utilisateur',
       COMPANY: {
-        APP: "Compagnies ",
+        APP: 'Compagnies ',
         COMP: "Compagnie",
         COMPANYENTITY: "Entités",
         DEPARTMENT: "Départements",
@@ -32,9 +32,9 @@ export const locale = {
         ALLPROJECTS: "Tous les projets",
         EMPLOYEE: "Employé",
         ADDEMPLOYEE: "Ajouter employé",
-        ALLEMPLOYEES:"Tous les employés",
-        JOB:"Fonction",
-        ALLJOBS:"Toutes les fonctions"
+        ALLEMPLOYEES: "Tous les employés",
+        JOB: "Fonction",
+        ALLJOBS: "Toutes les fonctions"
       },
       CVTECH: {
         APP: "Campagnes",
@@ -50,7 +50,17 @@ export const locale = {
         COMMERCIAL: "Commercial",
         ALLCOMMERCIAL: "Tous les Commercials",
         ADDCOMMERCIAL: "Ajouter un Commercial",
-      },
-    },
-  },
-};
+        PROJECT: "Projet",
+        ALLPROJECTS: "Tous les Projets",
+        PRODUCT: "Produit",
+        ALLPRODUCTS: "Tous les Produits",
+        SERVICE: "Services",
+        ALLSERVICES: "Tous les Services",
+        SERVICETYPE: "Type de Service",
+        ALLSERVICETYPES: "Tous les Type de Service"
+
+      }
+
+    }
+  }
+}
