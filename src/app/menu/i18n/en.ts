@@ -1,5 +1,5 @@
 export const locale = {
-  lang: 'en',
+  lang: "en",
   data: {
     MENU: {
       HOME: 'Home',
@@ -24,7 +24,26 @@ export const locale = {
         ADDCOMPANY: "Add company",
         ALLENTITIES: "All entities",
         ADDCOMPANYENTITY: "Add entity",
-        ADDDEPARTMENT: "Add department"
+        ADDDEPARTMENT: "Add department",
+        ALLDEPARTMENT: "All departments",
+        TEAM: "Team",
+        ALLTEAMS: "All teams",
+        PROJECT: "Project",
+        ALLPROJECTS: "All projects",
+        EMPLOYEE: "Employee",
+        ADDEMPLOYEE: "Add employee",
+        ALLEMPLOYEES: "All employees",
+        JOB: "Job",
+        ALLJOBS: "All jobs"
+      },
+      CVTECH: {
+        APP: "Campagn",
+        CANDIDAT: "Candidat",
+        ADDCAMPAIGN: "Add campagn",
+        ALLCAMPAIGNS: "All campagnes",
+        ADDCANDIDAT: "Add candidat",
+        ALLCANDIDATS: "All candidats",
+        ADDDEPARTMENT: "Add department",
       },
       LEAD: {
         APP: "Leads",
@@ -33,7 +52,30 @@ export const locale = {
         ADDCOMMERCIAL: "Add Commercial",
         PROJECT: "Project",
         ALLPROJECTS: "All Projects",
-      }
-    }
-  }
-}
+        PRODUCT: "Product",
+        ALLPRODUCTS: "All Products",
+        SERVICE: "Service",
+        ALLSERVICES: "All Services",
+        SERVICETYPE: "Service Type",
+        ALLSERVICETYPES: "All Service Types"
+      },
+      GRH: {
+        APP: "GRH",
+        GRH: "Human resource management",
+        VISIT: "Visit",
+        ALLVISITS: "All visits",
+        ADDVISIT: "Add visit",
+        WARNINGTYPE: "Warning type",
+        WARNING: "Warning",
+        REQUESTS: "Requests",
+        ALLHOLIDAYREQUESTS: "All holidays requests",
+        ALLABSENCEREQUESTS: "All absences requests",
+        ALLDEPARTUREREQUESTS: "All deapartures requests",
+        ALLMATERIALREQUESTS: "All materials requests",
+        EMPLOYEES: "Employees",
+        ALLEMPLOYEES: "All employees",
+        EMPLOYEEDEATAILS: "Employee details",
+      },
+    },
+  },
+};

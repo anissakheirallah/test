@@ -17,39 +17,31 @@ export class CompanyentityDetailsComponent implements OnInit {
   public contentHeader: object;
 
   entity_id:any;
-  companyEntity:CompanyEntity;
-
+  entity:CompanyEntity;
  
   departments:Array<EntityDepartment>;
 
-  options:EntityDepartment = {
+  edit:EntityDepartment = {
     id:null,
     name: '',
     timestamp:'',
     entity:null,
     entity_id:null
   }
-  // private
-  private horizontalWizardStepper: Stepper;
- 
-  private bsStepper;
+
+  entities?:CompanyEntity[];
 
   constructor(private companyservice:CompanyService,
     private companyEntityService:CompanyEntityService,
     private departmentService:EntityDepartmentService,
     private route:ActivatedRoute,
     private modalService: NgbModal) {}
-
  
   ngOnInit() {
-    this.horizontalWizardStepper = new Stepper(document.querySelector('#stepper2'), {});
-    this.bsStepper = document.querySelectorAll('.bs-stepper');
-
-    this.entity_id= this.route.snapshot.params["entity_id"];
-    this.entityedit=this.route.snapshot.params["entity_id"];
-    this.getCompanyEntity(this.entity_id);
-
-    
+ 
+    this.entity_id=this.route.snapshot.params["entity_id"];
+    this.getCompanyEntity(this.route.snapshot.params["entity_id"]);
+    this.getCompanyEntities();
 
     // content header
     this.contentHeader = {
@@ -71,28 +63,26 @@ export class CompanyentityDetailsComponent implements OnInit {
           {
             name: 'All Companies',
             isLink: true,
-            link: '/'
+            link: '/companies/company/allcompanies'
           },
           {
-            name: 'Company unit details',
-            isLink: true,
-            link: '/'
-          },
-          {
-            name: 'Departments details',
+            name: 'Company entity details',
             isLink: false
           }
         ]
       }
     };
-    this.getCompanyEntities();
   }
+
+  // ------------ GET Entity ------------
 
   getCompanyEntity(id:any):any{
     this.companyEntityService.getCompanyEntity(id).subscribe({
-      next:(data)=>{
-        this.companyEntity=data;
-        this.departments=data.departements;
+      next:(data:any)=>{
+        console.log(data);
+        
+        this.entity=data;
+        this.departments=data.departmentResponses;
     },
       error:(err) =>{
         console.error(err);
@@ -100,38 +90,7 @@ export class CompanyentityDetailsComponent implements OnInit {
     });
   }
 
-  // Select
-  
-  getCompanyEntities(): void {
-    const params = this.getParams(this.page, this.pageSize, this.searchTitle);
-    this.companyEntityService.getCompanyentities(params).subscribe(
-      {
-        next: (data) => {
-          console.log(data);
-          const { content, totalElements } = data;
-          this.entities = content;
-          this.count = totalElements;
-        }, error: (err) => {
-          console.error(err);
-        }
-      }
-    );
-  }
-
-      // delete department
-
-      deleteDepartment(id: number): void {
-        this.departmentService.deleteDepartment(id)
-          .subscribe(
-            data => {
-              console.log(data);
-              this.companyEntity=this.getCompanyEntity(this.entity_id);
-              this.departments=this.companyEntity.departements;
-            },
-            error => console.log(error));
-      }
-
-      // pagination and search
+  // ------------ pagination and search ------------
 
     searchTitle = "";
     page = 1;
@@ -161,9 +120,7 @@ export class CompanyentityDetailsComponent implements OnInit {
       }
     }
 
-    // Add department to entity
-
-    entities?:CompanyEntity[];
+    // ------------ Add department to entity ------------
 
     department: EntityDepartment = {
       id:null,
@@ -172,8 +129,6 @@ export class CompanyentityDetailsComponent implements OnInit {
       entity:null,
       entity_id:null
     }
-  
-    entityedit:any;
 
     modalAddentity(modalPrimaryAdd) {
       this.modalService.open(modalPrimaryAdd, {
@@ -185,58 +140,31 @@ export class CompanyentityDetailsComponent implements OnInit {
     saveDepartment(): void {
       const data = {
         name: this.department.name,
-        entity_id: this.entityedit
+        entity_id: this.entity_id
       }
       this.departmentService.createDepartment(data).subscribe(
         {
           next: (data) => {
-            console.log(data);
+            this.ngOnInit();
           }, error: (err) => {
             console.error(err);
           }
         });
     }
 
-    onChange(e: any) {
-      this.entityedit=e.target.value;
-      console.log("id entity", this.entityedit)
-    }
+    // ------------ Delete department from entity ------------
 
-    // update department
-
-    updateDepartment():void{
-      const data = {
-        id: this.options.id,
-        name: this.options.name,
-        entity_id: this.entityedit
-      }
-      this.departmentService.updateDepartment(data.id, data).subscribe(
-        {
-          next: (data) => {
-            this.companyEntity=this.getCompanyEntity(this.entity_id);
-            this.departments=this.companyEntity.departements;
-          }, error: (err) => {
-            console.error(err);
-          }
-        });
-    }
-  
-    modalEdit(modalPrimaryedit, id) {
-      console.log(id);
-      this.departmentService.getDepartment(id).subscribe({
-        next: (data) => {
-          this.options = data;
-          this.options.entity_id=this.entity_id
-        }, error: (err) => {
-          console.error(err);
+      deleteDepartment(id: number): void {
+        this.departmentService.deleteDepartment(id)
+          .subscribe(
+            data => {
+              this.entity=this.getCompanyEntity(this.entity_id);
+              this.departments=this.entity.departements;
+            },
+            error => console.log(error));
         }
-      });
-      this.modalService.open(modalPrimaryedit, {
-        centered: true,
-        windowClass: 'modal modal-primary',
-      });
-    }
-  
+
+    // ------------ GET department ------------
 
   getDepartment(id:any):any{
     this.departmentService.getDepartment(id).subscribe({
@@ -247,6 +175,23 @@ export class CompanyentityDetailsComponent implements OnInit {
         console.error(err);
       }
     });
+  }
+
+  // ------------ GET entities for select ------------
+  
+  getCompanyEntities(): void {
+    const params = this.getParams(this.page, this.pageSize, this.searchTitle);
+    this.companyEntityService.getCompanyentities(params).subscribe(
+      {
+        next: (data) => {
+          const { content, totalElements } = data;
+          this.entities = content;
+          this.count = totalElements;
+        }, error: (err) => {
+          console.error(err);
+        }
+      }
+    );
   }
 
 }

@@ -1,15 +1,15 @@
 export const locale = {
-  lang: 'fr',
+  lang: "fr",
   data: {
     MENU: {
-      HOME: 'Accueil',
-      SAMPLE: 'Échantillon',
-      Dashboard: 'tableau de bord',
-      CVs: 'CVs',
-      Users: 'Utilisateurs',
-      Campaign: 'Campagne',
-      cvtech: 'CvTech',
-      Settings: 'Parametres',
+      HOME: "Accueil",
+      SAMPLE: "Échantillon",
+      Dashboard: "tableau de bord",
+      CVs: "CVs",
+      Users: "Utilisateurs",
+      Campaign: "Campagne",
+      cvtech: "CvTech",
+      Settings: "Parametres",
       GNE: "gestion des niveau d'études",
       GEG: 'gestion des expériences globale',
       GSC: 'gestion des secteurs de compétence',
@@ -24,7 +24,26 @@ export const locale = {
         ALLCOMPANIES: "Tous les compagnies",
         ADDCOMPANYENTITY: "Ajouter une entité de compagnie",
         ADDDEPARTMENT: "Ajouter un département",
-        ALLENTITIES: "Toutes les entitées"
+        ALLENTITIES: "Toutes les entitées",
+        ALLDEPARTMENT: "Tous les départements",
+        TEAM: "Equipe",
+        ALLTEAMS: "Tous les équipes",
+        PROJECT: "Projet",
+        ALLPROJECTS: "Tous les projets",
+        EMPLOYEE: "Employé",
+        ADDEMPLOYEE: "Ajouter employé",
+        ALLEMPLOYEES: "Tous les employés",
+        JOB: "Fonction",
+        ALLJOBS: "Toutes les fonctions"
+      },
+      CVTECH: {
+        APP: "Campagnes",
+        CANDIDAT: "Candidat",
+        ADDCAMPAIGN: "Ajouter une campagne",
+        ALLCAMPAIGNS: "Tous les campagnes",
+        ADDCANDIDAT: "Ajouter un candidat",
+        ALLCANDIDATS: "Toutes les candidats",
+        ALLENTITIES: "Toutes les entitées",
       },
       LEAD: {
         APP: "Ventes",
@@ -33,8 +52,12 @@ export const locale = {
         ADDCOMMERCIAL: "Ajouter un Commercial",
         PROJECT: "Projet",
         ALLPROJECTS: "Tous les Projets",
-
-
+        PRODUCT: "Produit",
+        ALLPRODUCTS: "Tous les Produits",
+        SERVICE: "Services",
+        ALLSERVICES: "Tous les Services",
+        SERVICETYPE: "Type de Service",
+        ALLSERVICETYPES: "Tous les Type de Service"
 
       }
 

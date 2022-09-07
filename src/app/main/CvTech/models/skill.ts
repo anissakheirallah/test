@@ -1,10 +1,10 @@
 export class Skill {
-    name: String;
-    description: String;
+  id: number;
+  name: String;
+  description: String;
 
-    constructor(name: String, description: String) {
-        this.name = name;
-        this.description = description;
-    }
-
+  constructor(name: String, description: String) {
+    this.name = name;
+    this.description = description;
+  }
 }

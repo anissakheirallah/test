@@ -10,13 +10,13 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AddDepartmentComponent } from './add-department/add-department.component';
 
 
-const routes: Routes = 
-[
-  {
-  path: 'addDepartment',
-  component: AddDepartmentComponent,
-  }
-];
+const routes: Routes =
+  [
+    {
+      path: 'department',
+      component: AddDepartmentComponent,
+    }
+  ];
 
 @NgModule({
   declarations: [

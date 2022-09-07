@@ -1,4 +1,4 @@
-<div class="content-wrapper container-xxl p-0">
+<!-- <div class="content-wrapper container-xxl p-0">
     <div class="content-body">
 
         <app-content-header [contentHeader]="contentHeader"></app-content-header>
@@ -96,8 +96,8 @@
                         headerClass="d-flex align-items-center justify-content-center"
                         cellClass="d-flex align-items-center justify-content-center">
                     </ngx-datatable-column>
-                    <!--<ngx-datatable-column name="Balance" prop="Balance" cellClass="d-flex align-items-center">
-                    </ngx-datatable-column>-->
+            ------------<ngx-datatable-column name="Balance" prop="Balance" cellClass="d-flex align-items-center">
+                    </ngx-datatable-column> --------------------
 
                     <ngx-datatable-column name="Actions" [sortable]="false"
                         headerClass="d-flex align-items-center justify-content-center"
@@ -129,169 +129,228 @@
         </section>
 
     </div>
-</div>
+</div> -->
 
 <!-----------   Modal Edit Team   ----------->
 
-<ng-template #modalPrimaryedit let-modal>
-    <div class="modal-header">
-        <h5 class="modal-title" id="myModalLabel160"> Edit Holiday </h5>
-        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+<!-- <ng-template #modalPrimaryedit let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Edit Holiday</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modal.dismiss('Cross click')"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <form [formGroup]="form" (ngSubmit)="updateHoliday()" class="login-form">
+      <div class="col-12">
+        <div class="form-group row">
+          <div class="col-sm-3 col-form-label">
+            <label for="editname"> Title of holiday </label>
+          </div>
+
+          <div class="col-sm-9">
+            <div class="form-group">
+              <input
+                type="text"
+                id="holidayTitle"
+                class="form-control"
+                formControlName="holidayTitle"
+                placeholder="Enter the holiday title"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="form-group row">
+          <div class="col-sm-3 col-form-label">
+            <label for="editdesc"> message Details </label>
+          </div>
+          <div class="col-sm-9">
+            <div class="form-group">
+              <input
+                type="text"
+                id="message-Details"
+                class="form-control"
+                placeholder="Enter Message Details"
+                formControlName="messageDetails"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="form-group row">
+          <div class="col-sm-3 col-form-label">
+            <label for="editdesc">holiday Type</label>
+          </div>
+          <div class="col-sm-9">
+            <div class="form-group">
+              <select
+                class="form-control"
+                id="holidayType"
+                formControlName="holidayType"
+                (change)="pop($event.target.value)"
+              >
+                <option hidden></option>
+                <option value="paid" [disabled]="ppdisabled">Paid</option>
+                <option value="unpaid">Unpaid</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="form-group row">
+          <div class="col-sm-3 col-form-label">
+            <label for="editdesc"> Start Date </label>
+          </div>
+          <div class="col-sm-9">
+            <div class="input-group">
+              <input
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                formControlName="startDate"
+                ngbDatepicker
+                #basicDP="ngbDatepicker"
+                (dateSelect)="onDateTimeSelected($event)"
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary feather icon-calendar"
+                  (click)="basicDP.toggle()"
+                  type="button"
+                  rippleEffect
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="form-group row">
+          <div class="col-sm-3 col-form-label">
+            <label for="editdesc">finish Date</label>
+          </div>
+          <div class="col-sm-9">
+            <div class="input-group">
+              <input
+                class="form-control"
+                placeholder="dd-mm-yyyy"
+                formControlName="finishDate"
+                ngbDatepicker
+                #basicDPf="ngbDatepicker"
+                (dateSelect)="onDateTimeSelected($event)"
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary feather icon-calendar"
+                  (click)="basicDPf.toggle()"
+                  type="button"
+                  rippleEffect
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" rippleEffect>
+          Accept
         </button>
-    </div>
-    <div class="modal-body" tabindex="0" ngbAutofocus>
-        <form [formGroup]="form" (ngSubmit)="updateHoliday()" class="login-form">
-            <div class="col-12">
-                <div class="form-group row">
-                    <div class="col-sm-3 col-form-label">
-                        <label for="editname"> Title of holiday </label>
-                    </div>
-
-                    <div class="col-sm-9">
-                        <div class="form-group">
-                            <input type="text" id="holidayTitle" class="form-control" formControlName="holidayTitle"
-                                placeholder="Enter the holiday title">
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="form-group row">
-                    <div class="col-sm-3 col-form-label">
-                        <label for="editdesc"> message Details </label>
-                    </div>
-                    <div class="col-sm-9">
-
-                        <div class="form-group">
-                            <input type="text" id="message-Details" class="form-control"
-                                placeholder="Enter Message Details" formControlName="messageDetails" />
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="form-group row">
-                    <div class="col-sm-3 col-form-label">
-                        <label for="editdesc">holiday Type</label>
-                    </div>
-                    <div class="col-sm-9">
-
-                        <div class="form-group">
-                            <select class="form-control" id="holidayType" formControlName="holidayType"
-                                (change)="pop($event.target.value)">
-                                <option hidden></option>
-                                <option value="paid" [disabled]="ppdisabled">Paid</option>
-                                <option value="unpaid">Unpaid</option>
-                            </select>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="form-group row">
-                    <div class="col-sm-3 col-form-label">
-                        <label for="editdesc"> Start Date </label>
-                    </div>
-                    <div class="col-sm-9">
-                        <div class="input-group">
-                            <input class="form-control" placeholder="yyyy-mm-dd" formControlName="startDate"
-                                ngbDatepicker #basicDP="ngbDatepicker" (dateSelect)="onDateTimeSelected($event)">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary feather icon-calendar"
-                                    (click)="basicDP.toggle()" type="button" rippleEffect></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="form-group row">
-                    <div class="col-sm-3 col-form-label">
-                        <label for="editdesc">finish Date</label>
-                    </div>
-                    <div class="col-sm-9">
-                        <div class="input-group">
-                            <input class="form-control" placeholder="dd-mm-yyyy" formControlName="finishDate"
-                                ngbDatepicker #basicDPf="ngbDatepicker" (dateSelect)="onDateTimeSelected($event)">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary feather icon-calendar"
-                                    (click)="basicDPf.toggle()" type="button" rippleEffect></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" rippleEffect>
-                    Accept
-                </button>
-            </div>
-
-        </form>
-    </div>
-</ng-template>
+      </div>
+    </form>
+  </div>
+</ng-template> -->
 
 <!-----------   Modal Danger   ----------->
 
-<div class="modal-danger d-inline-block">
-    <ng-template #modalDanger let-modal>
-        <div class="modal-header">
-            <h5 class="modal-title" id="myModalLabel160">Confirm</h5>
+<!-- <div class="modal-danger d-inline-block">
+  <ng-template #modalDanger let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">Confirm</h5>
 
-            <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body" tabindex="0" ngbAutofocus>
-            Are you sure you want to delete the Team ?
-        </div>
-        <div class="modal-footer">
+      <button
+        type="button"
+        class="close"
+        (click)="modal.dismiss('Cross click')"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+      Are you sure you want to delete the Team ?
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="modal.close('Accept click')"
+        rippleEffect
+      >
+        Cancel
+      </button>
 
-            <button type="button" class="btn btn-danger" (click)="modal.close('Accept click')" rippleEffect>
-                Cancel
-            </button>
-
-            <button type="button" class="btn btn-danger" (click)="deleteHoliday()" rippleEffect>
-                Delete
-            </button>
-
-        </div>
-    </ng-template>
-</div>
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="deleteHoliday()"
+        rippleEffect
+      >
+        Delete
+      </button>
+    </div>
+  </ng-template>
+</div> -->
 
 <!-----------   Modal Danger for multiple delete  ----------->
 
-<div class="modal-danger d-inline-block">
-    <ng-template #modalDangerMultiple let-modal>
-        <div class="modal-header">
-            <h5 class="modal-title" id="myModalLabel160">Confirm</h5>
+<!-- <div class="modal-danger d-inline-block">
+  <ng-template #modalDangerMultiple let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel160">Confirm</h5>
 
-            <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body" tabindex="0" ngbAutofocus>
-            Are you sure you want to delete the selected Teams ?
-        </div>
-        <div class="modal-footer">
+      <button
+        type="button"
+        class="close"
+        (click)="modal.dismiss('Cross click')"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+      Are you sure you want to delete the selected Teams ?
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="modal.close('Accept click')"
+        rippleEffect
+      >
+        Cancel
+      </button>
 
-            <button type="button" class="btn btn-danger" (click)="modal.close('Accept click')" rippleEffect>
-                Cancel
-            </button>
-
-            <button type="button" class="btn btn-danger" (click)="deletemultiple()" rippleEffect>
-                Delete
-            </button>
-
-        </div>
-    </ng-template>
-</div>
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="deletemultiple()"
+        rippleEffect
+      >
+        Delete
+      </button>
+    </div>
+  </ng-template>
+</div> -->

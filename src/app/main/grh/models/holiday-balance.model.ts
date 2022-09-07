@@ -1,11 +1,9 @@
 export class HolidayBalance {
+  id: number;
+  balance: number;
+  timestamp: Date;
 
-    id: number;
-    employee_id: number;
-    balance: number;
-
-    public constructor(employee_id: number, balance: number) {
-        this.employee_id = employee_id;
-        this.balance = balance;
-    }
+  public constructor(balance: number) {
+    this.balance = balance;
+  }
 }

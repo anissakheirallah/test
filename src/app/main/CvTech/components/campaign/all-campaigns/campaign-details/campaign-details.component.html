@@ -11,7 +11,7 @@
           </div>
           <div class="table-responsive">
             <ngx-datatable class="bootstrap core-bootstrap ml-1" [columnMode]="'flex'" [headerHeight]="40"
-              [footerHeight]="50" [rowHeight]="58" [limit]="10" rowHeight="auto" [rows]="[Campaign]">
+              [footerHeight]="50" [rowHeight]="58"  rowHeight="auto" [rows]="[Campaign]">
 
               <ngx-datatable-column name="Name" prop="full_name" [flexGrow]="1">
                 <ng-template let-row="row" ngx-datatable-cell-template>
@@ -142,7 +142,7 @@
               <!-- Table of Selected Candidats -->
               <div class="table-responsive">
                 <ngx-datatable class="bootstrap core-bootstrap ml-1" [columnMode]="'flex'" [headerHeight]="40"
-                  [footerHeight]="50" [rowHeight]="58" [limit]="10" rowHeight="auto" [rows]="Postulations">
+                  [footerHeight]="50" [rowHeight]="58"  rowHeight="auto" [rows]="Postulations">
 
                   <ngx-datatable-column name="Name" prop="full_name" [flexGrow]="1.5">
                     <ng-template let-row="row" ngx-datatable-cell-template>
@@ -176,21 +176,24 @@
                   <ngx-datatable-column name="Actions" [flexGrow]="1">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       <div class="d-flex align-items-center">
-                        <div ngbDropdown container="body">
+                        <!-- <div ngbDropdown container="body">
                           <a ngbDropdownToggle href="javascript:void(0);" class="hide-arrow" id="dropdownBrowserState"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i data-feather="more-horizontal" class="text-primary cursor-pointer mr-50"></i>
                           </a>
                           <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
-                            <!-- <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                            <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
                               ><i data-feather="file-text" class="mr-50"></i> Edit</a
-                            > -->
+                            >
                             <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
                               (click)="deleteSelectedCandidat(row?.id)">
                               <i data-feather="trash-2" class="mr-50"></i> Delete
                             </a>
                           </div>
-                        </div>
+                        </div> -->
+                        <button (click)="deleteSelectedCandidat(row?.id)" type="button" class="btn btn-flat-danger btn-sm" rippleEffect>
+                          <i data-feather="trash-2" class="mr-50"></i> Delete
+                        </button>
                       </div>
                     </ng-template>
                   </ngx-datatable-column>
@@ -233,7 +236,7 @@
                     </div>
 
                     <ngx-datatable class="bootstrap core-bootstrap ml-1" [columnMode]="'flex'" [headerHeight]="40"
-                      [footerHeight]="50" [rowHeight]="58" [limit]="10" rowHeight="auto" [rows]="Candidats">
+                      [footerHeight]="50" [rowHeight]="58"  rowHeight="auto" [rows]="Candidats">
 
                       <ngx-datatable-column [width]="25" [sortable]="false" [canAutoResize]="false" [draggable]="false"
                         [resizeable]="false">

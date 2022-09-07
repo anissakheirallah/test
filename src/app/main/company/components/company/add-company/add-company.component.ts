@@ -21,7 +21,8 @@ export class AddCompanyComponent implements OnInit {
     phoneNumber: '',
     webSite: '',
     image: '',
-    entities: []
+    entities: [],
+    timestamp:''
   }
 
   public form: FormGroup = new FormGroup({
