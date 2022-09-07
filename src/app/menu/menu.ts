@@ -371,4 +371,40 @@ export const menu: CoreMenu[] = [
       },
     ],
   },
+  {
+    id: 'learning',
+    title: 'MENU.Learning',
+    type: 'collapsible',
+    icon: 'menu',
+    children:[
+      {
+        id: 'training',
+        title: 'Training',
+        type: 'item',
+        icon: 'book-open',
+        url: 'learning/training/'
+      },
+      {
+        id: 'faq',
+        title: 'FAQ',
+        type: 'item',
+        icon: 'help-circle',
+        url: '#'
+      },
+      {
+        id: 'quiz',
+        title: 'Quiz',
+        type: 'item',
+        icon: 'book',
+        url: '#'
+      },
+      {
+        id: 'reports',
+        title: 'Reports',
+        type: 'item',
+        icon: 'file',
+        url: '#'
+      }
+    ]
+  }
 ];

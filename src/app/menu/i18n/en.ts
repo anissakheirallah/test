@@ -9,6 +9,7 @@ export const locale = {
       Users: "Users",
       Campaign: "Campaign",
       cvtech: "CvTech",
+      Learning : 'Learning',
       Settings: "Settings",
       GNE: "Education level management",
       GEG: "Global experience management",
