@@ -37,6 +37,11 @@ const appRoutes: Routes = [
       import("./main/CvTech/cvtech.module").then((m) => m.CvtechModule),
   },
   {
+    path: "learning",
+    loadChildren: () =>
+      import("./main/learning/learning.module").then((m) => m.LearningModule),
+  },
+  {
     path: "companies",
     loadChildren: () =>
       import("./main/company/company.module").then((m) => m.CompanyModule),
@@ -50,10 +55,13 @@ const appRoutes: Routes = [
     path: "crm",
     loadChildren: () =>
       import("./main/crm/crm.module").then((m) => m.CrmModule),
-  },  {
+  },
+  {
     path: "workspace",
     loadChildren: () =>
-      import("./main/workspace/workspace.module").then((m) => m.WorkspaceModule),
+      import("./main/workspace/workspace.module").then(
+        (m) => m.WorkspaceModule
+      ),
   },
   {
     path: "",
@@ -63,9 +71,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
