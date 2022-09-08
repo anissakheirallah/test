@@ -10,6 +10,8 @@ import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-dat
 import { locale as en } from '../../../i18n/en';
 import { locale as fr } from '../../../i18n/fr';
 import { CoreTranslationService } from '@core/services/translation.service';
+import { Employee } from 'app/main/company/models/employee.model';
+import { EmployeeService } from 'app/main/company/services/employee.service';
 
 
 @Component({
@@ -27,9 +29,12 @@ export class AllTeamsComponent implements OnInit {
     employees: null,
     departement:null
   }
-
+  
+  emp : Employee;
   idDepartment: any;
   departments?: EntityDepartment[];
+  idEmployee : any;
+  employees?: Employee[];
   teams: any;
   submitted = false;
   
@@ -52,7 +57,8 @@ export class AllTeamsComponent implements OnInit {
     private departmentservice: EntityDepartmentService,
     private formBuilder: FormBuilder,
     private teamService: TeamService,
-    private _coreTranslationService: CoreTranslationService) {
+    private _coreTranslationService: CoreTranslationService,
+    private employeeService : EmployeeService) {
       this._coreTranslationService.translate(en, fr);
   }
 
@@ -75,6 +81,7 @@ export class AllTeamsComponent implements OnInit {
   // ------------ Get data ------------
   page = 1;
   count = 0;
+  countEmp= 0;
   name = '';
 
   getAllteams() {
@@ -88,6 +95,8 @@ export class AllTeamsComponent implements OnInit {
     }
     );
   }
+  
+  
 
   // ------------ Validation ------------
 
@@ -143,6 +152,8 @@ export class AllTeamsComponent implements OnInit {
     
     this.idDepartment = e.target.value;
     console.log("id dep",this.idDepartment);
+    this.idEmployee = e.target.value;
+    console.log("id Emp" + this.idEmployee);
   }
 
   // ------------ Edit Team ------------
@@ -204,6 +215,72 @@ export class AllTeamsComponent implements OnInit {
         }
       });
   }
+  // ------------ Modal Add team to employee ------------
+
+  modalOpenAddEmployee(modalAddEmployeeTeam, id) {
+    console.log(this.employees);
+    this.teamService.getTeam(id).subscribe({
+      next: (data) => {
+        console.log("department team: ",data.departement);
+        this.team = data;
+        this.team.departement_id = this.idDepartment;
+        this.form = this.formBuilder.group(
+          {
+            teamId: [
+              this.team.id,
+              [
+                Validators.required,
+                Validators.minLength(3)
+              ]
+            ]
+          }
+        );
+      }, error: (err) => {
+        console.error(err);
+      }
+    });
+    this.modalService.open(modalAddEmployeeTeam, {
+      centered: true,
+      windowClass: 'modal modal-primary',
+    });
+    
+  }
+
+  // ------------ Add team to employee ------------
+
+  addEmployeeToTeam() {
+    this.submitted = true;
+    if (this.form.invalid) {
+      return;
+    }
+
+    this.employeeService.getEmployee(this.idEmployee).subscribe({
+      next: (data) => {
+        this.emp = data;
+        this.emp.team_id = this.form.value.teamId;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+
+    console.log(this.emp);
+    console.log(this.form.value.teamId);
+    console.log(this.idEmployee);
+    this.employeeService.updateEmployee(this.idEmployee, this.emp).subscribe({
+      next: (data) => {
+        // this.getCompanies();
+        this.modalService.dismissAll("Cross click");
+        this.ngOnInit();
+        this.submitted = false;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+    console.log("Team ajouter");
+  }
+
 
   // ------------ Delete Team ------------ 
 
@@ -241,6 +318,25 @@ export class AllTeamsComponent implements OnInit {
           this.departments = content;
           this.count = totalElements;
           this.idDepartment = this.departments[0].id;
+        }, error: (err) => {
+          console.error(err);
+        }
+      }
+    );
+  }
+
+  // ------------ GET employees for select ------------
+
+  getEmployees(): void {
+    const params = { page: this.page - 1, size: 8, name: this.name };
+    this.employeeService.getEmployees(params).subscribe(
+      {
+        next: (data) => {
+          console.log(data.content);
+          const { content, totalElements } = data;
+          this.employees = data;
+          this.countEmp = totalElements;
+          this.idEmployee = this.employees[0].id;
         }, error: (err) => {
           console.error(err);
         }
@@ -311,6 +407,7 @@ export class AllTeamsComponent implements OnInit {
     //this.isSelected = true;
     this.getAllteams()
     this.getDepartments();
+    this.getEmployees();
     this.isDisabled = true;
 
     this.contentHeader = {
