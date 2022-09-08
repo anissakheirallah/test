@@ -227,125 +227,40 @@ export const menu: CoreMenu[] = [
             icon: "plus-square",
             url: "companies/employee/addemployee",
           },
-          {
-            id: 'allemployees',
-            title: 'MENU.COMPANY.ALLEMPLOYEES',
-            type: 'item',
-            icon: 'list',
-            url: 'companies/employee/allemployees'
-          }
-        ],
-      },
-      {
-        id: "Job",
-        title: "MENU.COMPANY.JOB",
-        type: "collapsible",
-        icon: "grid",
-        children: [
-          {
-            id: "alljobs",
-            title: "MENU.COMPANY.ALLJOBS",
-            type: "item",
-            icon: "plus-square",
-            url: "companies/job/alljobs",
-          },
         ],
       },
     ],
   },
   {
-    id: 'leads',
-    type: 'collapsible',
-    title: 'MENU.LEAD.APP',
-    icon: 'menu',
+    id: "leads",
+    type: "collapsible",
+    title: "MENU.LEAD.APP",
+    icon: "menu",
     children: [
       {
-        id: 'commercial',
-        title: 'MENU.LEAD.COMMERCIAL',
-        type: 'collapsible',
-        icon: 'grid',
+        id: "commercial",
+        title: "MENU.LEAD.COMMERCIAL",
+        type: "collapsible",
+        icon: "grid",
 
         children: [
           {
-            id: 'allCommercials',
-            title: 'MENU.LEAD.ALLCOMMERCIAL',
-            type: 'item',
-            icon: 'list',
-            url: 'crm/commercial'
+            id: "allcommercials",
+            title: "MENU.LEAD.ALLCOMMERCIAL",
+            type: "item",
+            icon: "list",
+            url: "crm/commercial/allcommercials",
           },
-
-        ]
+          {
+            id: "addcommercial",
+            title: "MENU.LEAD.ADDCOMMERCIAL",
+            type: "item",
+            icon: "plus-square",
+            url: "crm/commercial/addcommercial",
+          },
+        ],
       },
-
-      {
-        id: 'project',
-        title: 'MENU.LEAD.PROJECT',
-        type: 'collapsible',
-        icon: 'grid',
-
-        children: [
-          {
-            id: 'allprojects',
-            title: 'MENU.LEAD.ALLPROJECTS',
-            type: 'item',
-            icon: 'list',
-            url: 'crm/project'
-          },
-
-        ]
-      },
-      {
-        id: 'product',
-        title: 'MENU.LEAD.PRODUCT',
-        type: 'collapsible',
-        icon: 'grid',
-
-        children: [
-          {
-            id: 'allproducts',
-            title: 'MENU.LEAD.ALLPRODUCTS',
-            type: 'item',
-            icon: 'list',
-            url: 'crm/product'
-          },
-
-        ]
-      },
-      {
-        id: 'service',
-        title: 'MENU.LEAD.SERVICE',
-        type: 'collapsible',
-        icon: 'grid',
-
-        children: [
-          {
-            id: 'allservices',
-            title: 'MENU.LEAD.ALLSERVICES',
-            type: 'item',
-            icon: 'list',
-            url: 'crm/service'
-          },
-
-        ]
-      },
-      {
-        id: 'serviceType',
-        title: 'MENU.LEAD.SERVICETYPE',
-        type: 'collapsible',
-        icon: 'grid',
-
-        children: [
-          {
-            id: 'allServiceTypes',
-            title: 'MENU.LEAD.ALLSERVICETYPES',
-            type: 'item',
-            icon: 'list',
-            url: 'crm/serviceType'
-          },
-
-        ]
-      }
-    ]
+    ],
   },
   {
     id: "GRH",
@@ -387,17 +302,6 @@ export const menu: CoreMenu[] = [
             icon: "list",
             url: "grh/requests/all-holiday-requests",
           },
-
-        ]
-      },
-
-      {
-        id: 'project',
-        title: 'MENU.LEAD.PROJECT',
-        type: 'collapsible',
-        icon: 'grid',
-
-        children: [
           {
             id: "allabsencerequests",
             title: "MENU.GRH.ALLABSENCEREQUESTS",
@@ -442,6 +346,35 @@ export const menu: CoreMenu[] = [
             url: "grh/employee/employee-details",
           },
         ],
+      },
+    ],
+  },
+
+    //Menu GL_Workspace
+  {
+    id: "Workspace",
+    type: "collapsible",
+    title: "Workspace",
+    icon: "menu",
+    children: [
+      {
+        id: "forums",
+        title: "FORUMS",
+        type: "item",
+        icon: "plus-square",
+        url: "workspace/forums",
+      },
+      {
+        id: "Documents",
+        title: "Documents",
+        type: "collapsible",
+        icon: "grid",
+      },
+      {
+        id: "Configuration",
+        title: "Configuration",
+        type: "collapsible",
+        icon: "grid",
       },
     ],
   },

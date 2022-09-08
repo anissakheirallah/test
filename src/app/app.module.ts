@@ -1,11 +1,11 @@
-import { HttpClientModule } from '@angular/common/http';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule, Routes } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
-import { ToastrModule } from 'ngx-toastr'; // For auth after login toast
+import { HttpClientModule } from "@angular/common/http";
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterModule, Routes } from "@angular/router";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { TranslateModule } from "@ngx-translate/core";
+import { ToastrModule } from "ngx-toastr"; // For auth after login toast
 
 import { CoreCommonModule } from "@core/common.module";
 import { CoreSidebarModule, CoreThemeCustomizerModule } from "@core/components";
@@ -25,7 +25,6 @@ import { ReactiveFormsModule } from "@angular/forms";
 
 import { CrmModule } from "./main/crm/crm.module";
 
-
 const appRoutes: Routes = [
   {
     path: "pages",
@@ -36,11 +35,6 @@ const appRoutes: Routes = [
     path: "cvtech",
     loadChildren: () =>
       import("./main/CvTech/cvtech.module").then((m) => m.CvtechModule),
-  },
-  {
-    path: "learning",
-    loadChildren: () =>
-        import("./main/learning/learning.module").then((m) => m.LearningModule),
   },
   {
     path: "companies",
@@ -56,6 +50,10 @@ const appRoutes: Routes = [
     path: "crm",
     loadChildren: () =>
       import("./main/crm/crm.module").then((m) => m.CrmModule),
+  },  {
+    path: "workspace",
+    loadChildren: () =>
+      import("./main/workspace/workspace.module").then((m) => m.WorkspaceModule),
   },
   {
     path: "",
@@ -65,7 +63,6 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-
   declarations: [
     AppComponent
   ],
@@ -107,4 +104,4 @@ const appRoutes: Routes = [
 
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
