@@ -50,6 +50,10 @@ const appRoutes: Routes = [
     path: "crm",
     loadChildren: () =>
       import("./main/crm/crm.module").then((m) => m.CrmModule),
+  },  {
+    path: "workspace",
+    loadChildren: () =>
+      import("./main/workspace/workspace.module").then((m) => m.WorkspaceModule),
   },
   {
     path: "",
