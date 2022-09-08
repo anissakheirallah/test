@@ -1,48 +1,38 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { CoreCommonModule } from '@core/common.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { CvsComponent } from './cvs/cvs.component';
+import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
+import { ComponentModule } from './campaign/component/component.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { CampaignModule } from './campaign/campaign.module';
-import { UsersModule } from './users/users.module';
-import { profile } from 'console';
-import { ProfileModule } from './profil/profile.module';
-import { CandidatsModule } from './candidats/candidats.module';
 
 
-const routes: Routes = 
-[
+const routes: Routes =
+  [
     {
       path: 'campaign',
       loadChildren: () => import('./campaign/campaign.module').then(m => m.CampaignModule)
     },
     {
-      path: 'profile',
-      loadChildren: () => import('./profil/profile.module').then(m => m.ProfileModule)
+      path: 'candidates',
+      loadChildren: () => import('./candidate/candidate.module').then(m => m.CandidateModule)
     },
     {
-      path: 'candidats',
-      loadChildren: () => import('./candidats/candidats.module').then(m => m.CandidatsModule)
+      path: 'cvs',
+      loadChildren: () => import('./cvs/cvs.module').then(m => m.CvsModule)
     },
     {
-    path: 'cvs',
-    component: CvsComponent,
-  },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-  },
-];
+      path: 'dashboard',
+      component: DashboardComponent,
+    },
+  ];
 
 @NgModule({
   declarations: [
-    CvsComponent,
     DashboardComponent
   ],
   imports: [
@@ -54,9 +44,8 @@ const routes: Routes =
     NgSelectModule,
     FormsModule,
     NgxDatatableModule,
-    CampaignModule,
-    CandidatsModule,
-    NgbModule
+    ComponentModule,
+    //CampaignModule,
   ],
 
   providers: []

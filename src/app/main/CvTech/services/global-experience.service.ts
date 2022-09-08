@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import { GlobalExperience } from '../models/global-experience';
+import { GlobalExperience } from '../models/global-experience.model';
 
 const baseUrl = environment.UrlCvTech;
 

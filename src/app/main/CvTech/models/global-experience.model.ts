@@ -1,5 +1,6 @@
 export class GlobalExperience {
-    id:number;
+    
+    id: number;
     name: String;
     description: String;
 

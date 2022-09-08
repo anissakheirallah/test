@@ -32,4 +32,6 @@ const routes: Routes = [
 
   providers: [],
 })
-export class GrhModule {}
+export class GrhModule {
+
+}
