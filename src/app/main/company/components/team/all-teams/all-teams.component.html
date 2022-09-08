@@ -182,9 +182,14 @@
                       ><i data-feather="trash-2" class="mr-50"></i> {{"DELETE" | translate}}</a
                     >
                   </div>
+                  
+                  
                 </div>
-
-                <i data-feather="edit" class="text-primary cursor-pointer"></i>
+                <a href="javascript:void(0)"  class="d-flex align-items-center" title="Add employee to this team"
+                    (click)="modalOpenAddEmployee(modalAddEmployeeTeam, row?.id)"
+                      > <i data-feather="users" class="text-primary cursor-pointer"></i></a
+                    >
+                
               </div>
             </ng-template>
           </ngx-datatable-column>
@@ -420,6 +425,83 @@
   </ng-template>
 </div>
 <swal></swal>
+
+    <!------------------ add employee to team ------------------->
+
+    <ng-template #modalAddEmployeeTeam let-modal>
+      <form [formGroup]="form" (ngSubmit)="addEmployeeToTeam()" class="login-form">
+      <div class="modal-header">
+          <h5 class="modal-title" id="myModalLabel160"> Edit entity </h5>  
+          <button type="button" class="close"
+              (click)="modal.dismiss('Cross click')" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+  
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+  
+          <div class="col-12">
+              <div class="form-group row">
+                  <div class="col-sm-3 col-form-label">
+                      <label for="teamId"> Team Id </label>
+                  </div>
+                  <div class="col-sm-9">
+  
+                    <div class="form-group">
+                      <input
+                      type="text"
+                      formControlName="teamId"
+                      id="teamId"
+                      class="form-control"
+                      name="teamId"
+                      disabled = "true"
+                      [ngClass]="{
+                        'is-invalid': formControl['teamId'].errors
+                      }"
+                      placeholder="Enter the entity's name"
+                    />
+                    <div *ngIf="formControl['teamId'].errors">
+                        <div *ngIf="formControl['teamId'].errors['required']">
+                          The entity's name is required
+                        </div>
+                        <div *ngIf="formControl['teamId'].errors['minlength']">
+                          <span class="err">The entity's name should be more than 3 character!</span>
+                        </div>
+                    </div>
+                </div>
+  
+                  </div>
+              </div>
+          </div>
+  
+          <div class="col-12">
+            <div class="form-group row">
+                <div class="col-sm-3 col-form-label">
+                    <label for="employee"> Employee </label>
+                </div>
+                <br>
+                <div class="col-sm-9">
+                 <!-- <input type="text" id="editcompany" class="form-control"
+                    name="editcompany"
+                    [(ngModel)]="options.name" 
+                  />-->
+                <select class="custom-select" id="customSelectSize" size="4" (change)="onChange($event)">
+                  <option *ngFor="let employee of employees" id="employee" value="{{employee.id}}"
+                  > {{employee.firstName}} {{employee.lastName}}
+                  </option>
+                </select>
+                </div>
+            </div>
+          </div>   
+      </div>
+  
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" rippleEffect>
+            Accept
+        </button>
+      </div>
+    </form>
+  </ng-template>
 
 <!-----------   Modal Danger for multiple delete  ----------->
 
