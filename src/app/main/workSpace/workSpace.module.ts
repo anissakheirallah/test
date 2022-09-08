@@ -38,4 +38,4 @@ const routes: Routes = [
     providers: [],
 
 })
-export class WorkSpaceModule { }
+export class WorkspaceModule { }

@@ -350,11 +350,11 @@ export const menu: CoreMenu[] = [
     ],
   },
 
-    //Menu GL_WorkSpace
+    //Menu GL_Workspace
   {
-    id: "WorkSpace",
+    id: "Workspace",
     type: "collapsible",
-    title: "WorkSpace",
+    title: "Workspace",
     icon: "menu",
     children: [
       {
@@ -362,7 +362,7 @@ export const menu: CoreMenu[] = [
         title: "FORUMS",
         type: "item",
         icon: "plus-square",
-        url: "workSpace/forums",
+        url: "workspace/forums",
       },
       {
         id: "Documents",

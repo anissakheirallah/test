@@ -33,6 +33,10 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [
+        ForumsComponent,
+        ConfigurationComponent,
+        DocumentsComponent,
+
 
     ],
     imports: [

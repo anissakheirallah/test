@@ -24,9 +24,9 @@ import { GrhModule } from "./main/grh/grh.module";
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { CrmModule } from "./main/crm/crm.module";
-import { ForumsComponent } from './main/workSpace/components/forums/forums.component';
-import { DocumentsComponent } from './main/workSpace/components/documents/documents.component';
-import { ConfigurationComponent } from './main/workSpace/components/configuration/configuration.component';
+import { ForumsComponent } from './main/workspace/components/forums/forums.component';
+import { DocumentsComponent } from './main/workspace/components/documents/documents.component';
+import { ConfigurationComponent } from './main/workspace/components/configuration/configuration.component';
 import {ContentHeaderModule} from "./layout/components/content-header/content-header.module";
 
 
@@ -57,9 +57,9 @@ const appRoutes: Routes = [
       import("./main/crm/crm.module").then((m) => m.CrmModule),
   },
   {
-    path: "workSpace",
+    path: "workspace",
     loadChildren: () =>
-        import("./main/workSpace/workSpace.module").then((m)=>m.WorkSpaceModule),
+        import("./main/workspace/workspace.module").then((m)=>m.WorkspaceModule),
   },
   {
     path: "",
@@ -69,7 +69,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, ForumsComponent, DocumentsComponent, ConfigurationComponent],
+  declarations: [AppComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
