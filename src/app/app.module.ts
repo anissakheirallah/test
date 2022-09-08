@@ -24,11 +24,6 @@ import { GrhModule } from "./main/grh/grh.module";
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { CrmModule } from "./main/crm/crm.module";
-import { ForumsComponent } from './main/workspace/components/forums/forums.component';
-import { DocumentsComponent } from './main/workspace/components/documents/documents.component';
-import { ConfigurationComponent } from './main/workspace/components/configuration/configuration.component';
-import {ContentHeaderModule} from "./layout/components/content-header/content-header.module";
-
 
 const appRoutes: Routes = [
   {
@@ -57,11 +52,6 @@ const appRoutes: Routes = [
       import("./main/crm/crm.module").then((m) => m.CrmModule),
   },
   {
-    path: "workspace",
-    loadChildren: () =>
-        import("./main/workspace/workspace.module").then((m)=>m.WorkspaceModule),
-  },
-  {
     path: "",
     redirectTo: "home",
     pathMatch: "full",
@@ -69,40 +59,44 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        RouterModule.forRoot(appRoutes, {
-            scrollPositionRestoration: "enabled", // Add options right here
-            relativeLinkResolution: "legacy",
-        }),
-        TranslateModule.forRoot(),
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes, {
+      scrollPositionRestoration: "enabled", // Add options right here
+      relativeLinkResolution: "legacy",
+    }),
+    TranslateModule.forRoot(),
 
-        //NgBootstrap
-        NgbModule,
-        ToastrModule.forRoot(),
+    //NgBootstrap
+    NgbModule,
+    ToastrModule.forRoot(),
+    // ToastrModule.forRoot({
+    //   toastComponent: CustomToastComponent
+    // }),
 
-        // Core modules
-        CoreModule.forRoot(coreConfig),
-        CoreCommonModule,
-        CoreSidebarModule,
-        CoreThemeCustomizerModule,
+    // Core modules
+    CoreModule.forRoot(coreConfig),
+    CoreCommonModule,
+    CoreSidebarModule,
+    CoreThemeCustomizerModule,
 
-        // App modules
-        LayoutModule,
-        SampleModule,
-        CvtechModule,
-        CompanyModule,
-        GrhModule,
+    // App modules
+    LayoutModule,
+    SampleModule,
+    CvtechModule,
+    CompanyModule,
+    GrhModule,
 
-        ReactiveFormsModule,
+    ReactiveFormsModule,
 
-        VacationModule,
-        CrmModule,
-        ContentHeaderModule,
-    ],
+    VacationModule,
+    CrmModule,
+  ],
 
   bootstrap: [AppComponent],
 })

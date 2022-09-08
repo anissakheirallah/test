@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Employee } from 'app/main/company/models/employee.model';
+import { Team } from 'app/main/company/models/team.model';
 import { EmployeeService } from 'app/main/company/services/employee.service';
+import { TeamService } from 'app/main/company/services/team.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -19,7 +21,7 @@ export class AddEmployeeComponent implements OnInit {
     email: '',
     phoneNumber: 0,
     hireDate:undefined,
-    team_id:4
+    team_id:15
   }
 
   public form: FormGroup = new FormGroup({
@@ -31,10 +33,14 @@ export class AddEmployeeComponent implements OnInit {
   });
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private employeeService: EmployeeService) { }
+  constructor(private formBuilder: FormBuilder,
+     private employeeService: EmployeeService,
+     private teamService :TeamService) { }
 
 
   ngOnInit(): void {
+    this.selectBasicMethod();
+    this.getTeams();
     this.contentHeader = {
       headerTitle: 'Companies',
       actionButton: true,
@@ -118,7 +124,7 @@ export class AddEmployeeComponent implements OnInit {
 
   }
   saveEmployee(employee: Employee): void {
-    employee.team_id=4;
+    /*employee.team_id=4;
       console.log("save employee",employee.team_id);
     this.employeeService.createEmployee(employee).subscribe(
       {
@@ -135,7 +141,59 @@ export class AddEmployeeComponent implements OnInit {
         }, error: (err) => {
           console.error(err);
         }
-      });
+      });*/
+      console.log("educ selected" , this.educationSelected)
+  }
+
+   // ------------ GET teams for select ------------
+
+   teams : Team[];
+   page = 1;
+   count = 0;
+   name = '';
+   idTeam: any;
+   public selectBasic: Team[] = [];
+   public selectBasicLoading = false;
+
+   private selectBasicMethod() {
+    const params = { page: this.page - 1, size: 8, name: this.name };
+    this.selectBasicLoading = true;
+    
+    this.teamService.getTeams(params).subscribe(  {
+      next: (data) => {
+        const { content, totalElements } = data;
+        this.selectBasic  = content;
+        this.count = totalElements;
+        this.idTeam = this.teams[0].id;
+        this.selectBasicLoading = false;
+        console.log("teams: ", this.teams);
+      }, error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  public educationSelected;
+
+   getTeams(): void {
+    const params = { page: this.page - 1, size: 8, name: this.name };
+    this.teamService.getTeams(params).subscribe(
+      {
+        next: (data) => {
+          const { content, totalElements } = data;
+          this.teams = content;
+          this.count = totalElements;
+          this.idTeam = this.teams[0].id;
+          console.log("teams: ", this.teams);
+        }, error: (err) => {
+          console.error(err);
+        }
+      }
+    );
+  }
+
+  selectAddTagMethod(teamName) {
+    return { teamName: teamName, tag: true };
   }
 
 }

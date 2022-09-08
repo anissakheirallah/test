@@ -1,5 +1,6 @@
 export class Education {
-    id:number;
+    
+    id: number;
     name: String;
     description: String;
 

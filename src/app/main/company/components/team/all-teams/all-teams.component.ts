@@ -7,6 +7,10 @@ import { EntityDepartment } from 'app/main/company/models/entity-department.mode
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
+import { locale as en } from '../../../i18n/en';
+import { locale as fr } from '../../../i18n/fr';
+import { CoreTranslationService } from '@core/services/translation.service';
+
 
 @Component({
   selector: 'app-all-teams',
@@ -20,7 +24,8 @@ export class AllTeamsComponent implements OnInit {
     teamName: '',
     teamDesc: '',
     departement_id: null,
-    employees: null
+    employees: null,
+    departement:null
   }
 
   idDepartment: any;
@@ -46,7 +51,9 @@ export class AllTeamsComponent implements OnInit {
   constructor(private modalService: NgbModal,
     private departmentservice: EntityDepartmentService,
     private formBuilder: FormBuilder,
-    private teamService: TeamService) {
+    private teamService: TeamService,
+    private _coreTranslationService: CoreTranslationService) {
+      this._coreTranslationService.translate(en, fr);
   }
 
   @ViewChild(DatatableComponent) table: DatatableComponent;
@@ -133,7 +140,9 @@ export class AllTeamsComponent implements OnInit {
   }
 
   onChange(e: any) {
+    
     this.idDepartment = e.target.value;
+    console.log("id dep",this.idDepartment);
   }
 
   // ------------ Edit Team ------------
@@ -141,6 +150,7 @@ export class AllTeamsComponent implements OnInit {
   modalEdit(modalPrimaryedit, id) {
     this.teamService.getTeam(id).subscribe({
       next: (data) => {
+        console.log("department team: ",data.departement);
         this.team = data;
         this.team.departement_id = this.idDepartment;
         this.form = this.formBuilder.group(
@@ -241,15 +251,15 @@ export class AllTeamsComponent implements OnInit {
   // ------------ Check multiple deletion ------------
 
   onSelect({ selected }) {
-    console.log("sel1",selected);
-    //this.selectedList.splice(0,this.selectedList.length);
-    while(this.selectedList.length > 0) {
+    //console.log("sel1",selected);
+    this.selectedList.splice(0,this.selectedList.length);
+    /*while(this.selectedList.length > 0) {
       this.selectedList.pop();
   }
-  console.log("sel2",selected);
+  console.log("sel2",selected);*/
     this.selectedList.push(...selected);
-    console.log("sel3",selected);
-    console.log("list",this.selectedList);
+   // console.log("sel3",selected);
+  //  console.log("list",this.selectedList);
     // console.log("selected.length",selected.length);
     // selected.length=0;
     // console.log("selected.length",selected.length);
@@ -280,7 +290,7 @@ export class AllTeamsComponent implements OnInit {
     });
     this.teamService.deleteMultipleTeam(this.ids).subscribe({
       next: () => {
-       // location.reload();
+        location.reload();
         //this.modalService.dismissAll("Cross click");
         this.ngOnInit();
       },

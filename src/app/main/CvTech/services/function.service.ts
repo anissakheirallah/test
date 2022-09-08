@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
-import { Function } from "../models/function";
+import { Function } from "../models/function.model";
 
 const baseUrl = environment.UrlCvTech;
 

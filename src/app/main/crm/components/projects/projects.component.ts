@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
+import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { Project } from '../../models/project.model';
 import { ProjectService } from '../../services/project.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-projects',
@@ -22,7 +23,7 @@ export class ProjectsComponent implements OnInit {
     id: null,
     projectName: '',
     projectType: '',
-    status:null,
+    status: null,
     startDate: null,
     finishDate: null,
     teams: null
@@ -34,6 +35,7 @@ export class ProjectsComponent implements OnInit {
   projects: Project[] = [];
   idDelete: number;
   isUpdate: number;
+  projectStatus: boolean;
   submitted = false;
 
   public ColumnMode = ColumnMode;
@@ -41,6 +43,9 @@ export class ProjectsComponent implements OnInit {
   page = 1;
   count = 5;
   name = '';
+
+  private modal = null;
+  $swal: any;
 
   constructor(private modalService: NgbModal, private calendar: NgbCalendar, public formatter: NgbDateParserFormatter,
     private projectService: ProjectService, private formBuilder: FormBuilder) { }
@@ -85,11 +90,6 @@ export class ProjectsComponent implements OnInit {
           },
           {
             name: 'Project',
-            isLink: true,
-            link: '/'
-          },
-          {
-            name: 'Add Project',
             isLink: false
           }
         ]
@@ -191,12 +191,57 @@ export class ProjectsComponent implements OnInit {
   }
 
 
-  modalOpenDanger(modalDanger, id: any) {
-    this.idDelete = id;
-    this.modalService.open(modalDanger, {
-      centered: true,
-      windowClass: 'modal modal-danger'
-    });
+  modalOpenDanger(id: any, status: boolean) {
+    this.isUpdate = id;
+    this.projectStatus = status;
+    //this.modal = modalDanger;
+    //this.modalService.open(modalDanger, {
+    //  centered: true,
+    // windowClass: 'modal modal-danger'
+    // });
+  }
+
+
+  changeProjectStatus() {
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, change it!',
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-outline-danger ml-1',
+      },
+      buttonsStyling: false,
+
+    }).then(result => {
+      if (result.value) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Changed!',
+          text: 'Your project status has been changed.',
+          customClass: {
+            confirmButton: 'btn btn-success',
+          },
+        })
+
+
+        this.projectService.changeStatus(this.isUpdate, this.projectStatus).subscribe({
+          next: () => {
+            this.getAllProjects();
+            //this.modal.close('Accept click');
+          }, error(err) {
+            console.log(err);
+          },
+        })
+
+      }
+    })
+
+
+
   }
 
   deleteProject() {
@@ -327,4 +372,41 @@ export class ProjectsComponent implements OnInit {
 
   }
 
+
+
+
+
+  // confirm texrt
+  confirmText() {
+    this.$swal({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-outline-danger ml-1',
+      },
+      buttonsStyling: false,
+    }).then(result => {
+      if (result.value) {
+        this.$swal({
+          icon: 'success',
+          title: 'Deleted!',
+          text: 'Your file has been deleted.',
+          customClass: {
+            confirmButton: 'btn btn-success',
+          },
+        })
+      }
+    })
+  }
+
+
 }
+
+
+
+
+
