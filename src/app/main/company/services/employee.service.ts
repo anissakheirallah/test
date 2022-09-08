@@ -12,6 +12,8 @@ const baseUrl = environment.UrlCompany;
 export class EmployeeService {
 
   constructor(private httpClient: HttpClient) { }
+  
+ 
 
   createEmployee(data: any): Observable<any> {
     return this.httpClient.post(`${baseUrl}/employee`, data);
@@ -22,6 +24,8 @@ export class EmployeeService {
   }
 
   updateEmployee(id: number, data: any): Observable<any> {
+    console.log("update Employee Service : ");
+    
     return this.httpClient.put(`${baseUrl}/employee/${id}`, data);
   }
 
