@@ -21,9 +21,9 @@ const routes: Routes =
 @NgModule({
     declarations: [
 
-    
-    AddTrainingComponent
-  ],
+
+        AddTrainingComponent
+    ],
     imports: [
         CommonModule,
         RouterModule.forChild(routes),

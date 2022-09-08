@@ -12,12 +12,12 @@ export const locale = {
       Settings: "Parametres",
       Learning : 'Formation',
       GNE: "gestion des niveau d'études",
-      GEG: 'gestion des expériences globale',
-      GSC: 'gestion des secteurs de compétence',
-      GFS: 'gestion des fonctions souhaité',
-      adduser: 'Ajouter un utilisateur',
+      GEG: "gestion des expériences globale",
+      GSC: "gestion des secteurs de compétence",
+      GFS: "gestion des fonctions souhaité",
+      adduser: "Ajouter un utilisateur",
       COMPANY: {
-        APP: 'Compagnies ',
+        APP: "Compagnies ",
         COMP: "Compagnie",
         COMPANYENTITY: "Entités",
         DEPARTMENT: "Départements",
@@ -35,7 +35,7 @@ export const locale = {
         ADDEMPLOYEE: "Ajouter employé",
         ALLEMPLOYEES: "Tous les employés",
         JOB: "Fonction",
-        ALLJOBS: "Toutes les fonctions"
+        ALLJOBS: "Toutes les fonctions",
       },
       CVTECH: {
         APP: "Campagnes",
@@ -58,10 +58,25 @@ export const locale = {
         SERVICE: "Services",
         ALLSERVICES: "Tous les Services",
         SERVICETYPE: "Type de Service",
-        ALLSERVICETYPES: "Tous les Type de Service"
-
-      }
-
-    }
-  }
-}
+        ALLSERVICETYPES: "Tous les Type de Service",
+      },
+      GRH: {
+        APP: "GRH",
+        GRH: "Gestion des ressources humaines",
+        VISIT: "Visit",
+        ALLVISITS: "Toutes les visites",
+        ADDVISIT: "Ajouter une visite",
+        WARNINGTYPE: "Type d'avertissement",
+        WARNING: "Avertissement",
+        REQUESTS: "Demandes",
+        ALLHOLIDAYREQUESTS: "Vacances",
+        ALLABSENCEREQUESTS: "Absence",
+        ALLDEPARTUREREQUESTS: "Départ",
+        ALLMATERIALREQUESTS: "Matériaux",
+        EMPLOYEES: "Employés",
+        ALLEMPLOYEES: "Tous les employés",
+        EMPLOYEEDEATAILS: "Détails de l'employé",
+      },
+    },
+  },
+};

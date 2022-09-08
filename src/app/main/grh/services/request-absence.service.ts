@@ -44,39 +44,102 @@ export class RequestAbsenceService {
     });
   }
 
-  getPendingAbsenceRequests(): Observable<any> {
+  getPendingAbsenceRequests(params: any): Observable<any> {
     return this.httpClient.get<RequestAbsence[]>(
-      `${baseUrl}/requestabsence/getPending`
+      `${baseUrl}/requestabsence/getPendingWithPagination`,
+      {
+        params,
+      }
     );
   }
 
-  getAcceptedAbsenceRequests(): Observable<any> {
+  getAcceptedAbsenceRequests(params: any): Observable<any> {
     return this.httpClient.get<RequestAbsence[]>(
-      `${baseUrl}/requestabsence/getAccepted`
+      `${baseUrl}/requestabsence/getAcceptedWithPagination`,
+      {
+        params,
+      }
     );
   }
 
-  getRefusedAbsenceRequests(): Observable<any> {
+  getRefusedAbsenceRequests(params: any): Observable<any> {
     return this.httpClient.get<RequestAbsence[]>(
-      `${baseUrl}/requestabsence/getRefused`
+      `${baseUrl}/requestabsence/getRefusedWithPagination`,
+      {
+        params,
+      }
     );
   }
 
-  getPendingAbsenceRequestsOfAnEmployee(id: number): Observable<any> {
+  getPendingAbsenceRequestsOfAnEmployee(
+    params: any,
+    id: number
+  ): Observable<any> {
     return this.httpClient.get<RequestAbsence[]>(
-      `${baseUrl}/requestabsence/getPendingOfAnEmployee${id}`
+      `${baseUrl}/requestabsence/getPendingOfAnEmployeeWithPagination/${id}`,
+      {
+        params,
+      }
     );
   }
 
-  getAcceptedAbsenceRequestsOfAnEmployee(id: number): Observable<any> {
+  getAcceptedAbsenceRequestsOfAnEmployee(
+    params: any,
+    id: number
+  ): Observable<any> {
     return this.httpClient.get<RequestAbsence[]>(
-      `${baseUrl}/requestabsence/getAcceptedOfAnEmployee${id}`
+      `${baseUrl}/requestabsence/getAcceptedOfAnEmployeeWithPagination/${id}`,
+      {
+        params,
+      }
     );
   }
 
-  getRefusedAbsenceRequestsOfAnEmployee(id: number): Observable<any> {
+  getRefusedAbsenceRequestsOfAnEmployee(
+    params: any,
+    id: number
+  ): Observable<any> {
     return this.httpClient.get<RequestAbsence[]>(
-      `${baseUrl}/requestabsence/getRefusedOfAnEmployee${id}`
+      `${baseUrl}/requestabsence/getRefusedOfAnEmployeeWithPagination/${id}`,
+      {
+        params,
+      }
     );
   }
+
+  // getPendingAbsenceRequests(): Observable<any> {
+  //   return this.httpClient.get<RequestAbsence[]>(
+  //     `${baseUrl}/requestabsence/getPending`
+  //   );
+  // }
+
+  // getAcceptedAbsenceRequests(): Observable<any> {
+  //   return this.httpClient.get<RequestAbsence[]>(
+  //     `${baseUrl}/requestabsence/getAccepted`
+  //   );
+  // }
+
+  // getRefusedAbsenceRequests(): Observable<any> {
+  //   return this.httpClient.get<RequestAbsence[]>(
+  //     `${baseUrl}/requestabsence/getRefused`
+  //   );
+  // }
+
+  // getPendingAbsenceRequestsOfAnEmployee(id: number): Observable<any> {
+  //   return this.httpClient.get<RequestAbsence[]>(
+  //     `${baseUrl}/requestabsence/getPendingOfAnEmployee${id}`
+  //   );
+  // }
+
+  // getAcceptedAbsenceRequestsOfAnEmployee(id: number): Observable<any> {
+  //   return this.httpClient.get<RequestAbsence[]>(
+  //     `${baseUrl}/requestabsence/getAcceptedOfAnEmployee${id}`
+  //   );
+  // }
+
+  // getRefusedAbsenceRequestsOfAnEmployee(id: number): Observable<any> {
+  //   return this.httpClient.get<RequestAbsence[]>(
+  //     `${baseUrl}/requestabsence/getRefusedOfAnEmployee${id}`
+  //   );
+  // }
 }

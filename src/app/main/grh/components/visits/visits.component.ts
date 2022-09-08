@@ -12,6 +12,7 @@ import { Visit } from "../../models/visit.model";
 import { Employee } from "../../models/employee.model";
 import { EmployeeService } from "../../services/employee.service";
 import { VisitService } from "../../services/visit.service";
+import { HolidayBalance } from "../../models/holiday-balance.model";
 
 @Component({
   selector: "app-visits",
@@ -43,22 +44,29 @@ export class VisitsComponent implements OnInit {
     employee_id: null,
   };
 
+  // holidaybalance: HolidayBalance = {
+  //   id: 0,
+  //   balance: 0,
+  //   timestamp: null,
+  // };
+
   employees?: Employee[];
-  employeeS: Employee = {
-    id: 0,
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: "",
-    holidaybalance_id: 0,
-    warnings: [],
-    requestHolidays: [],
-    requestAbsences: [],
-    requestDepartures: [],
-    requestMaterials: [],
-    requestRecuperationHolidays: [],
-    visits: [],
-  };
+  // employeeS: Employee = {
+  //   id: 0,
+  //   firstName: "",
+  //   lastName: "",
+  //   email: "",
+  //   phoneNumber: "",
+  //   holidaybalance_id: 0,
+  //   holidaybalance: this.holidaybalance,
+  //   warnings: [],
+  //   requestHolidays: [],
+  //   requestAbsences: [],
+  //   requestDepartures: [],
+  //   requestMaterials: [],
+  //   requestRecuperationHolidays: [],
+  //   visits: [],
+  // };
 
   idEmployee: any = "";
 
@@ -132,7 +140,7 @@ export class VisitsComponent implements OnInit {
 
   page = 1;
   count = 0;
-  firstName = "";
+  search = "";
   public pagePosition = 1;
   public totalPages = 0;
   public chkBoxSelected = [];
@@ -142,7 +150,7 @@ export class VisitsComponent implements OnInit {
     this.getAllvisits();
   }
 
-  getParams(page: number, pageSize: number, firstName: string) {
+  getParams(page: number, pageSize: number, search: string) {
     let params: any = {};
     if (page) {
       params["page"] = page - 1;
@@ -150,8 +158,8 @@ export class VisitsComponent implements OnInit {
     if (pageSize) {
       params["size"] = pageSize;
     }
-    if (firstName) {
-      params["firstName"] = firstName;
+    if (search) {
+      params["search"] = search;
     }
     return params;
   }
@@ -160,7 +168,7 @@ export class VisitsComponent implements OnInit {
     const params = {
       page: this.page - 1,
       size: 8,
-      firstName: this.firstName,
+      search: this.search,
     };
     console.log(params);
     this.visitService.getVisits(params).subscribe({
@@ -178,7 +186,7 @@ export class VisitsComponent implements OnInit {
     });
   }
 
-  // ------------ Add Entity ------------
+  // ------------ Add visit ------------
 
   AddVisit(): void {
     this.submitted = true;
@@ -253,16 +261,6 @@ export class VisitsComponent implements OnInit {
   }
 
   // ------------ Update visit ------------
-
-  edit: Visit = {
-    id: null,
-    datetime: null,
-    name: "",
-    cin: "",
-    visitPurpose: "",
-    observation: "",
-    employee_id: null,
-  };
 
   modalEdit(modalPrimaryedit, id) {
     this.visitService.getVisit(id).subscribe({
@@ -339,7 +337,7 @@ export class VisitsComponent implements OnInit {
   // ------------ GET employees for select ------------
 
   getEmployees(): void {
-    const params = { page: this.page - 1, size: 8, name: this.firstName };
+    const params = { page: this.page - 1, size: 8, name: this.search };
     this.employeeService.getEmployees(params).subscribe({
       next: (data) => {
         const { content, totalElements } = data;

@@ -15,6 +15,7 @@ export class Employee {
   email: String;
   phoneNumber: String;
   holidaybalance_id: number;
+  holidayBalance: HolidayBalance;
   warnings: Array<RhWarning> = [];
   requestHolidays: Array<RequestHoliday> = [];
   requestAbsences: Array<RequestAbsence> = [];
@@ -28,12 +29,14 @@ export class Employee {
     lastName: String,
     email: String,
     phoneNumber: String,
-    holidaybalance_id: number
+    holidaybalance_id: number,
+    holidaybalance: HolidayBalance
   ) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.holidaybalance_id = holidaybalance_id;
+    this.holidayBalance = holidaybalance;
   }
 }

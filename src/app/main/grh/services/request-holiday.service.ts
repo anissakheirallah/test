@@ -44,39 +44,102 @@ export class RequestHolidayService {
     });
   }
 
-  getPendingHolidayRequests(): Observable<any> {
+  getPendingHolidayRequests(params: any): Observable<any> {
     return this.httpClient.get<RequestHoliday[]>(
-      `${baseUrl}/requestholiday/getPending`
+      `${baseUrl}/requestholiday/getPendingWithPagination`,
+      {
+        params,
+      }
     );
   }
 
-  getAcceptedHolidayRequests(): Observable<any> {
+  getAcceptedHolidayRequests(params: any): Observable<any> {
     return this.httpClient.get<RequestHoliday[]>(
-      `${baseUrl}/requestholiday/getAccepted`
+      `${baseUrl}/requestholiday/getAcceptedWithPagination`,
+      {
+        params,
+      }
     );
   }
 
-  getRefusedHolidayRequests(): Observable<any> {
+  getRefusedHolidayRequests(params: any): Observable<any> {
     return this.httpClient.get<RequestHoliday[]>(
-      `${baseUrl}/requestholiday/getRefused`
+      `${baseUrl}/requestholiday/getRefusedWithPagination`,
+      {
+        params,
+      }
     );
   }
 
-  getPendingHolidayRequestsOfAnEmployee(id: number): Observable<any> {
+  getPendingHolidayRequestsOfAnEmployee(
+    params: any,
+    id: number
+  ): Observable<any> {
     return this.httpClient.get<RequestHoliday[]>(
-      `${baseUrl}/requestholiday/getPendingOfAnEmployee${id}`
+      `${baseUrl}/requestholiday/getPendingOfAnEmployeeWithPagination/${id}`,
+      {
+        params,
+      }
     );
   }
 
-  getAcceptedHolidayRequestsOfAnEmployee(id: number): Observable<any> {
+  getAcceptedHolidayRequestsOfAnEmployee(
+    params: any,
+    id: number
+  ): Observable<any> {
     return this.httpClient.get<RequestHoliday[]>(
-      `${baseUrl}/requestholiday/getAcceptedOfAnEmployee${id}`
+      `${baseUrl}/requestholiday/getAcceptedOfAnEmployeeWithPagination/${id}`,
+      {
+        params,
+      }
     );
   }
 
-  getRefusedHolidayRequestsOfAnEmployee(id: number): Observable<any> {
+  getRefusedHolidayRequestsOfAnEmployee(
+    params: any,
+    id: number
+  ): Observable<any> {
     return this.httpClient.get<RequestHoliday[]>(
-      `${baseUrl}/requestholiday/getRefusedOfAnEmployee${id}`
+      `${baseUrl}/requestholiday/getRefusedOfAnEmployeeWithPagination/${id}`,
+      {
+        params,
+      }
     );
   }
+
+  // getPendingHolidayRequests(): Observable<any> {
+  //   return this.httpClient.get<RequestHoliday[]>(
+  //     `${baseUrl}/requestholiday/getPending`
+  //   );
+  // }
+
+  // getAcceptedHolidayRequests(): Observable<any> {
+  //   return this.httpClient.get<RequestHoliday[]>(
+  //     `${baseUrl}/requestholiday/getAccepted`
+  //   );
+  // }
+
+  // getRefusedHolidayRequests(): Observable<any> {
+  //   return this.httpClient.get<RequestHoliday[]>(
+  //     `${baseUrl}/requestholiday/getRefused`
+  //   );
+  // }
+
+  // getPendingHolidayRequestsOfAnEmployee(id: number): Observable<any> {
+  //   return this.httpClient.get<RequestHoliday[]>(
+  //     `${baseUrl}/requestholiday/getPendingOfAnEmployee${id}`
+  //   );
+  // }
+
+  // getAcceptedHolidayRequestsOfAnEmployee(id: number): Observable<any> {
+  //   return this.httpClient.get<RequestHoliday[]>(
+  //     `${baseUrl}/requestholiday/getAcceptedOfAnEmployee${id}`
+  //   );
+  // }
+
+  // getRefusedHolidayRequestsOfAnEmployee(id: number): Observable<any> {
+  //   return this.httpClient.get<RequestHoliday[]>(
+  //     `${baseUrl}/requestholiday/getRefusedOfAnEmployee${id}`
+  //   );
+  // }
 }

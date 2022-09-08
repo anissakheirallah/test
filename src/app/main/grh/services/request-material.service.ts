@@ -47,39 +47,102 @@ export class RequestMaterialService {
     );
   }
 
-  getPendingMaterialRequests(): Observable<any> {
+  getPendingMaterialRequests(params: any): Observable<any> {
     return this.httpClient.get<RequestMaterial[]>(
-      `${baseUrl}/requestmaterial/getPending`
+      `${baseUrl}/requestmaterial/getPendingWithPagination`,
+      {
+        params,
+      }
     );
   }
 
-  getAcceptedMaterialRequests(): Observable<any> {
+  getAcceptedMaterialRequests(params: any): Observable<any> {
     return this.httpClient.get<RequestMaterial[]>(
-      `${baseUrl}/requestmaterial/getAccepted`
+      `${baseUrl}/requestmaterial/getAcceptedWithPagination`,
+      {
+        params,
+      }
     );
   }
 
-  getRefusedMaterialRequests(): Observable<any> {
+  getRefusedMaterialRequests(params: any): Observable<any> {
     return this.httpClient.get<RequestMaterial[]>(
-      `${baseUrl}/requestmaterial/getRefused`
+      `${baseUrl}/requestmaterial/getRefusedWithPagination`,
+      {
+        params,
+      }
     );
   }
 
-  getPendingMaterialRequestsOfAnEmployee(id: number): Observable<any> {
+  getPendingMaterialRequestsOfAnEmployee(
+    params: any,
+    id: number
+  ): Observable<any> {
     return this.httpClient.get<RequestMaterial[]>(
-      `${baseUrl}/requestmaterial/getPendingOfAnEmployee${id}`
+      `${baseUrl}/requestmaterial/getPendingOfAnEmployeeWithPagination/${id}`,
+      {
+        params,
+      }
     );
   }
 
-  getAcceptedMaterialRequestsOfAnEmployee(id: number): Observable<any> {
+  getAcceptedMaterialRequestsOfAnEmployee(
+    params: any,
+    id: number
+  ): Observable<any> {
     return this.httpClient.get<RequestMaterial[]>(
-      `${baseUrl}/requestmaterial/getAcceptedOfAnEmployee${id}`
+      `${baseUrl}/requestmaterial/getAcceptedOfAnEmployeeWithPagination/${id}`,
+      {
+        params,
+      }
     );
   }
 
-  getRefusedMaterialRequestsOfAnEmployee(id: number): Observable<any> {
+  getRefusedMaterialRequestsOfAnEmployee(
+    params: any,
+    id: number
+  ): Observable<any> {
     return this.httpClient.get<RequestMaterial[]>(
-      `${baseUrl}/requestmaterial/getRefusedOfAnEmployee${id}`
+      `${baseUrl}/requestmaterial/getRefusedOfAnEmployeeWithPagination/${id}`,
+      {
+        params,
+      }
     );
   }
+
+  // getPendingMaterialRequests(): Observable<any> {
+  //   return this.httpClient.get<RequestMaterial[]>(
+  //     `${baseUrl}/requestmaterial/getPending`
+  //   );
+  // }
+
+  // getAcceptedMaterialRequests(): Observable<any> {
+  //   return this.httpClient.get<RequestMaterial[]>(
+  //     `${baseUrl}/requestmaterial/getAccepted`
+  //   );
+  // }
+
+  // getRefusedMaterialRequests(): Observable<any> {
+  //   return this.httpClient.get<RequestMaterial[]>(
+  //     `${baseUrl}/requestmaterial/getRefused`
+  //   );
+  // }
+
+  // getPendingMaterialRequestsOfAnEmployee(id: number): Observable<any> {
+  //   return this.httpClient.get<RequestMaterial[]>(
+  //     `${baseUrl}/requestmaterial/getPendingOfAnEmployee${id}`
+  //   );
+  // }
+
+  // getAcceptedMaterialRequestsOfAnEmployee(id: number): Observable<any> {
+  //   return this.httpClient.get<RequestMaterial[]>(
+  //     `${baseUrl}/requestmaterial/getAcceptedOfAnEmployee${id}`
+  //   );
+  // }
+
+  // getRefusedMaterialRequestsOfAnEmployee(id: number): Observable<any> {
+  //   return this.httpClient.get<RequestMaterial[]>(
+  //     `${baseUrl}/requestmaterial/getRefusedOfAnEmployee${id}`
+  //   );
+  // }
 }

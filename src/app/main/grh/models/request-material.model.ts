@@ -1,3 +1,4 @@
+import { Employee } from "./employee.model";
 import { Material } from "./material.model";
 import { RhRequest } from "./rh-request.model";
 
@@ -9,6 +10,7 @@ export class RequestMaterial extends RhRequest {
   materials: Array<Material> = [];
 
   constructor(
+    employee: Employee,
     city: String,
     employee_id: number,
     requeststatus_id: number,
@@ -18,7 +20,7 @@ export class RequestMaterial extends RhRequest {
     agreement: Boolean,
     materials: Array<Material>
   ) {
-    super(city, employee_id, requeststatus_id);
+    super(employee, city, employee_id, requeststatus_id);
     this.numberofdays = numberofdays;
     this.startDate = startDate;
     this.returnDate = returnDate;

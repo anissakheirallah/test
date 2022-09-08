@@ -1,3 +1,4 @@
+import { Employee } from "./employee.model";
 import { RhRequest } from "./rh-request.model";
 
 export class RequestAbsence extends RhRequest {
@@ -7,6 +8,7 @@ export class RequestAbsence extends RhRequest {
   entryTime: Date;
 
   constructor(
+    employee: Employee,
     city: String,
     employee_id: number,
     requeststatus_id: number,
@@ -15,7 +17,7 @@ export class RequestAbsence extends RhRequest {
     exitTime: Date,
     entryTime: Date
   ) {
-    super(city, employee_id, requeststatus_id);
+    super(employee, city, employee_id, requeststatus_id);
     this.reason = reason;
     this.absenceDate = absenceDate;
     this.exitTime = exitTime;
