@@ -12,7 +12,7 @@ import { AddCampaignComponent } from './add-campaign/add-campaign.component';
 
 const routes: Routes = [
   {
-    path: 'add',
+    path: 'addcampaign',
     component: AddCampaignComponent
   },
   {
