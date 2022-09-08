@@ -416,40 +416,69 @@ export const menu: CoreMenu[] = [
       },
     ],
   },
+
+  //Menu GL_Workspace
   {
-    id: 'learning',
-    title: 'MENU.Learning',
-    type: 'collapsible',
-    icon: 'menu',
-    children:[
+    id: "Workspace",
+    type: "collapsible",
+    title: "Workspace",
+    icon: "menu",
+    children: [
       {
-        id: 'training',
-        title: 'Training',
-        type: 'item',
-        icon: 'book-open',
-        url: 'learning/training/'
+        id: "forums",
+        title: "FORUMS",
+        type: "item",
+        icon: "plus-square",
+        url: "workspace/forums",
       },
       {
-        id: 'faq',
-        title: 'FAQ',
-        type: 'item',
-        icon: 'help-circle',
-        url: '#'
+        id: "Documents",
+        title: "Documents",
+        type: "collapsible",
+        icon: "grid",
       },
       {
-        id: 'quiz',
-        title: 'Quiz',
-        type: 'item',
-        icon: 'book',
-        url: '#'
+        id: "Configuration",
+        title: "Configuration",
+        type: "collapsible",
+        icon: "grid",
+      },
+    ],
+  },
+  {
+    id: "learning",
+    title: "MENU.Learning",
+    type: "collapsible",
+    icon: "menu",
+    children: [
+      {
+        id: "training",
+        title: "Training",
+        type: "item",
+        icon: "book-open",
+        url: "learning/training/",
       },
       {
-        id: 'reports',
-        title: 'Reports',
-        type: 'item',
-        icon: 'file',
-        url: '#'
-      }
-    ]
-  }
+        id: "faq",
+        title: "FAQ",
+        type: "item",
+        icon: "help-circle",
+        url: "#",
+      },
+      {
+        id: "quiz",
+        title: "Quiz",
+        type: "item",
+        icon: "book",
+        url: "#",
+      },
+      {
+        id: "reports",
+        title: "Reports",
+        type: "item",
+        icon: "file",
+        url: "#",
+      },
+    ],
+  },
 ];

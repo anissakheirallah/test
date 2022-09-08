@@ -8,6 +8,7 @@ import { ContentHeaderModule } from 'app/layout/components/content-header/conten
 
 import { SampleComponent } from './sample.component';
 import { HomeComponent } from './home.component';
+import {NgbCollapseModule} from "@ng-bootstrap/ng-bootstrap";
 
 const routes = [
   {
@@ -29,12 +30,13 @@ const routes = [
 
 @NgModule({
   declarations: [SampleComponent, HomeComponent],
-  imports: [
-    RouterModule.forChild(routes), 
-    ContentHeaderModule, 
-    TranslateModule, 
-    CoreCommonModule
-  ],
+    imports: [
+        RouterModule.forChild(routes),
+        ContentHeaderModule,
+        TranslateModule,
+        CoreCommonModule,
+        NgbCollapseModule
+    ],
   exports: [SampleComponent, HomeComponent]
 })
 export class SampleModule {}
