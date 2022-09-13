@@ -19,7 +19,7 @@ import { FunctionService } from "app/main/CvTech/services/function.service";
 })
 export class FunctionComponent implements OnInit {
   public data?: Function[];
-  public func: Function = { id: null, name: "", description: "" };
+  public func: Function = { id: null, name: "", description: "" , campaignId:1};
   public pagePosition = 1;
   public totalPages = 0;
   contentHeader: {
@@ -167,7 +167,9 @@ export class FunctionComponent implements OnInit {
   public addData(): void {
     const functionData = {
       name: this.func.name,
+      
       description: this.func.description,
+      campaignId:1
     };
     this.functionService.addFunction(functionData).subscribe({
       next: (data) => {
@@ -221,6 +223,7 @@ export class FunctionComponent implements OnInit {
     }
     this.func.name = this.funcForm.value.name;
     this.func.description = this.funcForm.value.description;
+    this.func.campaignId = 1;
 
     this.updateFunction(this.func);
   }
