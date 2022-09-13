@@ -60,6 +60,24 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-12">
+                    <div class="form-group row">
+                      <div class="col-sm-3 col-form-label">
+                        <label for="function-desc">Campaign</label>
+                      </div>
+                      <div class="col-sm-9">
+                        <div class="form-group">
+                          <select class="form-control" id="basicSelect" formControlName="campaignId">
+                            <option hidden></option>
+                            <option *ngFor="let campaign of campaigns" value="{{campaign.id}}">
+                              {{campaign.name}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="col-sm-9 offset-sm-3">
                     <button type="submit" rippleEffect class="btn btn-primary mr-1">
                       Add
@@ -77,77 +95,77 @@
     </section>
 
     <section id="ngx-datatable-kitchen-sink">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title text-primary">All Functions</h4>
-            <!-- Button trigger modal -->
-          </div>
-          <div class="d-flex flex-row justify-content-between align-items-center">
-            <div class="col-md-5 col-12">
-              <div class="d-flex align-items-center justify-content-start pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
-                <label class="d-flex align-items-center">Search
-                  <input type="search" name="name" id="name" [(ngModel)]="name" placeholder="Search by Name"
-                    class="form-control ml-25" (change)="getAllFunctions()" (keyup)="getAllFunctions()" /></label>
-              </div>
-            </div>
-            <div>
-              <button type="button" class="btn btn-icon rounded-circle btn-primary mr-1" data-toggle="tooltip"
-                data-placement="top" title="add project" rippleEffect>
-                <span [data-feather]="'plus'"></span>
-              </button>
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title text-primary">All Functions</h4>
+          <!-- Button trigger modal -->
+        </div>
+        <div class="d-flex flex-row justify-content-between align-items-center">
+          <div class="col-md-5 col-12">
+            <div class="d-flex align-items-center justify-content-start pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+              <label class="d-flex align-items-center">Search
+                <input type="search" name="name" id="name" [(ngModel)]="name" placeholder="Search by Name"
+                  class="form-control ml-25" (change)="getAllFunctions()" (keyup)="getAllFunctions()" /></label>
             </div>
           </div>
-
-          <ngx-datatable class="bootstrap core-bootstrap m-1" [columnMode]="'flex'" [headerHeight]="40"
-            [footerHeight]="50" [rowHeight]="45" rowHeight="auto" [rows]="data" [limit]="basicSelectedOption"
-            [columnMode]="ColumnMode.force">
-
-            <ngx-datatable-column name="function Name" prop="name"
-              headerClass="d-flex align-items-center justify-content-center"
-              cellClass="d-flex align-items-center justify-content-center">
-            </ngx-datatable-column>
-
-            <ngx-datatable-column name="Description" prop="description"
-              headerClass="d-flex align-items-center justify-content-center"
-              cellClass="d-flex align-items-center justify-content-center">
-            </ngx-datatable-column>
-
-            <ngx-datatable-column name="Actions" [flexGrow]="1" [sortable]="false"
-              headerClass="d-flex align-items-center justify-content-center"
-              cellClass="d-flex align-items-center justify-content-center">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <div class="d-flex align-items-center justify-content-center">
-                  <a href="javascript:void(0)" class="d-flex align-items-center m-1"
-                    (click)="modalEdit(modalPrimaryedit, row.id)" data-toggle="tooltip" data-placement="top"
-                    title="edit project">
-                    <i data-feather="edit" class="text-primary cursor-pointer"></i></a>
-                  <a href="javascript:void(0)" class="d-flex align-items-center"
-                    (click)="modalOpenDanger(modalDanger, row.id)" data-toggle="tooltip" data-placement="top"
-                    title="delete project"><i data-feather="trash-2" class="text-primary cursor-pointer"></i></a>
-                </div>
-              </ng-template>
-            </ngx-datatable-column>
-          </ngx-datatable>
-          <div class="pageit">
-            <div class="col-md-3 col-12">
-              <div>
-                <label class="d-flex align-items-center">Show
-                  <select class="form-control mx-25" [(ngModel)]="basicSelectedOption" (change)="getAllFunctions()">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                  </select>
-                  entries</label>
-              </div>
-            </div>
-            <div class="col-md-3 col-12">
-              <ngb-pagination class="d-flex justify-content-end" [directionLinks]="false" [collectionSize]="totalPages"
-                [(page)]="pagePosition" (pageChange)="pageChanged($event)">
-              </ngb-pagination>
-            </div>
+          <div>
+            <button type="button" class="btn btn-icon rounded-circle btn-primary mr-1" data-toggle="tooltip"
+              data-placement="top" title="add project" rippleEffect>
+              <span [data-feather]="'plus'"></span>
+            </button>
           </div>
         </div>
+
+        <ngx-datatable class="bootstrap core-bootstrap m-1" [columnMode]="'flex'" [headerHeight]="40"
+          [footerHeight]="50" [rowHeight]="45" rowHeight="auto" [rows]="data" [limit]="basicSelectedOption"
+          [columnMode]="ColumnMode.force">
+
+          <ngx-datatable-column name="function Name" prop="name"
+            headerClass="d-flex align-items-center justify-content-center"
+            cellClass="d-flex align-items-center justify-content-center">
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Description" prop="description"
+            headerClass="d-flex align-items-center justify-content-center"
+            cellClass="d-flex align-items-center justify-content-center">
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Actions" [flexGrow]="1" [sortable]="false"
+            headerClass="d-flex align-items-center justify-content-center"
+            cellClass="d-flex align-items-center justify-content-center">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <div class="d-flex align-items-center justify-content-center">
+                <a href="javascript:void(0)" class="d-flex align-items-center m-1"
+                  (click)="modalEdit(modalPrimaryedit, row.id)" data-toggle="tooltip" data-placement="top"
+                  title="edit project">
+                  <i data-feather="edit" class="text-primary cursor-pointer"></i></a>
+                <a href="javascript:void(0)" class="d-flex align-items-center"
+                  (click)="modalOpenDanger(modalDanger, row.id)" data-toggle="tooltip" data-placement="top"
+                  title="delete project"><i data-feather="trash-2" class="text-primary cursor-pointer"></i></a>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+        <div class="pageit">
+          <div class="col-md-3 col-12">
+            <div>
+              <label class="d-flex align-items-center">Show
+                <select class="form-control mx-25" [(ngModel)]="basicSelectedOption" (change)="getAllFunctions()">
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </select>
+                entries</label>
+            </div>
+          </div>
+          <div class="col-md-3 col-12">
+            <ngb-pagination class="d-flex justify-content-end" [directionLinks]="false" [collectionSize]="totalPages"
+              [(page)]="page" (pageChange)="pageChanged($event)">
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 </div>
@@ -211,6 +229,23 @@
           </div>
         </div>
       </div>
+      <div class="col-12">
+        <div class="form-group row">
+          <div class="col-sm-3 col-form-label">
+            <label for="skill-desc">campaign</label>
+          </div>
+          <div class="col-sm-9">
+            <select class="form-control" id="basicSelect" formControlName="campaignId">
+              <option hidden></option>
+              <option *ngFor="let campaign of campaigns" value="{{campaign.id}}">
+                {{campaign.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+
     </div>
     <div class="modal-footer">
       <button type="submit" class="btn btn-primary" rippleEffect>Accept</button>
