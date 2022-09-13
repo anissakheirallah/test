@@ -9,11 +9,7 @@
               <h4 class="card-title text-primary">Add Function</h4>
             </div>
             <div class="card-body">
-              <form
-                class="form form-horizontal"
-                [formGroup]="funcForm"
-                (ngSubmit)="onSubmit()"
-              >
+              <form class="form form-horizontal" [formGroup]="funcForm" (ngSubmit)="onSubmit()">
                 <div class="row">
                   <div class="col-12">
                     <div class="form-group row">
@@ -21,21 +17,11 @@
                         <label for="Skill-name">Name</label>
                       </div>
                       <div class="col-sm-9">
-                        <input
-                          type="text"
-                          formControlName="name"
-                          id="function-name"
-                          class="form-control"
-                          name="function-name"
-                          [ngClass]="{
+                        <input type="text" formControlName="name" id="function-name" class="form-control"
+                          name="function-name" [ngClass]="{
                             'is-invalid': submitted && f['name'].errors
-                          }"
-                          placeholder="Enter the function's name"
-                        />
-                        <div
-                          *ngIf="submitted && f['name'].errors"
-                          class="invalid-feedback"
-                        >
+                          }" placeholder="Enter the function's name" />
+                        <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
                           <div *ngIf="f['name'].errors['required']">
                             The function's name is required
                           </div>
@@ -56,23 +42,11 @@
                         <label for="function-desc">Description</label>
                       </div>
                       <div class="col-sm-9">
-                        <textarea
-                          id="function-desc"
-                          formControlName="description"
-                          placeholder="Description"
-                          name="function-desc"
-                          rows="2"
-                          wrap="soft"
-                          [ngClass]="{
+                        <textarea id="function-desc" formControlName="description" placeholder="Description"
+                          name="function-desc" rows="2" wrap="soft" [ngClass]="{
                             'is-invalid': submitted && f['description'].errors
-                          }"
-                          class="form-control"
-                          data-v-aa799a9e=""
-                        ></textarea>
-                        <div
-                          *ngIf="submitted && f['description'].errors"
-                          class="invalid-feedback"
-                        >
+                          }" class="form-control" data-v-aa799a9e=""></textarea>
+                        <div *ngIf="submitted && f['description'].errors" class="invalid-feedback">
                           <div *ngIf="f['description'].errors['required']">
                             description is required
                           </div>
@@ -87,18 +61,10 @@
                     </div>
                   </div>
                   <div class="col-sm-9 offset-sm-3">
-                    <button
-                      type="submit"
-                      rippleEffect
-                      class="btn btn-primary mr-1"
-                    >
+                    <button type="submit" rippleEffect class="btn btn-primary mr-1">
                       Add
                     </button>
-                    <button
-                      type="reset"
-                      rippleEffect
-                      class="btn btn-outline-secondary"
-                    >
+                    <button type="reset" rippleEffect class="btn btn-outline-secondary">
                       Reset
                     </button>
                   </div>
@@ -110,107 +76,79 @@
       </div>
     </section>
 
-    <div class="row" id="table-hover-animation">
-      <div class="col-12">
+    <section id="ngx-datatable-kitchen-sink">
         <div class="card">
           <div class="card-header">
             <h4 class="card-title text-primary">All Functions</h4>
-            <div
-              class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0"
-            >
-              <input
-                type="search"
-                name="name"
-                id="name"
-                [(ngModel)]="name"
-                placeholder="Search by Name"
-                class="form-control ml-25"
-                (change)="getData()"
-              />
+            <!-- Button trigger modal -->
+          </div>
+          <div class="d-flex flex-row justify-content-between align-items-center">
+            <div class="col-md-5 col-12">
+              <div class="d-flex align-items-center justify-content-start pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                <label class="d-flex align-items-center">Search
+                  <input type="search" name="name" id="name" [(ngModel)]="name" placeholder="Search by Name"
+                    class="form-control ml-25" (change)="getAllFunctions()" (keyup)="getAllFunctions()" /></label>
+              </div>
+            </div>
+            <div>
+              <button type="button" class="btn btn-icon rounded-circle btn-primary mr-1" data-toggle="tooltip"
+                data-placement="top" title="add project" rippleEffect>
+                <span [data-feather]="'plus'"></span>
+              </button>
             </div>
           </div>
 
-          <ngx-datatable
-            class="bootstrap core-bootstrap ml-1"
-            [columnMode]="'flex'"
-            [headerHeight]="40"
-            [footerHeight]="50"
-            [rowHeight]="58"
-            rowHeight="auto"
-            [rows]="data"
-            [selected]="chkBoxSelected"
-          >
-            <ngx-datatable-column name="Name" [flexGrow]="1">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                {{ row?.name }}
-              </ng-template>
+          <ngx-datatable class="bootstrap core-bootstrap m-1" [columnMode]="'flex'" [headerHeight]="40"
+            [footerHeight]="50" [rowHeight]="45" rowHeight="auto" [rows]="data" [limit]="basicSelectedOption"
+            [columnMode]="ColumnMode.force">
+
+            <ngx-datatable-column name="function Name" prop="name"
+              headerClass="d-flex align-items-center justify-content-center"
+              cellClass="d-flex align-items-center justify-content-center">
             </ngx-datatable-column>
 
-            <ngx-datatable-column name="Description" [flexGrow]="1">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                {{ row?.description }}
-              </ng-template>
+            <ngx-datatable-column name="Description" prop="description"
+              headerClass="d-flex align-items-center justify-content-center"
+              cellClass="d-flex align-items-center justify-content-center">
             </ngx-datatable-column>
 
-            <ngx-datatable-column name="Actions" [flexGrow]="1">
+            <ngx-datatable-column name="Actions" [flexGrow]="1" [sortable]="false"
+              headerClass="d-flex align-items-center justify-content-center"
+              cellClass="d-flex align-items-center justify-content-center">
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <div class="d-flex align-items-center">
-                  <div ngbDropdown container="body">
-                    <a
-                      ngbDropdownToggle
-                      href="javascript:void(0);"
-                      class="hide-arrow"
-                      id="dropdownBrowserState"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      <i
-                        data-feather="more-horizontal"
-                        class="text-primary cursor-pointer mr-50"
-                      ></i>
-                    </a>
-                    <div
-                      ngbDropdownMenu
-                      class="drodopwn-menu-right"
-                      aria-labelledby="dropdownBrowserState"
-                    >
-                      <a
-                        ngbDropdownItem
-                        href="javascript:void(0);"
-                        (click)="modalEdit(modalPrimaryedit, row.id)"
-                      >
-                        <i data-feather="edit-2" class="mr-50"></i>
-                        <span>Edit</span>
-                      </a>
-
-                      <a
-                        href="javascript:void(0)"
-                        ngbDropdownItem
-                        class="d-flex align-items-center"
-                        (click)="modalOpenDanger(modalDanger, row?.id)"
-                      >
-                        <i data-feather="trash-2" class="mr-50"></i> Delete
-                      </a>
-                    </div>
-                  </div>
+                <div class="d-flex align-items-center justify-content-center">
+                  <a href="javascript:void(0)" class="d-flex align-items-center m-1"
+                    (click)="modalEdit(modalPrimaryedit, row.id)" data-toggle="tooltip" data-placement="top"
+                    title="edit project">
+                    <i data-feather="edit" class="text-primary cursor-pointer"></i></a>
+                  <a href="javascript:void(0)" class="d-flex align-items-center"
+                    (click)="modalOpenDanger(modalDanger, row.id)" data-toggle="tooltip" data-placement="top"
+                    title="delete project"><i data-feather="trash-2" class="text-primary cursor-pointer"></i></a>
                 </div>
               </ng-template>
             </ngx-datatable-column>
           </ngx-datatable>
-          <div class="col-lg-12">
-            <ngb-pagination
-              class="d-flex justify-content-end"
-              [directionLinks]="false"
-              [collectionSize]="totalPages"
-              [(page)]="pagePosition"
-              (pageChange)="pageChanged($event)"
-            >
-            </ngb-pagination>
+          <div class="pageit">
+            <div class="col-md-3 col-12">
+              <div>
+                <label class="d-flex align-items-center">Show
+                  <select class="form-control mx-25" [(ngModel)]="basicSelectedOption" (change)="getAllFunctions()">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                  </select>
+                  entries</label>
+              </div>
+            </div>
+            <div class="col-md-3 col-12">
+              <ngb-pagination class="d-flex justify-content-end" [directionLinks]="false" [collectionSize]="totalPages"
+                [(page)]="pagePosition" (pageChange)="pageChanged($event)">
+              </ngb-pagination>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+    </section>
   </div>
 </div>
 
@@ -220,12 +158,7 @@
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Edit Function</h5>
 
-    <button
-      type="button"
-      class="close"
-      (click)="modal.dismiss('Cross click')"
-      aria-label="Close"
-    >
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -237,17 +170,9 @@
             <label for="Skill-name">Name</label>
           </div>
           <div class="col-sm-9">
-            <input
-              type="text"
-              formControlName="name"
-              id="skill-name"
-              class="form-control"
-              name="skill-name"
-              [ngClass]="{
+            <input type="text" formControlName="name" id="skill-name" class="form-control" name="skill-name" [ngClass]="{
                 'is-invalid': f['name'].errors
-              }"
-              placeholder="Enter the skill's name"
-            />
+              }" placeholder="Enter the skill's name" />
             <div *ngIf="f['name'].errors" class="invalid-feedback">
               <div *ngIf="f['name'].errors['required']">
                 The skill's name is required
@@ -268,19 +193,10 @@
             <label for="skill-desc">Description</label>
           </div>
           <div class="col-sm-9">
-            <textarea
-              id="skill-desc"
-              formControlName="description"
-              placeholder="Description"
-              name="skill-desc"
-              rows="2"
-              wrap="soft"
-              [ngClass]="{
+            <textarea id="skill-desc" formControlName="description" placeholder="Description" name="skill-desc" rows="2"
+              wrap="soft" [ngClass]="{
                 'is-invalid': f['description'].errors
-              }"
-              class="form-control"
-              data-v-aa799a9e=""
-            ></textarea>
+              }" class="form-control" data-v-aa799a9e=""></textarea>
             <div *ngIf="f['description'].errors" class="invalid-feedback">
               <div *ngIf="f['description'].errors['required']">
                 description is required
@@ -308,12 +224,7 @@
     <div class="modal-header">
       <h5 class="modal-title" id="myModalLabel160">Confirm</h5>
 
-      <button
-        type="button"
-        class="close"
-        (click)="modal.dismiss('Cross click')"
-        aria-label="Close"
-      >
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -321,22 +232,11 @@
       Are you sure you want to delete the function ?
     </div>
     <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-danger"
-        (click)="modal.close('Accept click')"
-        rippleEffect
-      >
+      <button type="button" class="btn btn-danger" (click)="modal.close('Accept click')" rippleEffect>
         Cancel
       </button>
 
-      <button
-        type="button"
-        class="btn btn-danger"
-        (click)="deleteData()"
-        routerLink="/reload"
-        rippleEffect
-      >
+      <button type="button" class="btn btn-danger" (click)="deleteData()" routerLink="/reload" rippleEffect>
         Delete
       </button>
     </div>
