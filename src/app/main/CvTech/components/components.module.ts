@@ -26,10 +26,6 @@ const routes: Routes =
       loadChildren: () => import('./cvs/cvs.module').then(m => m.CvsModule)
     },
     {
-      path: 'contrat',
-      loadChildren: () => import('./contrat/contrat.module').then(m => m.ContratModule)
-    },
-    {
       path: 'dashboard',
       component: DashboardComponent,
     },
