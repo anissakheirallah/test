@@ -1,14 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators
-} from "@angular/forms";
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ColumnMode } from "@swimlane/ngx-datatable";
+import { Campaign } from "app/main/CvTech/models/campaign.model";
 import { Function } from "app/main/CvTech/models/function.model";
+import { CampaignService } from "app/main/CvTech/services/campaign.service";
 import { FunctionService } from "app/main/CvTech/services/function.service";
 
 @Component({
@@ -18,41 +14,34 @@ import { FunctionService } from "app/main/CvTech/services/function.service";
   encapsulation: ViewEncapsulation.None
 })
 export class FunctionComponent implements OnInit {
+
   public data?: Function[];
-  public func: Function = { id: null, name: "", description: "" };
-  public pagePosition = 1;
+  public functionAdd: Function = { id: 0, name: "", description: "", campaignId: 11 };
+
   public totalPages = 0;
-  contentHeader: {
-    headerTitle: string;
-    actionButton: boolean;
-    breadcrumb: {
-      type: string;
-      links: (
-        | { name: string; isLink: boolean; link: string }
-        | { name: string; isLink: boolean; link?: undefined }
-      )[];
-    };
-  };
-
-  submitted = false;
-  
+  public page = 1;
+  public basicSelectedOption = 5;
+  public name = "";
+  public submitted = false;
   public ColumnMode = ColumnMode;
-
-  public chkBoxSelected = [];
-
-  constructor(
-    private modalService: NgbModal,
-    private formBuilder: FormBuilder,
-    private functionService: FunctionService
-  ) { }
+  private modal = null;
+  private id = 0;
+  public contentHeader: Object;
+  public campaigns: Campaign[];
 
   public funcForm: FormGroup = new FormGroup({
     name: new FormControl(""),
     description: new FormControl(""),
+    campaignId: new FormControl(""),
   });
+
+  constructor(private modalService: NgbModal, private formBuilder: FormBuilder, private functionService: FunctionService
+    , private campaignService: CampaignService) { }
+
 
   ngOnInit(): void {
     this.getAllFunctions();
+    this.getAllCampaign();
     this.contentHeader = {
       headerTitle: "Function",
       actionButton: true,
@@ -97,7 +86,11 @@ export class FunctionComponent implements OnInit {
           Validators.minLength(3),
           Validators.maxLength(45),
         ],
-      ],
+      ], campaignId: [
+        "", [
+          Validators.required,
+        ],
+      ]
     });
   }
 
@@ -108,13 +101,8 @@ export class FunctionComponent implements OnInit {
     });
   }
 
-  page = 1;
-  basicSelectedOption = 5;
-  name = "";
-
   public pageChanged(event: any): void {
     this.page = event;
-    console.log(event);
     this.getAllFunctions();
   }
 
@@ -127,10 +115,9 @@ export class FunctionComponent implements OnInit {
 
     this.functionService.getAllPagination(params).subscribe({
       next: (response: any) => {
-        const { content, totalElements, totalPages } = response;
+        const { content, totalPages } = response;
         this.totalPages = totalPages * 10;
         this.data = content;
-        console.log(content);
       },
       error: (err) => {
         console.error(err);
@@ -138,9 +125,14 @@ export class FunctionComponent implements OnInit {
     });
   }
 
-
-  private modal = null;
-  private id = 0;
+  getAllCampaign(): void {
+    this.campaignService.getAllCampaign().subscribe({
+      next: (value: any) => {
+        this.campaigns = value;
+        console.log(this.campaigns);
+      },
+    })
+  }
 
   modalOpenDanger(modalDanger, id: any) {
     this.id = id;
@@ -159,15 +151,17 @@ export class FunctionComponent implements OnInit {
     if (this.funcForm.invalid) {
       return;
     }
-    this.func = this.funcForm.value;
+    this.functionAdd = this.funcForm.value;
 
-    this.addData();
+    this.addFunction();
   }
 
-  public addData(): void {
+  public addFunction(): void {
+    console.log(this.functionAdd);
     const functionData = {
-      name: this.func.name,
-      description: this.func.description,
+      name: this.functionAdd.name,
+      description: this.functionAdd.description,
+      campaignId: this.functionAdd.campaignId
     };
     this.functionService.addFunction(functionData).subscribe({
       next: (data) => {
@@ -185,10 +179,10 @@ export class FunctionComponent implements OnInit {
   modalEdit(modalPrimaryedit, id) {
     this.functionService.getFunction(id).subscribe({
       next: (data) => {
-        this.func = data;
+        this.functionAdd = data;
         this.funcForm = this.formBuilder.group({
           name: [
-            this.func.name,
+            this.functionAdd.name,
             [
               Validators.required,
               Validators.minLength(3),
@@ -196,11 +190,17 @@ export class FunctionComponent implements OnInit {
             ],
           ],
           description: [
-            this.func.name,
+            this.functionAdd.name,
             [
               Validators.required,
               Validators.minLength(3),
               Validators.maxLength(45),
+            ],
+          ],
+          campaignId: [
+            this.functionAdd.campaignId,
+            [
+              Validators.required,
             ],
           ],
         });
@@ -219,13 +219,15 @@ export class FunctionComponent implements OnInit {
     if (this.funcForm.invalid) {
       return;
     }
-    this.func.name = this.funcForm.value.name;
-    this.func.description = this.funcForm.value.description;
+    this.functionAdd.name = this.funcForm.value.name;
+    this.functionAdd.description = this.funcForm.value.description;
+    this.functionAdd.campaignId = this.funcForm.value.campaignId;
 
-    this.updateFunction(this.func);
+    this.updateFunction(this.functionAdd);
   }
 
   updateFunction(funct: Function): void {
+    console.log(funct);
     this.functionService.updateFunction(funct.id, funct).subscribe({
       next: (data) => {
         console.log(data);
