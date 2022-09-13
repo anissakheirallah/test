@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Education } from 'app/main/cvtech/models/education.model';
 import { GlobalExperience } from 'app/main/CvTech/models/global-experience.model';
 import { Skill } from 'app/main/CvTech/models/skill.model';
-import { AllCampaignService } from 'app/main/CvTech/services/all-campaign.service';
+import { CampaignService } from 'app/main/CvTech/services/campaign.service';
 import { EducationService } from 'app/main/CvTech/services/education.service';
 import { FunctionService } from 'app/main/CvTech/services/function.service';
 import { GlobalExperienceService } from 'app/main/CvTech/services/global-experience.service';
@@ -19,7 +19,7 @@ export class AddCampaignComponent implements OnInit {
   public contentHeader: object;
 
   constructor(
-    private AllCampaignService: AllCampaignService,
+    private AllCampaignService: CampaignService,
     private router: Router,
 
     private EducationService: EducationService,
