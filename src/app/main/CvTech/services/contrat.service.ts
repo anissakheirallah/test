@@ -31,7 +31,7 @@ export class ContratService {
     });
   }
 
-  updateContrat(id: number, data: any): Observable<any> {
+  updateContract(id: number, data: any): Observable<any> {
     return this.http.put(`${baseUrl}/contract/${id}`, data);
   }
 

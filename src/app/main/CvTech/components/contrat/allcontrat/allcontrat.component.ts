@@ -1,141 +1,189 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ContratService } from './../../../services/contrat.service';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 import { Contrat } from 'app/main/CvTech/models/contrat.model';
-import { ContratService } from 'app/main/CvTech/services/contrat.service';
 import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
   selector: 'app-allcontrat',
   templateUrl: './allcontrat.component.html',
-  styleUrls: ['./allcontrat.component.scss']
+  styleUrls: ['./allcontrat.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AllcontratComponent implements OnInit {
-
-  contentHeader: { headerTitle: string; actionButton: boolean; breadcrumb: { type: string; links: ({ name: string; isLink: boolean; link: string; } | { name: string; isLink: boolean; link?: undefined; })[]; }; };
-
-  contrats?: Contrat[];
-  pageSize = 5;
-
-  public ColumnMode = ColumnMode;
-  public SelectionType = SelectionType;
-
-  contrat: Contrat = {
-    id: null,
-    name: '',
-    description: null,
-    campaignId: 0
-  }
-
-
-  editContrat: Contrat = {
-    id: null,
-    name: '',
-    description: null,
-    campaignId: 0
-  }
-
-
-
-  public form: FormGroup = new FormGroup({
-    name: new FormControl(''),
-    description: new FormControl(''),
-  });
-
-
-  public formEdit: FormGroup = new FormGroup({
-    name: new FormControl(''),
-    description: new FormControl(''),
-  });
-
+  public data?: Contrat[];
+  public cont: Contrat = {
+    id: null, name: "", description: "",
+    campaignId: 1
+  };
+  public pagePosition = 1;
+  public totalPages = 0;
+  contentHeader: {
+    headerTitle: string;
+    actionButton: boolean;
+    breadcrumb: {
+      type: string;
+      links: (
+        | { name: string; isLink: boolean; link: string }
+        | { name: string; isLink: boolean; link?: undefined }
+      )[];
+    };
+  };
 
   submitted = false;
-  constructor(private modalService: NgbModal,
-    private contratService: ContratService, private formBuilder: FormBuilder, private router: Router, private toastr: ToastrService) { }
+  
+  public ColumnMode = ColumnMode;
+
+  public chkBoxSelected = [];
+
+  constructor(
+    private modalService: NgbModal,
+    private formBuilder: FormBuilder,
+    private contratService: ContratService
+  ) { }
+
+  public contForm: FormGroup = new FormGroup({
+    name: new FormControl(""),
+    description: new FormControl(""),
+  });
 
 
   ngOnInit(): void {
-    this.getContrats();
-
+   this.getContrats();
     this.contentHeader = {
-      headerTitle: 'All contrats',
+      headerTitle: "Function",
       actionButton: true,
       breadcrumb: {
-        type: '',
+        type: "",
         links: [
           {
-            name: 'Home',
+            name: "Home",
             isLink: true,
-            link: '/'
+            link: "/",
           },
           {
-            name: 'CvTech',
+            name: "CvTech",
             isLink: true,
-            link: '/'
+            link: "/",
           },
           {
-            name: 'Contrat',
+            name: "Profil",
             isLink: true,
-            link: '/'
+            link: "/",
           },
           {
-            name: 'All Contrats',
-            isLink: false
-          }
-        ]
-      }
+            name: "Function",
+            isLink: false,
+          },
+        ],
+      },
     };
+    this.contForm = this.formBuilder.group({
+      name: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.pattern("[a-zA-Z ]*"),
+        ],
+      ],
+      description: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(45),
+        ],
+      ],
+    });
   }
-
-  get formControl(): { [key: string]: AbstractControl } {
-    return this.form.controls;
+  modalOpenPrimary(modalPrimary) {
+    this.modalService.open(modalPrimary, {
+      centered: true,
+      windowClass: "modal modal-primary",
+    });
   }
-
-  get EditFormControl(): { [key: string]: AbstractControl } {
-    return this.formEdit.controls;
-  }
-
-
-  @ViewChild(DatatableComponent) table: DatatableComponent;
 
   page = 1;
-  count = 5;
-  searchContrat = '';
-
-
-  filterByName(event) {
-    this.searchContrat = event.target.value.toLowerCase();
-    this.getContrats();
-  }
+  basicSelectedOption = 5;
+  name = "";
 
   public pageChanged(event: any): void {
     this.page = event;
+    console.log(event);
     this.getContrats();
   }
+
+
 
   public getContrats(): void {
     const params = {
       page: this.page - 1,
-      size: this.pageSize,
-      name: this.searchContrat
-    }
+      size: this.basicSelectedOption,
+      name: this.name,
+    };
+
     this.contratService.getContracts(params).subscribe(
       {
         next: (response: any) => {
           const { content, totalElements, totalPages } = response;
-          this.count = totalElements;
-          //this.totalPages = totalPages * 10
-          this.contrats = response.content
-          console.log(this.contrats)
+            this.totalPages = totalPages * 10;
+            this.data = content;
+            console.log(content);
         }, error: (err) => {
           console.error(err);
         }
       }
     );
   }
+  private modal = null;
+  private id = 0;
+
+  modalOpenDanger(modalDanger, id: any) {
+    this.id = id;
+    this.modal = this.modalService.open(modalDanger, {
+      centered: true,
+      windowClass: "modal modal-danger",
+    });
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.contForm.controls;
+  }
+
+
+  onSubmit(): void {
+    this.submitted = true;
+    if (this.contratService.invalid) {
+      return;
+    }
+    this.cont = this.contForm.value;
+
+    this.addData();
+  }
+
+  public addData(): void {
+    const contractData = {
+      name: this.cont.name,
+      description: this.cont.description,
+    };
+    this.contratService.createContrat(contractData).subscribe({
+      next: (data) => {
+        this.ngOnInit();
+      },
+      error: (err) => {
+        console.error(err);
+        alert(err.message);
+      },
+    });
+  }
+
+
+
 
   //Edit 
 
@@ -144,27 +192,29 @@ export class AllcontratComponent implements OnInit {
     this.contratService.getContrat(id).subscribe({
       next: (data) => {
         console.log(data)
-        this.editContrat.id = data.id;
-        this.editContrat.name = data.name;
-        this.editContrat.description = data.description;
+         this.cont = data;
        // this.editContrat.campaignId = data.campaignId;
-        this.formEdit = this.formBuilder.group(
+        this.contForm = this.formBuilder.group(
           {
             name: [
-              this.editContrat.name,
+              this.cont.name,
               [
                 Validators.required,
                 Validators.minLength(3),
                 Validators.pattern("[a-zA-Z ]*")
               ]
             ],
-            description: [this.editContrat.description, Validators.required],
+            description: [this.cont.description, [
+              Validators.required,
+              Validators.minLength(3),
+              Validators.maxLength(45),
+            ],],
 
           }
         );
       }, error: (err) => {
         console.error(err);
-      }
+      },
     });
     this.modal = this.modalService.open(modalPrimaryedit, {
       centered: true,
@@ -172,6 +222,43 @@ export class AllcontratComponent implements OnInit {
     });
   }
 
+  edit(): void {
+    if (this.contForm.invalid) {
+      return;
+    }
+    this.cont.name = this.contForm.value.name;
+    this.cont.description = this.contForm.value.description;
+
+    this.updateContrat(this.cont);
+  }
+
+  updateFunction(cont : Contrat): void {
+    this.contratService.updateContract(cont.id, cont).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.getContrats();
+        this.modalService.dismissAll();
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+  }
+
+  public deleteData() {
+    console.log(this.id);
+
+    this.modal.close("Accept click");
+    this.contratService.deleteContrat(this.id).subscribe({
+      next: () => {
+        console.log("Function deleted !", this.id);
+        this.ngOnInit();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
 
 
 
