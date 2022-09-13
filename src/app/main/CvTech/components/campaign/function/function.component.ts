@@ -1,20 +1,21 @@
-import { HttpErrorResponse } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import {
   AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from "@angular/forms";
-import { FunctionService } from "app/main/CvTech/services/function.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ColumnMode } from "@swimlane/ngx-datatable";
 import { Function } from "app/main/CvTech/models/function.model";
+import { FunctionService } from "app/main/CvTech/services/function.service";
 
 @Component({
   selector: "app-function",
   templateUrl: "./function.component.html",
   styleUrls: ["./function.component.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class FunctionComponent implements OnInit {
   public data?: Function[];
@@ -34,6 +35,8 @@ export class FunctionComponent implements OnInit {
   };
 
   submitted = false;
+  
+  public ColumnMode = ColumnMode;
 
   public chkBoxSelected = [];
 
@@ -41,7 +44,7 @@ export class FunctionComponent implements OnInit {
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private functionService: FunctionService
-  ) {}
+  ) { }
 
   public funcForm: FormGroup = new FormGroup({
     name: new FormControl(""),
@@ -49,7 +52,7 @@ export class FunctionComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.getData();
+    this.getAllFunctions();
     this.contentHeader = {
       headerTitle: "Function",
       actionButton: true,
@@ -106,62 +109,35 @@ export class FunctionComponent implements OnInit {
   }
 
   page = 1;
-  count = 0;
+  basicSelectedOption = 5;
   name = "";
-  description = "";
 
   public pageChanged(event: any): void {
     this.page = event;
     console.log(event);
-    this.getData();
+    this.getAllFunctions();
   }
 
-  getParams(page: number, pageSize: number, name: string, description: string) {
-    let params: any = {};
-    if (page) {
-      params["page"] = page - 1;
-    }
-    if (pageSize) {
-      params["size"] = pageSize;
-    }
-    if (name) {
-      params["name"] = name;
-    }
-    if (description) {
-      params["description"] = description;
-    }
-
-    return params;
-  }
-
-  // ----------------------------------
-
-  // getData(): void {
-  //   this.functionService.getFunctions().subscribe((response: any) => {
-  //     (this.data = response.content), console.log(response);
-  //   });
-  // }
-
-  getData(): void {
+  getAllFunctions(): void {
     const params = {
       page: this.page - 1,
-      size: 4,
+      size: this.basicSelectedOption,
       name: this.name,
-      description: this.description,
     };
 
     this.functionService.getAllPagination(params).subscribe({
       next: (response: any) => {
         const { content, totalElements, totalPages } = response;
-        this.count = totalElements;
         this.totalPages = totalPages * 10;
-        this.data = response.content;
+        this.data = content;
+        console.log(content);
       },
       error: (err) => {
         console.error(err);
       },
     });
   }
+
 
   private modal = null;
   private id = 0;
@@ -188,22 +164,6 @@ export class FunctionComponent implements OnInit {
     this.addData();
   }
 
-  // addData(): void {
-  //   this.func = this.funcForm.value;
-  //   const functionData = {
-  //     name: this.func.name,
-  //     description: this.func.description,
-  //   };
-  //   this.functionService.addFunction(functionData).subscribe(
-  //     (response: Function) => {
-  //       console.log(response), window.location.reload();
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       alert(error.message);
-  //     }
-  //   );
-  // }
-
   public addData(): void {
     const functionData = {
       name: this.func.name,
@@ -219,17 +179,6 @@ export class FunctionComponent implements OnInit {
       },
     });
   }
-
-  // deleteData(id: number) {
-  //   this.functionService.deleteFunction(id).subscribe(
-  //     () => {
-  //       window.location.reload();
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       alert(error.message);
-  //     }
-  //   );
-  // }
 
   // ------------ Edit function ------------
 
@@ -280,7 +229,7 @@ export class FunctionComponent implements OnInit {
     this.functionService.updateFunction(funct.id, funct).subscribe({
       next: (data) => {
         console.log(data);
-        this.getData();
+        this.getAllFunctions();
         this.modalService.dismissAll();
       },
       error: (err) => {
