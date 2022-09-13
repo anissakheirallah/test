@@ -5,6 +5,7 @@ export const locale = {
       HOME: "Accueil",
       SAMPLE: "Échantillon",
       Dashboard: "tableau de bord",
+      Function: "Fonction",
       CVs: "CVs",
       Users: "Utilisateurs",
       Campaign: "Campagne",

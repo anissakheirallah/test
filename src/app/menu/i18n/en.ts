@@ -22,6 +22,7 @@ export const locale = {
       SAMPLE: 'Sample',
       Dashboard: 'Dashboard',
       CVs: 'CVs',
+      Function: "Function",
       Users: 'Users',
       Campaign: 'Campaign',
       cvtech: 'CvTech',
