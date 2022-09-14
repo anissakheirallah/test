@@ -6,6 +6,8 @@ export const locale = {
       SAMPLE: "Échantillon",
       Dashboard: "tableau de bord",
       Function: "Fonction",
+      Contract:"Contrat",
+      Region:"Region",
       CVs: "CVs",
       Users: "Utilisateurs",
       Campaign: "Campagne",

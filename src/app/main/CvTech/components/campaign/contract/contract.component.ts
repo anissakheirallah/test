@@ -1,23 +1,23 @@
+import { ContratService } from 'app/main/CvTech/services/contrat.service';
+import { Contrat } from './../../../models/contrat.model';
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ColumnMode } from "@swimlane/ngx-datatable";
 import { Campaign } from "app/main/CvTech/models/campaign.model";
-import { Function } from "app/main/CvTech/models/function.model";
 import { CampaignService } from "app/main/CvTech/services/campaign.service";
-import { FunctionService } from "app/main/CvTech/services/function.service";
-import { ToastrService } from "ngx-toastr";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: "app-function",
-  templateUrl: "./function.component.html",
-  styleUrls: ["./function.component.scss"],
+  selector: "app-contract",
+  templateUrl: "./contract.component.html",
+  styleUrls: ["./contract.component.scss"],
   encapsulation: ViewEncapsulation.None
 })
-export class FunctionComponent implements OnInit {
+export class ContractComponent implements OnInit {
 
-  public data?: Function[];
-  public functionAdd: Function = { id: 0, name: "", description: "", campaignId: 11 };
+  public data?: Contrat[];
+  public contractAdd: Contrat = { id: 0, name: "", description: "", campaignId: 11 };
 
   public totalPages = 0;
   public page = 1;
@@ -30,21 +30,21 @@ export class FunctionComponent implements OnInit {
   public contentHeader: Object;
   public campaigns: Campaign[];
 
-  public funcForm: FormGroup = new FormGroup({
+  public contForm: FormGroup = new FormGroup({
     name: new FormControl(""),
     description: new FormControl(""),
     campaignId: new FormControl(""),
   });
 
-  constructor(private modalService: NgbModal, private formBuilder: FormBuilder, private functionService: FunctionService
+  constructor(private modalService: NgbModal, private formBuilder: FormBuilder, private contratService: ContratService
     , private campaignService: CampaignService , private toastr: ToastrService) { }
 
 
   ngOnInit(): void {
-    this.getAllFunctions();
+    this.getAllContracts();
     this.getAllCampaign();
     this.contentHeader = {
-      headerTitle: "Function",
+      headerTitle: "Contract",
       actionButton: true,
       breadcrumb: {
         type: "",
@@ -65,13 +65,13 @@ export class FunctionComponent implements OnInit {
             link: "/",
           },
           {
-            name: "Function",
+            name: "contract",
             isLink: false,
           },
         ],
       },
     };
-    this.funcForm = this.formBuilder.group({
+    this.contForm = this.formBuilder.group({
       name: [
         "",
         [
@@ -104,17 +104,17 @@ export class FunctionComponent implements OnInit {
 
   public pageChanged(event: any): void {
     this.page = event;
-    this.getAllFunctions();
+    this.getAllContracts();
   }
 
-  getAllFunctions(): void {
+  getAllContracts(): void {
     const params = {
       page: this.page - 1,
       size: this.basicSelectedOption,
       name: this.name,
     };
 
-    this.functionService.getAllPagination(params).subscribe({
+    this.contratService.getAllPagination(params).subscribe({
       next: (response: any) => {
         const { content, totalPages } = response;
         this.totalPages = totalPages * 10;
@@ -144,35 +144,33 @@ export class FunctionComponent implements OnInit {
   }
 
   get f(): { [key: string]: AbstractControl } {
-    return this.funcForm.controls;
+    return this.contForm.controls;
   }
 
   onSubmit(): void {
     this.submitted = true;
-    if (this.funcForm.invalid) {
-      this.toastrWarning("Oooops!! Something went wrong .")
+    if (this.contForm.invalid) {
+      this.toastrWarning("Oooops!! Something went wrong . ");
 
       return;
     }
-    this.functionAdd = this.funcForm.value;
+    this.contractAdd = this.contForm.value;
 
-    this.addFunction();
+    this.addContracts();
   }
 
-  public addFunction(): void {
-    console.log(this.functionAdd);
-    const functionData = {
-      name: this.functionAdd.name,
-      description: this.functionAdd.description,
-      campaignId: this.functionAdd.campaignId
+  public addContracts(): void {
+    console.log(this.contractAdd);
+    const contractData = {
+      name: this.contractAdd.name,
+      description: this.contractAdd.description,
+      campaignId: this.contractAdd.campaignId
     };
-    this.functionService.addFunction(functionData).subscribe({
+    this.contratService.createContrat(contractData).subscribe({
       next: (data) => {
         this.ngOnInit();
         this.modalService.dismissAll();
-        this.toastrSuccess(" Function added successfully !! ");
-
-
+        this.toastrSuccess("Contract added successfully !! ");
       },
       error: (err) => {
         console.error(err);
@@ -180,50 +178,16 @@ export class FunctionComponent implements OnInit {
       },
     });
   }
-  modalAdd(modalPrimaryadd) {
-    this.functionAdd.name = "";
-    this.functionAdd.description = "";
-    this.functionAdd.campaignId = 0;
-    this.funcForm = this.formBuilder.group({
-      name: [
-        this.functionAdd.name,
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.pattern("[a-zA-Z ]*"),
-        ],
-      ],
-      description: [
-        this.functionAdd.description,
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(45),
-        ],
-      ],
-      campaignId: [
-        this.functionAdd.campaignId,
-        [
-          Validators.required,
-        ],
-      ],
-    });
 
-    this.modalService.open(modalPrimaryadd, {
-      centered: true,
-      windowClass: "modal modal-primary",
-    });
-  }
-
-  // ------------ Edit function ------------
+  // ------------ Edit Contract ------------
 
   modalEdit(modalPrimaryedit, id) {
-    this.functionService.getFunction(id).subscribe({
+    this.contratService.getContrat(id).subscribe({
       next: (data) => {
-        this.functionAdd = data;
-        this.funcForm = this.formBuilder.group({
+        this.contractAdd = data;
+        this.contForm = this.formBuilder.group({
           name: [
-            this.functionAdd.name,
+            this.contractAdd.name,
             [
               Validators.required,
               Validators.minLength(3),
@@ -231,7 +195,7 @@ export class FunctionComponent implements OnInit {
             ],
           ],
           description: [
-            this.functionAdd.description,
+            this.contractAdd.description,
             [
               Validators.required,
               Validators.minLength(3),
@@ -239,7 +203,7 @@ export class FunctionComponent implements OnInit {
             ],
           ],
           campaignId: [
-            this.functionAdd.campaignId,
+            this.contractAdd.campaignId,
             [
               Validators.required,
             ],
@@ -256,32 +220,40 @@ export class FunctionComponent implements OnInit {
     });
   }
 
-  edit(): void {
-    if (this.funcForm.invalid) {
-      this.toastrWarning("Oooops!! Something went wrong .")
 
-      return;
-    }
-    this.functionAdd.name = this.funcForm.value.name;
-    this.functionAdd.description = this.funcForm.value.description;
-    this.functionAdd.campaignId = this.funcForm.value.campaignId;
 
-    this.updateFunction(this.functionAdd);
-  }
+  modalAdd(modalPrimaryadd) {
+    this.contractAdd.name = "";
+    this.contractAdd.description = "";
+    this.contractAdd.campaignId = 0;
+    this.contForm = this.formBuilder.group({
+      name: [
+        this.contractAdd.name,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.pattern("[a-zA-Z ]*"),
+        ],
+      ],
+      description: [
+        this.contractAdd.description,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(45),
+        ],
+      ],
+      campaignId: [
+        this.contractAdd.campaignId,
+        [
+          Validators.required,
+        ],
+      ],
+    });
 
-  updateFunction(funct: Function): void {
-    console.log(funct);
-    this.functionService.updateFunction(funct.id, funct).subscribe({
-      next: (data) => {
-        console.log(data);
-        this.getAllFunctions();
-        this.modalService.dismissAll();
-        this.toastrSuccess(" Function updated successfully !! ");
-
-      },
-      error: (err) => {
-        console.error(err);
-      },
+    this.modalService.open(modalPrimaryadd, {
+      centered: true,
+      windowClass: "modal modal-primary",
     });
   }
 
@@ -292,11 +264,38 @@ export class FunctionComponent implements OnInit {
     });
   }
 
-  // Warning
   toastrWarning(message: string) {
     this.toastr.warning('👋 ' + message, 'Warning!', {
       toastClass: 'toast ngx-toastr',
       positionClass: 'toast-top-right'
+    });
+  }
+
+  edit(): void {
+    if (this.contForm.invalid) {
+      this.toastrWarning("Oooops!! Something went wrong .")
+      return;
+    }
+    this.contractAdd.name = this.contForm.value.name;
+    this.contractAdd.description = this.contForm.value.description;
+    this.contractAdd.campaignId = this.contForm.value.campaignId;
+
+    this.updateContracts(this.contractAdd);
+  }
+
+  updateContracts(cont: Contrat): void {
+    console.log(cont);
+    this.contratService.updateContract(cont.id, cont).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.getAllContracts();
+        this.modalService.dismissAll();
+        this.toastrSuccess(" Contract updated successfully !! ");
+
+      },
+      error: (err) => {
+        console.error(err);
+      },
     });
   }
 
@@ -306,11 +305,11 @@ export class FunctionComponent implements OnInit {
     console.log(this.id);
 
     this.modal.close("Accept click");
-    this.functionService.deleteFunction(this.id).subscribe({
+    this.contratService.deleteContrat(this.id).subscribe({
       next: () => {
-        console.log("Function deleted !", this.id);
+        console.log("Contract deleted !", this.id);
         this.ngOnInit();
-        this.toastrSuccess(" Function deleted successfully !! ");
+        this.toastrSuccess("Contract delete successfully !! ");
 
       },
       error: (err) => {
@@ -321,6 +320,6 @@ export class FunctionComponent implements OnInit {
 
   onReset(): void {
     this.submitted = false;
-    this.funcForm.reset();
+    this.contForm.reset();
   }
 }

@@ -23,6 +23,8 @@ export const locale = {
       Dashboard: 'Dashboard',
       CVs: 'CVs',
       Function: "Function",
+      Contract:"Contract",
+      Region:"Region",
       Users: 'Users',
       Campaign: 'Campaign',
       cvtech: 'CvTech',

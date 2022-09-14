@@ -8,27 +8,27 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h4 class="card-title text-primary">Add Function</h4>
+              <h4 class="card-title text-primary">Add Region</h4>
             </div>
             <div class="card-body">
-              <form class="form form-horizontal" [formGroup]="funcForm" (ngSubmit)="onSubmit()">
+              <form class="form form-horizontal" [formGroup]="regionForm" (ngSubmit)="onSubmit()">
                 <div class="row">
                   <div class="col-12">
                     <div class="form-group row">
                       <div class="col-sm-3 col-form-label">
-                        <label for="Skill-name">Name</label>
+                        <label for="region-name">Name</label>
                       </div>
                       <div class="col-sm-9">
-                        <input type="text" formControlName="name" id="function-name" class="form-control"
-                          name="function-name" [ngClass]="{
+                        <input type="text" formControlName="name" id="region-name" class="form-control"
+                          name="region-name" [ngClass]="{
                             'is-invalid': submitted && f['name'].errors
-                          }" placeholder="Enter the function's name" />
+                          }" placeholder="Enter the region's name" />
                         <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
                           <div *ngIf="f['name'].errors['required']">
-                            The function's name is required
+                            The region's name is required
                           </div>
                           <div *ngIf="f['name'].errors['pattern']">
-                            The function's name must have characters only
+                            The region's name must have characters only
                           </div>
                           <div *ngIf="f['name'].errors['minlength']">
                             Add more characters
@@ -37,49 +37,6 @@
                       </div>
                     </div>
                   </div>
-
-                  <div class="col-12">
-                    <div class="form-group row">
-                      <div class="col-sm-3 col-form-label">
-                        <label for="function-desc">Description</label>
-                      </div>
-                      <div class="col-sm-9">
-                        <textarea id="function-desc" formControlName="description" placeholder="Description"
-                          name="function-desc" rows="2" wrap="soft" [ngClass]="{
-                            'is-invalid': submitted && f['description'].errors
-                          }" class="form-control" data-v-aa799a9e=""></textarea>
-                        <div *ngIf="submitted && f['description'].errors" class="invalid-feedback">
-                          <div *ngIf="f['description'].errors['required']">
-                            description is required
-                          </div>
-                          <div *ngIf="f['description'].errors['minlength']">
-                            description should have more than 3 characters
-                          </div>
-                          <div *ngIf="f['description'].errors['maxlength']">
-                            description shouldn't have more than 45 characters
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-group row">
-                      <div class="col-sm-3 col-form-label">
-                        <label for="function-desc">Campaign</label>
-                      </div>
-                      <div class="col-sm-9">
-                        <div class="form-group">
-                          <select class="form-control" id="basicSelect" formControlName="campaignId">
-                            <option hidden></option>
-                            <option *ngFor="let campaign of campaigns" value="{{campaign.id}}">
-                              {{campaign.name}}
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
                   <div class="col-sm-9 offset-sm-3">
                     <button type="submit" rippleEffect class="btn btn-primary mr-1">
                       Add
@@ -97,6 +54,7 @@
     </section>
   </ng-template>
 
+
     <section id="ngx-datatable-kitchen-sink">
       <div class="card">
         <div class="card-header">
@@ -108,7 +66,7 @@
             <div class="d-flex align-items-center justify-content-start pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
               <label class="d-flex align-items-center">Search
                 <input type="search" name="name" id="name" [(ngModel)]="name" placeholder="Search by Name"
-                  class="form-control ml-25" (change)="getAllFunctions()" (keyup)="getAllFunctions()" /></label>
+                  class="form-control ml-25" (change)="getAllRegion()" (keyup)="getAllRegion()" /></label>
             </div>
           </div>
           <div>
@@ -123,12 +81,7 @@
           [footerHeight]="50" [rowHeight]="45" rowHeight="auto" [rows]="data" [limit]="basicSelectedOption"
           [columnMode]="ColumnMode.force">
 
-          <ngx-datatable-column name="function Name" prop="name"
-            headerClass="d-flex align-items-center justify-content-center"
-            cellClass="d-flex align-items-center justify-content-center">
-          </ngx-datatable-column>
-
-          <ngx-datatable-column name="Description" prop="description"
+          <ngx-datatable-column name="region Name" prop="name"
             headerClass="d-flex align-items-center justify-content-center"
             cellClass="d-flex align-items-center justify-content-center">
           </ngx-datatable-column>
@@ -153,7 +106,7 @@
           <div class="col-md-3 col-12">
             <div>
               <label class="d-flex align-items-center">Show
-                <select class="form-control mx-25" [(ngModel)]="basicSelectedOption" (change)="getAllFunctions()">
+                <select class="form-control mx-25" [(ngModel)]="basicSelectedOption" (change)="getAllRegion()">
                   <option value="5">5</option>
                   <option value="10">10</option>
                   <option value="25">25</option>
@@ -183,15 +136,15 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form class="form form-horizontal" [formGroup]="funcForm" (ngSubmit)="edit()">
+  <form class="form form-horizontal" [formGroup]="regionForm" (ngSubmit)="edit()">
     <div class="modal-body" tabindex="0" ngbAutofocus>
       <div class="col-12">
         <div class="form-group row">
           <div class="col-sm-3 col-form-label">
-            <label for="Skill-name">Name</label>
+            <label for="name">Name</label>
           </div>
           <div class="col-sm-9">
-            <input type="text" formControlName="name" id="skill-name" class="form-control" name="skill-name" [ngClass]="{
+            <input type="text" formControlName="name" id="name" class="form-control" name="name" [ngClass]="{
                 'is-invalid': f['name'].errors
               }" placeholder="Enter the skill's name" />
             <div *ngIf="f['name'].errors" class="invalid-feedback">
@@ -210,45 +163,9 @@
       </div>
       <div class="col-12">
         <div class="form-group row">
-          <div class="col-sm-3 col-form-label">
-            <label for="skill-desc">Description</label>
-          </div>
-          <div class="col-sm-9">
-            <textarea id="skill-desc" formControlName="description" placeholder="Description" name="skill-desc" rows="2"
-              wrap="soft" [ngClass]="{
-                'is-invalid': f['description'].errors
-              }" class="form-control" data-v-aa799a9e=""></textarea>
-            <div *ngIf="f['description'].errors" class="invalid-feedback">
-              <div *ngIf="f['description'].errors['required']">
-                description is required
-              </div>
-              <div *ngIf="f['description'].errors['minlength']">
-                description should have more than 3 characters
-              </div>
-              <div *ngIf="f['description'].errors['maxlength']">
-                description shouldn't have more than 45 characters
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-      <div class="col-12">
-        <div class="form-group row">
-          <div class="col-sm-3 col-form-label">
-            <label for="skill-desc">campaign</label>
-          </div>
-          <div class="col-sm-9">
-            <select class="form-control" id="basicSelect" formControlName="campaignId">
-              <option hidden></option>
-              <option *ngFor="let campaign of campaigns" value="{{campaign.id}}">
-                {{campaign.name}}
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-
+    
     </div>
     <div class="modal-footer">
       <button type="submit" class="btn btn-primary" rippleEffect>Accept</button>
@@ -267,7 +184,7 @@
       </button>
     </div>
     <div class="modal-body" tabindex="0" ngbAutofocus>
-      Are you sure you want to delete the function ?
+      Are you sure you want to delete the region ?
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-danger" (click)="modal.close('Accept click')" rippleEffect>

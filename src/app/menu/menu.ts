@@ -44,6 +44,20 @@ export const menu: CoreMenu[] = [
             url: 'cvtech/campaign/function',
           },
           {
+            id: 'contract',
+            title: 'MENU.Contract',
+            type: 'item',
+            icon: 'monitor',
+            url: 'cvtech/campaign/contract',
+          },
+          {
+            id: 'region',
+            title: 'MENU.Region',
+            type: 'item',
+            icon: 'monitor',
+            url: 'cvtech/campaign/region',
+          },
+          {
             id: "addcampaign",
             title: "MENU.CVTECH.ADDCAMPAIGN",
             type: "item",
