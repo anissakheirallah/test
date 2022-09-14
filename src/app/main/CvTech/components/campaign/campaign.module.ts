@@ -1,3 +1,5 @@
+import { RegionComponent } from './Region/region.component';
+import { ContractComponent } from './contract/contract.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -20,11 +22,22 @@ const routes: Routes = [
     path: 'function',
     component: FunctionComponent
   },
+  {
+    path:'contract',
+    component:ContractComponent
+  },
+  {
+    path:'region',
+    component:RegionComponent
+  }
+
 ];
 
 @NgModule({
   declarations: [
-    FunctionComponent
+    FunctionComponent,
+    ContractComponent,
+    RegionComponent
   ],
   imports: [
     CommonModule,
