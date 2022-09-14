@@ -21,6 +21,7 @@ export class FunctionComponent implements OnInit {
   public totalPages = 0;
   public page = 1;
   public basicSelectedOption = 5;
+  
   public name = "";
   public submitted = false;
   public ColumnMode = ColumnMode;
@@ -70,36 +71,8 @@ export class FunctionComponent implements OnInit {
         ],
       },
     };
-    this.funcForm = this.formBuilder.group({
-      name: [
-        "",
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.pattern("[a-zA-Z ]*"),
-        ],
-      ],
-      description: [
-        "",
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(45),
-        ],
-      ], campaignId: [
-        "", [
-          Validators.required,
-        ],
-      ]
-    });
   }
 
-  modalOpenPrimary(modalPrimary) {
-    this.modalService.open(modalPrimary, {
-      centered: true,
-      windowClass: "modal modal-primary",
-    });
-  }
 
   public pageChanged(event: any): void {
     this.page = event;
@@ -134,6 +107,39 @@ export class FunctionComponent implements OnInit {
     })
   }
 
+  modalOpen(modalBasic) {
+
+    this.funcForm = this.formBuilder.group({
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.pattern("[a-zA-Z ]*"),
+        ],
+      ],
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(45),
+        ],
+      ],
+      campaignId: [
+        '',
+        [
+          Validators.required,
+        ],
+      ],
+    });
+    this.modalService.open(modalBasic, {
+      centered: true,
+      windowClass: "modal modal-primary",
+      size: "lg",
+    });
+  }
+
   modalOpenDanger(modalDanger, id: any) {
     this.id = id;
     this.modal = this.modalService.open(modalDanger, {
@@ -165,6 +171,7 @@ export class FunctionComponent implements OnInit {
     };
     this.functionService.addFunction(functionData).subscribe({
       next: (data) => {
+        this.modalService.dismissAll();
         this.ngOnInit();
       },
       error: (err) => {
@@ -172,6 +179,7 @@ export class FunctionComponent implements OnInit {
         alert(err.message);
       },
     });
+    this.emptyfields();
   }
 
   // ------------ Edit function ------------
@@ -190,7 +198,7 @@ export class FunctionComponent implements OnInit {
             ],
           ],
           description: [
-            this.functionAdd.name,
+            this.functionAdd.description,
             [
               Validators.required,
               Validators.minLength(3),
@@ -212,6 +220,7 @@ export class FunctionComponent implements OnInit {
     this.modalService.open(modalPrimaryedit, {
       centered: true,
       windowClass: "modal modal-primary",
+      size: 'lg',
     });
   }
 
@@ -227,7 +236,6 @@ export class FunctionComponent implements OnInit {
   }
 
   updateFunction(funct: Function): void {
-    console.log(funct);
     this.functionService.updateFunction(funct.id, funct).subscribe({
       next: (data) => {
         console.log(data);
@@ -237,6 +245,21 @@ export class FunctionComponent implements OnInit {
       error: (err) => {
         console.error(err);
       },
+    });
+    this.emptyfields();
+  }
+
+  emptyfields() {
+    this.funcForm = this.formBuilder.group({
+      name: [
+        '',
+      ],
+      description: [
+        '',
+      ],
+      campaignId: [
+        '',
+      ],
     });
   }
 

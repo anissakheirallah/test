@@ -1,98 +1,6 @@
 <div class="content-wrapper container-xxl p-0">
   <div class="content-body">
     <app-content-header [contentHeader]="contentHeader"></app-content-header>
-    <section id="basic-carousel">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title text-primary">Add Function</h4>
-            </div>
-            <div class="card-body">
-              <form class="form form-horizontal" [formGroup]="funcForm" (ngSubmit)="onSubmit()">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-group row">
-                      <div class="col-sm-3 col-form-label">
-                        <label for="Skill-name">Name</label>
-                      </div>
-                      <div class="col-sm-9">
-                        <input type="text" formControlName="name" id="function-name" class="form-control"
-                          name="function-name" [ngClass]="{
-                            'is-invalid': submitted && f['name'].errors
-                          }" placeholder="Enter the function's name" />
-                        <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
-                          <div *ngIf="f['name'].errors['required']">
-                            The function's name is required
-                          </div>
-                          <div *ngIf="f['name'].errors['pattern']">
-                            The function's name must have characters only
-                          </div>
-                          <div *ngIf="f['name'].errors['minlength']">
-                            Add more characters
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-12">
-                    <div class="form-group row">
-                      <div class="col-sm-3 col-form-label">
-                        <label for="function-desc">Description</label>
-                      </div>
-                      <div class="col-sm-9">
-                        <textarea id="function-desc" formControlName="description" placeholder="Description"
-                          name="function-desc" rows="2" wrap="soft" [ngClass]="{
-                            'is-invalid': submitted && f['description'].errors
-                          }" class="form-control" data-v-aa799a9e=""></textarea>
-                        <div *ngIf="submitted && f['description'].errors" class="invalid-feedback">
-                          <div *ngIf="f['description'].errors['required']">
-                            description is required
-                          </div>
-                          <div *ngIf="f['description'].errors['minlength']">
-                            description should have more than 3 characters
-                          </div>
-                          <div *ngIf="f['description'].errors['maxlength']">
-                            description shouldn't have more than 45 characters
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-group row">
-                      <div class="col-sm-3 col-form-label">
-                        <label for="function-desc">Campaign</label>
-                      </div>
-                      <div class="col-sm-9">
-                        <div class="form-group">
-                          <select class="form-control" id="basicSelect" formControlName="campaignId">
-                            <option hidden></option>
-                            <option *ngFor="let campaign of campaigns" value="{{campaign.id}}">
-                              {{campaign.name}}
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-9 offset-sm-3">
-                    <button type="submit" rippleEffect class="btn btn-primary mr-1">
-                      Add
-                    </button>
-                    <button type="reset" rippleEffect class="btn btn-outline-secondary">
-                      Reset
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <section id="ngx-datatable-kitchen-sink">
       <div class="card">
@@ -110,8 +18,16 @@
           </div>
           <div>
             <button type="button" class="btn btn-icon rounded-circle btn-primary mr-1" data-toggle="tooltip"
-              data-placement="top" title="add project" rippleEffect>
+              data-placement="top" (click)="modalOpen(modalPrimaryadd)" title="add project" rippleEffect>
               <span [data-feather]="'plus'"></span>
+            </button>
+            <button type="button" class="btn btn-icon rounded-circle btn-success mr-1" data-toggle="tooltip"
+              data-placement="top" title="export projects" rippleEffect>
+              <span [data-feather]="'upload'"></span>
+            </button>
+            <button type="button" class="btn btn-icon rounded-circle btn-warning mr-1" data-toggle="tooltip"
+              data-placement="top" title="import project" rippleEffect>
+              <span [data-feather]="'download'"></span>
             </button>
           </div>
         </div>
@@ -147,7 +63,7 @@
           </ngx-datatable-column>
         </ngx-datatable>
         <div class="pageit">
-          <div class="col-md-3 col-12">
+          <div class="col-md-2 col-12">
             <div>
               <label class="d-flex align-items-center">Show
                 <select class="form-control mx-25" [(ngModel)]="basicSelectedOption" (change)="getAllFunctions()">
@@ -160,8 +76,8 @@
             </div>
           </div>
           <div class="col-md-3 col-12">
-            <ngb-pagination class="d-flex justify-content-end" [directionLinks]="false" [collectionSize]="totalPages"
-              [(page)]="page" (pageChange)="pageChanged($event)">
+            <ngb-pagination class="d-flex justify-content-end" [collectionSize]="totalPages" [(page)]="page"
+              [boundaryLinks]="true" size="lg" [maxSize]="2" (pageChange)="pageChanged($event)">
             </ngb-pagination>
           </div>
         </div>
@@ -170,13 +86,114 @@
   </div>
 </div>
 
+
+<!------------------ Add Function ------------------->
+
+
+<ng-template #modalPrimaryadd let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="myModalLabel160">Add Function</h5>
+
+    <button type="button" class="close" (click)="modal.dismiss('Cross click');emptyfields()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <form class="form form-horizontal" [formGroup]="funcForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group row">
+                <div class="col-sm-3 col-form-label">
+                  <label for="Skill-name">Name</label>
+                </div>
+                <div class="col-sm-9">
+                  <input type="text" formControlName="name" id="function-name" class="form-control" name="function-name"
+                    [ngClass]="{
+                          'is-invalid': submitted && f['name'].errors
+                        }" placeholder="Enter the function's name" />
+                  <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                    <div *ngIf="f['name'].errors['required']">
+                      The function's name is required
+                    </div>
+                    <div *ngIf="f['name'].errors['pattern']">
+                      The function's name must have characters only
+                    </div>
+                    <div *ngIf="f['name'].errors['minlength']">
+                      Add more characters
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group row">
+                <div class="col-sm-3 col-form-label">
+                  <label for="function-desc">Description</label>
+                </div>
+                <div class="col-sm-9">
+                  <textarea id="function-desc" formControlName="description" placeholder="Description"
+                    name="function-desc" rows="2" wrap="soft" [ngClass]="{
+                          'is-invalid': submitted && f['description'].errors
+                        }" class="form-control" data-v-aa799a9e=""></textarea>
+                  <div *ngIf="submitted && f['description'].errors" class="invalid-feedback">
+                    <div *ngIf="f['description'].errors['required']">
+                      description is required
+                    </div>
+                    <div *ngIf="f['description'].errors['minlength']">
+                      description should have more than 3 characters
+                    </div>
+                    <div *ngIf="f['description'].errors['maxlength']">
+                      description shouldn't have more than 45 characters
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group row">
+                <div class="col-sm-3 col-form-label">
+                  <label for="function-desc">Campaign</label>
+                </div>
+                <div class="col-sm-9">
+                  <div class="form-group">
+                    <select class="form-control" id="basicSelect" formControlName="campaignId">
+                      <option hidden></option>
+                      <option *ngFor="let campaign of campaigns" value="{{campaign.id}}">
+                        {{campaign.name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-9 offset-sm-3">
+              <button type="submit" rippleEffect class="btn btn-primary mr-1">
+                Add
+              </button>
+              <button type="reset" rippleEffect class="btn btn-outline-secondary">
+                Reset
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</ng-template>
+
 <!------------------ Edit Function ------------------->
 
 <ng-template #modalPrimaryedit let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="myModalLabel160">Edit Function</h5>
 
-    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+    <button type="button" class="close" (click)="modal.dismiss('Cross click');emptyfields()" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
