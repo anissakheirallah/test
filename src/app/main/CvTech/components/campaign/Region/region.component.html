@@ -116,8 +116,8 @@
             </div>
           </div>
           <div class="col-md-3 col-12">
-            <ngb-pagination class="d-flex justify-content-end" [directionLinks]="false" [collectionSize]="totalPages"
-              [(page)]="page" (pageChange)="pageChanged($event)">
+            <ngb-pagination class="d-flex justify-content-end" [collectionSize]="totalPages"
+            [boundaryLinks]="true" size="lg" [maxSize]="2"   [(page)]="page" (pageChange)="pageChanged($event)">
             </ngb-pagination>
           </div>
         </div>

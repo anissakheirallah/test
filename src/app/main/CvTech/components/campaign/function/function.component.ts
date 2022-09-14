@@ -22,6 +22,7 @@ export class FunctionComponent implements OnInit {
   public totalPages = 0;
   public page = 1;
   public basicSelectedOption = 5;
+  
   public name = "";
   public submitted = false;
   public ColumnMode = ColumnMode;
@@ -71,36 +72,8 @@ export class FunctionComponent implements OnInit {
         ],
       },
     };
-    this.funcForm = this.formBuilder.group({
-      name: [
-        "",
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.pattern("[a-zA-Z ]*"),
-        ],
-      ],
-      description: [
-        "",
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(45),
-        ],
-      ], campaignId: [
-        "", [
-          Validators.required,
-        ],
-      ]
-    });
   }
 
-  modalOpenPrimary(modalPrimary) {
-    this.modalService.open(modalPrimary, {
-      centered: true,
-      windowClass: "modal modal-primary",
-    });
-  }
 
   public pageChanged(event: any): void {
     this.page = event;
@@ -133,6 +106,39 @@ export class FunctionComponent implements OnInit {
         console.log(this.campaigns);
       },
     })
+  }
+
+  modalOpen(modalBasic) {
+
+    this.funcForm = this.formBuilder.group({
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.pattern("[a-zA-Z ]*"),
+        ],
+      ],
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(45),
+        ],
+      ],
+      campaignId: [
+        '',
+        [
+          Validators.required,
+        ],
+      ],
+    });
+    this.modalService.open(modalBasic, {
+      centered: true,
+      windowClass: "modal modal-primary",
+      size: "lg",
+    });
   }
 
   modalOpenDanger(modalDanger, id: any) {
@@ -168,6 +174,7 @@ export class FunctionComponent implements OnInit {
     };
     this.functionService.addFunction(functionData).subscribe({
       next: (data) => {
+        this.modalService.dismissAll();
         this.ngOnInit();
         this.modalService.dismissAll();
         this.toastrSuccess(" Function added successfully !! ");
@@ -179,40 +186,7 @@ export class FunctionComponent implements OnInit {
         alert(err.message);
       },
     });
-  }
-  modalAdd(modalPrimaryadd) {
-    this.functionAdd.name = "";
-    this.functionAdd.description = "";
-    this.functionAdd.campaignId = 0;
-    this.funcForm = this.formBuilder.group({
-      name: [
-        this.functionAdd.name,
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.pattern("[a-zA-Z ]*"),
-        ],
-      ],
-      description: [
-        this.functionAdd.description,
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(45),
-        ],
-      ],
-      campaignId: [
-        this.functionAdd.campaignId,
-        [
-          Validators.required,
-        ],
-      ],
-    });
-
-    this.modalService.open(modalPrimaryadd, {
-      centered: true,
-      windowClass: "modal modal-primary",
-    });
+    this.emptyfields();
   }
 
   // ------------ Edit function ------------
@@ -253,6 +227,7 @@ export class FunctionComponent implements OnInit {
     this.modalService.open(modalPrimaryedit, {
       centered: true,
       windowClass: "modal modal-primary",
+      size: 'lg',
     });
   }
 
@@ -270,7 +245,6 @@ export class FunctionComponent implements OnInit {
   }
 
   updateFunction(funct: Function): void {
-    console.log(funct);
     this.functionService.updateFunction(funct.id, funct).subscribe({
       next: (data) => {
         console.log(data);
@@ -282,6 +256,21 @@ export class FunctionComponent implements OnInit {
       error: (err) => {
         console.error(err);
       },
+    });
+    this.emptyfields();
+  }
+
+  emptyfields() {
+    this.funcForm = this.formBuilder.group({
+      name: [
+        '',
+      ],
+      description: [
+        '',
+      ],
+      campaignId: [
+        '',
+      ],
     });
   }
 
