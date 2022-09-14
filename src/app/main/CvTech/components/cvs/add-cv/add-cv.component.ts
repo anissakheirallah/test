@@ -1,31 +1,26 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Campaign } from 'app/main/CvTech/models/campaign.model';
 import { Candidate } from 'app/main/CvTech/models/candidate.model';
 import { Cv } from 'app/main/CvTech/models/cv.model';
+import { Domain } from 'app/main/CvTech/models/domain.model';
 import { Education } from 'app/main/cvtech/models/education.model';
 import { GlobalExperience } from 'app/main/CvTech/models/global-experience.model';
 import { Language } from 'app/main/CvTech/models/language.model';
 import { Skill } from 'app/main/CvTech/models/skill.model';
 import { CvService } from 'app/main/CvTech/services/cv.service';
 import Stepper from 'bs-stepper';
+import { repeaterAnimation } from './add-cv.animation';
 
 @Component({
   selector: 'app-add-cv',
   templateUrl: './add-cv.component.html',
   styleUrls: ['./add-cv.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  animations: [repeaterAnimation]
 })
 export class AddCvComponent implements OnInit {
 
   public contentHeader: object;
-
-  public selectBasic = [
-    { name: '+2' },
-    { name: '+3' },
-    { name: '+5' }
-  ];
-
-  public selectMulti = [{ name: 'English' }, { name: 'French' }, { name: 'Spanish' }];
-  public selectMultiSelected;
 
   pageSize = 5;
   page = 1;
@@ -35,7 +30,8 @@ export class AddCvComponent implements OnInit {
   languages?:Language[];
   skills?:Skill[];
   experiences?: GlobalExperience[];
-  //domains?: Domain[];
+  domains?: Domain[];
+  campaigns?: Campaign[];
 
   candidate:Candidate = {
     id:0,
@@ -75,6 +71,13 @@ export class AddCvComponent implements OnInit {
     name: '',
     description: ''
   }
+
+  domain:Domain = {
+    id: 0,
+    name: '',
+    duration: 0
+  }
+
   cv : Cv = {
     id: 0,
     availability: '',
@@ -87,6 +90,17 @@ export class AddCvComponent implements OnInit {
     languagesId: [],
     candidaciesId: [],
   }
+
+  public items = [{ campanyName: '', description:'', startDate: '', endDate: '' }];
+
+  public item = {
+    campanyName: '',
+    description:'',
+    startDate: '',
+    endDate: ''
+  };
+
+
   // private
   private modernWizardStepper: Stepper;
   private bsStepper;
@@ -106,6 +120,25 @@ export class AddCvComponent implements OnInit {
 
   constructor( private cvService: CvService) { }
 
+  addItem() {
+    this.items.push({
+      campanyName: '',
+      description: '',
+      startDate: '',
+      endDate: ''
+    });
+  }
+
+/**DeleteItem  * @param id */
+ deleteItem(id) {
+  for (let i = 0; i < this.items.length; i++) {
+    if (this.items.indexOf(this.items[i]) === id) {
+      this.items.splice(i, 1);
+      break;
+    }
+  }
+}
+
   ngOnInit(): void {
 
     this.getCandidates();
@@ -113,6 +146,8 @@ export class AddCvComponent implements OnInit {
     this.getLanguages();
     this.getSkills();
     this.getGlobalExperience();
+    this.getDomains();
+    this.getCampaigns();
 
     this.modernWizardStepper = new Stepper(document.querySelector('#stepper3'), {
       linear: false,
@@ -204,6 +239,30 @@ export class AddCvComponent implements OnInit {
     this.cvService.getGlobalExperience(params).subscribe({
       next:(data:any)=>{
         this.experiences=data.content;
+      }
+    })
+  }
+
+  getDomains(){
+    const params = {
+      page: this.page - 1,
+      size: this.pageSize,
+    }
+    this.cvService.getDomains(params).subscribe({
+      next:(data:any)=>{
+        this.domains=data.content;
+      }
+    })
+  }
+
+  getCampaigns(){
+    const params = {
+      page: this.page - 1,
+      size: this.pageSize,
+    }
+    this.cvService.getCampaigns(params).subscribe({
+      next:(data:any)=>{
+        this.campaigns=data.content;
       }
     })
   }

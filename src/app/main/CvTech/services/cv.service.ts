@@ -7,6 +7,7 @@ import { Education } from '../models/education.model';
 import { Skill } from '../models/skill.model';
 import { GlobalExperience } from '../models/global-experience.model';
 import { Domain } from 'domain';
+import { Campaign } from '../models/campaign.model';
 
 const baseUrl = environment.UrlCvTech;
 
@@ -45,4 +46,7 @@ export class CvService {
     return this.httpClient.get<Domain[]>(`${baseUrl}/domain`,{ params });
   }
   
+  getCampaigns(params:any):Observable<any>{
+    return this.httpClient.get<Campaign[]>(`${baseUrl}/campaign`,{ params });
+  }
 }
