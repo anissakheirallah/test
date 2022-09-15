@@ -1,12 +1,7 @@
-import { Component, OnInit } from "@angular/core";
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators
-} from "@angular/forms";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ColumnMode } from "@swimlane/ngx-datatable";
 import { Skill } from "app/main/CvTech/models/skill.model";
 import { SkillService } from "../../../services/skill.service";
 
@@ -14,9 +9,9 @@ import { SkillService } from "../../../services/skill.service";
   selector: "app-skills",
   templateUrl: "./skills.component.html",
   styleUrls: ["./skills.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SkillsComponent implements OnInit {
-  // public skill: Skill = { id: null, name: undefined, description: undefined };
 
   public skill: Skill = {
     id: null,
@@ -24,37 +19,35 @@ export class SkillsComponent implements OnInit {
     description: "",
   };
 
-  // public contentHeader: object;
+
+  public basicSelectedOption = 5;
+  public ColumnMode = ColumnMode;
+
+  page = 1;
+  count = 0;
+  name = "";
+  description = "";
+
+
+  private modal = null;
+  private id = 0;
+
+  public contentHeader: object;
   public pagePosition = 1;
   public totalPages = 0;
-  contentHeader: {
-    headerTitle: string;
-    actionButton: boolean;
-    breadcrumb: {
-      type: string;
-      links: (
-        | { name: string; isLink: boolean; link: string }
-        | { name: string; isLink: boolean; link?: undefined }
-      )[];
-    };
-  };
 
   public data?: Skill[];
 
   submitted = false;
 
-  public chkBoxSelected = [];
-
-  constructor(
-    private modalService: NgbModal,
-    private formBuilder: FormBuilder,
-    private skillService: SkillService
-  ) { }
-
   public skillForm: FormGroup = new FormGroup({
     name: new FormControl(""),
     description: new FormControl(""),
   });
+
+  constructor(private modalService: NgbModal, private formBuilder: FormBuilder, private skillService: SkillService) { }
+
+
 
   ngOnInit(): void {
     this.getData();
@@ -88,6 +81,9 @@ export class SkillsComponent implements OnInit {
       },
     };
 
+  }
+
+  modalOpen(modalBasic) {
     this.skillForm = this.formBuilder.group({
       name: [
         "",
@@ -106,42 +102,18 @@ export class SkillsComponent implements OnInit {
         ],
       ],
     });
-  }
-
-  modalOpenPrimary(modalPrimary) {
-    this.modalService.open(modalPrimary, {
+    this.modalService.open(modalBasic, {
       centered: true,
       windowClass: "modal modal-primary",
+      size: "lg",
     });
   }
 
-  page = 1;
-  count = 0;
-  name = "";
-  description = "";
 
   public pageChanged(event: any): void {
     this.page = event;
     console.log(event);
     this.getData();
-  }
-
-  getParams(page: number, pageSize: number, name: string, description: string) {
-    let params: any = {};
-    if (page) {
-      params["page"] = page - 1;
-    }
-    if (pageSize) {
-      params["size"] = pageSize;
-    }
-    if (name) {
-      params["name"] = name;
-    }
-    if (description) {
-      params["description"] = description;
-    }
-
-    return params;
   }
 
   getData(): void {
@@ -157,22 +129,11 @@ export class SkillsComponent implements OnInit {
         const { content, totalElements, totalPages } = response;
         this.count = totalElements;
         this.totalPages = totalPages * 10;
-        this.data = response.content;
+        this.data = content;
       },
       error: (err) => {
         console.error(err);
       },
-    });
-  }
-
-  private modal = null;
-  private id = 0;
-
-  modalOpenDanger(modalDanger, id: any) {
-    this.id = id;
-    this.modal = this.modalService.open(modalDanger, {
-      centered: true,
-      windowClass: "modal modal-danger",
     });
   }
 
@@ -190,17 +151,11 @@ export class SkillsComponent implements OnInit {
     this.addData();
   }
 
-  // public getData(): void {
-  //   this.skillService.getSkills().subscribe(
-  //     (res: any) => {
-  //       this.data = res.content;
-  //       //console.log(res)
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       alert(error.message);
-  //     }
-  //   );
-  // }
+  onReset(): void {
+    this.submitted = false;
+    this.skillForm.reset();
+  }
+
 
   public addData(): void {
     const skillData = {
@@ -216,18 +171,8 @@ export class SkillsComponent implements OnInit {
         alert(err.message);
       },
     });
+    this.emptyfields();
   }
-
-  // public deleteData(id: number): void {
-  //   this.skillService.deleteSkill(id).subscribe(
-  //     () => {
-  //       window.location.reload();
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       alert(error.message);
-  //     }
-  //   );
-  // }
 
   // ------------ Edit skill ------------
 
@@ -264,6 +209,7 @@ export class SkillsComponent implements OnInit {
     });
   }
 
+
   edit(): void {
     if (this.skillForm.invalid) {
       return;
@@ -285,9 +231,19 @@ export class SkillsComponent implements OnInit {
         console.error(err);
       },
     });
+    this.emptyfields();
   }
 
   // ------------- delete -------------- //
+
+  modalOpenDanger(modalDanger, id: any) {
+    this.id = id;
+    this.modal = this.modalService.open(modalDanger, {
+      centered: true,
+      windowClass: "modal modal-danger",
+    });
+  }
+
 
   public deleteData() {
     console.log(this.id);
@@ -304,8 +260,18 @@ export class SkillsComponent implements OnInit {
     });
   }
 
-  onReset(): void {
-    this.submitted = false;
-    this.skillForm.reset();
+  emptyfields() {
+    this.skillForm = this.formBuilder.group({
+      name: [
+        '',
+      ],
+      description: [
+        '',
+      ],
+      campaignId: [
+        '',
+      ],
+    });
   }
+
 }
