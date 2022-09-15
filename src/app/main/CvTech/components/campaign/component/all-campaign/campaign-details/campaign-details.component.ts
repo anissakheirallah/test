@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Candidate } from 'app/main/CvTech/models/candidate.model';
-import { AllCampaignService } from 'app/main/CvTech/services/all-campaign.service';
+import { CampaignService } from 'app/main/CvTech/services/campaign.service';
 import { CandidateService } from 'app/main/CvTech/services/candidate.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class CampaignDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private AllCampaignService: AllCampaignService,
+    private AllCampaignService: CampaignService,
     private modalService: NgbModal,
     private AllCandidatService: CandidateService,
   ) { }

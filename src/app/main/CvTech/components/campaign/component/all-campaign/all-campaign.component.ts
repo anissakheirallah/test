@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { AllCampaignService } from "app/main/CvTech/services/all-campaign.service";
+import { CampaignService } from "app/main/CvTech/services/campaign.service";
 
 @Component({
   selector: "app-all-campaign",
@@ -23,7 +23,7 @@ export class AllCampaignComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private AllCampaignService: AllCampaignService
+    private AllCampaignService: CampaignService
   ) {}
 
   ngOnInit(): void {

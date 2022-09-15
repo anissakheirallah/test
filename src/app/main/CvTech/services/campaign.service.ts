@@ -9,12 +9,12 @@ const baseUrl = environment.UrlCvTech;
 @Injectable({
   providedIn: 'root'
 })
-export class AllCampaignService {
+export class CampaignService {
 
   constructor(private http: HttpClient) { }
 
   getAllCampaign(): Observable<any[]> {
-    return this.http.get<any[]>(`${baseUrl}/campaign`);
+    return this.http.get<any[]>(`${baseUrl}/campaign/all`);
   }
 
   getbyid(id: number): Observable<any> {

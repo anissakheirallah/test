@@ -14,7 +14,7 @@ import { CandidateDetailsComponent } from './candidate-details/candidate-details
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'allcandidates',
     component: AllCandidatesComponent,
   },
   {
