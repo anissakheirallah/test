@@ -1,3 +1,5 @@
+import { GlobalExperience } from "./global-experience.model";
+
 export class Cv {
 
     id: number;
@@ -6,7 +8,7 @@ export class Cv {
     candidateId:number;
     domainsId:Array<number> = [];
     skillsId:Array<number> = [];
-    globalExperiencesId:Array<number> = [];
+    globalExperiencesId:Array<GlobalExperience> = [];
     educationsId:Array<number> = [];
     languagesId:Array<number> = [];
     candidaciesId:Array<number> = [];
