@@ -10,6 +10,8 @@ import { ContentHeaderModule } from 'app/layout/components/content-header/conten
 import { EducationComponent } from './education/education.component';
 import { GlobalExperienceComponent } from './global-experience/global-experience.component';
 import { SkillsComponent } from './skills/skills.component';
+import { AddCvComponent } from './add-cv/add-cv.component';
+import { CardSnippetModule } from '@core/components/card-snippet/card-snippet.module';
 
 const routes: Routes = [
   {
@@ -24,6 +26,11 @@ const routes: Routes = [
     path: 'skills',
     component: SkillsComponent,
   },
+  {
+    path: 'addCv',
+    component: AddCvComponent,
+    data: { animation: 'repeater' }
+  },
 
 ];
 
@@ -31,7 +38,8 @@ const routes: Routes = [
   declarations: [
     SkillsComponent,
     EducationComponent,
-    GlobalExperienceComponent
+    GlobalExperienceComponent,
+    AddCvComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +50,7 @@ const routes: Routes = [
     NgSelectModule,
     FormsModule,
     NgxDatatableModule,
+    CardSnippetModule
   ]
 })
 export class CvsModule { }
